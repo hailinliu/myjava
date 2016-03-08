@@ -1,0 +1,53 @@
+{% autoescape None %}
+<html lang="zh">
+<head></head>
+<body data-stat="ymtj" data-page="index" data-kid="C00D8E0B-A403-4263-9D2F-6710237FB8CA">﻿<!--<![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="/static/img/base.css" type="text/css">
+<link rel="stylesheet" href="/static/img/index.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="/static/img/mail.css">
+<link rel="stylesheet" href="/static/img/article.css" type="text/css">
+<script src="/static/img/lb.platform.base.js"></script>
+<script type="text/javascript" src="/static/img/Login.min.js" async=""></script>
+<script type="text/javascript" src="/static/img/mail.js" async=""></script>
+
+<script src="/static/img/trace-debug.js" type="text/javascript"></script>
+
+
+<div class="container pb-58">
+    <!--/s 头部 -->
+    <!--/e 头部广告切换 -->
+    <div class="f-right wrap flooright f-cf">
+        <div class="f-fr wrap-r">
+            <h3 class="t ind-section-t bor-top-thin">
+                <span class="title-name bor-top-rough">公告资讯</span><span class="title-more">当前位置：平台首页&nbsp;-&gt;&nbsp;公告资讯</span>
+            </h3>
+            <br><br>
+
+            <div class="article-cont">
+                <div class="article-title"><h1>{{news.get('title')}}!!!</h1></div>
+                <br>
+
+                <div class="article-main">
+                    <div>
+                        {{news.get('desc') }}
+                    </div>
+                    <div style="text-align: right;">互助金融平台中心</div>
+                    <div style="text-align: right;">{{news['time']}}</div>
+                    <p align="center">
+                        <br>
+                        <input name="" type="button" class="btn1 btn1-orange2 drop-shadow" value="返  回"
+                               onclick="history.back(-1)">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

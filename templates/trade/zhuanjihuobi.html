@@ -1,0 +1,81 @@
+{% extends "../base.html" %}
+{% block page_title %}激活币转账{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>交易管理
+                    <small> 激活币转账</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    </li>
+                    <li><a href="#">交易管理</a></li>
+                    <li class="active">激活币转账</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">激活币转账</div>
+
+
+                <div class="panel-body">
+                    <!--主-->
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+      <span style="color:#F00">
+
+
+  您好! <strong></strong> (18645586611). 您的可转出激活币为:<span id="mejihuobi">0</span>
+
+
+      </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="x1" class="col-sm-2 control-label">转出金额</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="x1" placeholder="请输入要转出的金额" value=""
+                                       maxlength="11">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="x2" class="col-sm-2 control-label">用户编号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="x2" placeholder="输入您要转给的用户" value="">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning zhuanjihuobi_go">马上转账</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--End-->
+                </div>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+{%end%}

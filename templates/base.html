@@ -1,0 +1,53 @@
+<html lang="zh"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>主程序</title>
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="/static/css/css.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            background: #3D3D3D;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/layer.css" id="layui_layer_skinlayercss">
+    <!--&version={% module random() %}-->
+    <!--<script type="text/javascript" src="{{ static_url('js/jquery-1.7.2.min.js') }}"></script>-->
+
+</head>
+<body>
+{%block common_js %}
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/static/js/layer.js"></script>
+<script src="/static/js/long.js"></script>
+{%end%}
+<div class="main clearfix">
+    <!--LEFT -->
+    {%block left%}
+    {%include 'left.html' %}
+    {%end%}
+    <script>
+        //$(selector).toggle(speed,callback);
+
+    </script>
+
+
+    <!--LEFT End-->
+
+    {%block content%}
+
+    {%end%}
+
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+{% extends "../base.html" %}
+{% block page_title %}申请提现{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>交易系统
+                    <small> 申请提现</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">申请提现</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">申请提现</div>
+
+
+                <div class="panel-body">
+                    <p>注:提现将收取20%手续费</p>
+
+
+                    <!--主-->
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <label for="x1" class="col-sm-2 control-label">您的金币余额</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" id="x1"
+                                       placeholder="您的金币余额" value="246">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="x2" class="col-sm-2 control-label">提现金额</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="x2" placeholder="提现金额" value=""
+                                       maxlength="10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="x3" class="col-sm-2 control-label">支付宝账号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="x3" placeholder="收款的支付宝账号" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="x4" class="col-sm-2 control-label">支付宝姓名</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="x4" placeholder="收款的支付宝账号姓名" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label><input type="checkbox" checked="checked" id="x5"> 设置该支付宝账号为默认收款账号</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning goumai_go">申请提现</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <!--End-->
+                </div>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+{%end%}

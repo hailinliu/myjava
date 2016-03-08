@@ -1,0 +1,463 @@
+# encoding:utf-8
+import json
+import random
+import time
+from datetime import datetime
+from datetime import date
+from bson import DBRef, ObjectId
+import datetime
+import math
+import tornado
+
+from tornado.web import RequestHandler, StaticFileHandler
+
+from BaseHandler import BaseHandler
+
+from utils.mail import MailHandler
+from pymongo import DESCENDING
+import pymongo
+
+
+class AdminLoginHandler(BaseHandler):
+    """登录"""
+
+    def get(self):
+        # tornado.web.RequestHandler._template_loaders.clear()
+        nexts = self.request.arguments.get("next")
+        referer_url = '/admin/home'
+        if 'Referer' in self.request.headers:
+            referer_url = '/' + '/'.join(self.request.headers['Referer'].split("/")[3:])
+        error = ""
+        if self.user:
+            if self.user.get("role", "") in ['admin', "superadmin"]:
+                print self.user.get("role", "")
+                self.redirect(referer_url)
+                error = ""
+            else:
+                error = u"您已登录账号:%s,如继续则退出当前账号" % self.user['uid']
+
+        next = referer_url
+        if nexts:
+            next = nexts[0]
+        else:
+            url = ""
+        self.render("admin/login.html", url=next, myuser=self.user, error=error)
+
+    def post(self, *args, **kwargs):
+
+        print [value[0] for key, value in self.request.arguments.items() if key != '_xsrf']
+        url, pwd, name = (value[0] for key, value in self.request.arguments.items() if key != '_xsrf')
+        if not pwd:
+            self.render("admin/login.html")
+        self.logging.info(('admin user  %s login in' % (name)))
+
+        res = self.begin_admin_session(name, pwd)
+        if not res:
+            self.render("admin/login.html", myuser=self.user, url=url, error="用户名或密码不正确")
+
+        admin_user = self.db.user.find_one({"username": name, "role": "superadmin"})
+        if not admin_user:
+            self.render("admin/login.html", myuser=self.user, url=url, error="非法用户,请输入管理员账号")
+
+        # # 登录记录
+        # get_ip = self.request.remote_ip
+        # self.db.logininfo.insert({"uid": self.user['uid'], "ip": get_ip, "time": time.strftime("%Y-%m-%d %H:%M:%S")})
+
+        if url == '/admin/login':
+            self.redirect('/admin/home')
+        else:
+            self.redirect(url)
+
+
+class AdminLogoutHandler(BaseHandler):
+    """注销"""
+
+    def get(self):
+        self.post()
+
+    def post(self):
+        self.end_session()
+        self.redirect('/admin/login')
+
+
+class AdminHomeHandler(BaseHandler):
+    """后台主页"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        user_count = self.db.user.find().count()
+        user_handle = self.db.user_handle.find({"handle": "2"}).sort("time", DESCENDING).limit(8)
+        today = datetime.date.today()
+        today_register_count = self.db.user.find({"regtime": {"$gte": str(today)}}).count()
+
+        total_sum = self.db.provide_money.aggregate({'$group': {'_id': "", 'sum': {'$sum': '$money'}}})
+        if len(total_sum['result']) > 0:
+            total_provide_money = total_sum['result'][0]['sum']
+        else:
+            total_provide_money = 0
+        today_total_provide_money = 0
+        provide_help_count = self.db.provide_help.find({"status": "waiting"}).count()
+        today_provide_help_count = self.db.provide_help.find(
+            {"status": "waiting", "time": {"$gte": str(today)}}).count()
+
+        provide_help_money_result = self.db.provide_help.aggregate(
+            [{"$match": {"status": "waiting"}}, {"$group": {'_id': "", 'sum': {'$sum': '$jine'}}}])['result']
+        if len(provide_help_money_result) > 0:
+            provide_help_money_count = provide_help_money_result[0]['sum']
+        else:
+            provide_help_money_count = 0
+        today_provide_help_result = self.db.provide_help.aggregate(
+            [{"$match": {"time": {"$gte": str(today)}}},
+             {"$group": {'_id': 0, 'sum': {'$sum': '$jine'}}}])['result']
+        if len(today_provide_help_result) > 0:
+            today_provide_help_money_count = today_provide_help_result[0]['sum']
+        else:
+            today_provide_help_money_count = 0
+
+        self.render("admin/home.html", myuser=self.user, admin_nav=1, user_count=user_count,
+                    total_provide_money=total_provide_money, provide_help_count=provide_help_count,
+                    today_total_provide_money=today_total_provide_money,
+                    today_provide_help_count=today_provide_help_count,
+                    provide_help_money_count=provide_help_money_count,
+                    today_provide_help_money_count=today_provide_help_money_count,
+                    today_register_count=today_register_count, user_handle=user_handle)
+
+
+class AdminNewsEdit(BaseHandler):
+    """公告发布、编辑"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        news_id = int(self.get_argument("id", 0))
+        news = self.db.news.find_one({"id": news_id})
+        if not news:
+            news = {}
+        self.render("admin/news_edit.html", myuser=self.user, news=news, news_id=news_id, admin_nav=3)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        info = self.request.arguments
+        for key, value in info.items():
+            info[key] = value[0]
+            print key, value[0]
+        del info['_xsrf']
+        info = dict(info)
+
+        news_id = int(info['id'])
+        del info['id']
+        if news_id:
+            self.db.news.update({"id": news_id}, {"$set": info})
+        else:
+            # id自增1
+            last = self.db.news.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last.count() > 0:
+                lastone = dict()
+                for item in last:
+                    lastone = item
+                info['id'] = int(lastone['id']) + 1
+            else:
+                info['id'] = 1
+            info['time'] = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+            self.db.news.insert(info)
+            print info
+        return self.redirect("/admin/news")
+
+
+class AdminNewsList(BaseHandler):
+    """公告列表"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        news = self.db.news.find().sort("_id", pymongo.DESCENDING)
+        self.render("admin/news.html", myuser=self.user, admin_nav=2, news=news)
+
+    @BaseHandler.admin_authed
+    def delete(self):
+        try:
+            for value in self.request.arguments.values():
+                self.db.news.remove({"id": int(value[0])})
+        except Exception, e:
+            print e
+            self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
+
+
+class AdminUserList(BaseHandler):
+    """用户列表"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        if not self.user:
+            self.redirect('/admin/login')
+        query = {"role": {"$ne": 'superadmin'}, "blacklist": {"$ne": 1}}
+        search = ""
+        role = self.get_argument("role", None)
+        if role:
+            query.update({"role": role})
+        if self.get_argument("page", None) in ["", None]:
+            current_page = 1
+        else:
+            current_page = int(self.get_argument("page"))
+
+        uid = self.get_argument("uid", None)
+        if uid:
+            query.update({"admin": uid})
+
+        users = self.db.user.find(query)
+        per = 20.0
+        pages = int(math.ceil(users.count() / per))
+        users = users.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
+        counts = users.count()
+        # uid 存在，则查询该用户下面的会员
+        def member_count(uid):
+            return self.db.user.find({"admin": uid}).count()
+
+        def trade_count(uid):
+            return self.db.trade_log.find({"uid": uid}).count()
+
+        self.render("admin/users.html", myuser=self.user, admin_nav=2, current_page=current_page, pages=pages,
+                    counts=counts, member_count=member_count, trade_count=trade_count, users=users, search=search,
+                    role=role)
+
+    @BaseHandler.admin_authed
+    def delete(self):
+        try:
+            for value in self.request.arguments.values():
+                print value[0]
+                self.db.user.remove({"uid": value[0]})
+        except Exception, e:
+            print e
+            self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
+
+    @BaseHandler.admin_authed
+    def put(self):
+        try:
+            for value in self.request.arguments.values():
+                self.db.user.update({"uid": value[0]}, {"$set": {"blacklist": 1}})
+        except Exception, e:
+            print e
+            self.write(json.dumps({"status": 'error', "msg": u"更新失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            self.write(json.dumps({"status": 'ok', "msg": "update %d items." % count}))
+
+    @BaseHandler.admin_authed
+    def post(self):
+
+        query = {"role": {"$ne": 'superadmin'}, "blacklist": {"$ne": 1}}
+        search = self.get_argument("search", "").encode("utf-8")
+        if search:
+            query.update({"$or": [{'username': search}, {"uid": search}, {'phone': search}]})
+        role = self.get_argument("role", None)
+        if role:
+            query.update({"role": role})
+        if self.get_argument("page", None) in ["", None]:
+            current_page = 1
+        else:
+            current_page = int(self.get_argument("page"))
+
+        uid = self.get_argument("uid", None)
+        if uid:
+            query.update({"admin": uid})
+        users = self.db.user.find(query)
+        per = 20.0
+        pages = int(math.ceil(users.count() / per))
+        users = users.skip(int(per) * (current_page - 1)).limit(int(per))
+        counts = users.count()
+        # uid 存在，则查询该用户下面的会员
+        def member_count(uid):
+            return self.db.user.find({"admin": uid}).count()
+
+        def trade_count(uid):
+            return self.db.trade_log.find({"uid": uid}).count()
+
+        self.render("admin/users.html", myuser=self.user, admin_nav=2, current_page=current_page, pages=pages,
+                    counts=counts, member_count=member_count, trade_count=trade_count, search=search, users=users,
+                    role=role)
+
+
+class AdminCheckPhone(BaseHandler):
+    """检查电话号码"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        phone = self.get_argument("phone", None)
+        exist = self.db.user.find_one({"phone": phone})
+        if not exist:
+            self.write(json.dumps({"status": 'ok'}))
+
+        else:
+            self.write(json.dumps({"status": 'error'}))
+
+
+class AddUser(BaseHandler):
+    """添加用户"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        if not self.user:
+            self.redirect('/admin/login')
+        # users = self.db.user.find({"role": {"$ne": 'superadmin'}}, {"blacklist": {"$ne": True}})
+        users = self.db.user.find({"role": {"$ne": 'superadmin'}})
+        type = self.get_argument("type", None)
+        self.render("admin/add_user.html", myuser=self.user, admin_nav=2, type=type, users=users)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        UserID = self.get_argument('UserID', None)
+        phone = self.get_argument('phone', None)
+        username = self.get_argument("username", None)
+        pwd = self.get_argument("pwd", None)
+        user = self.db.user.find_one({"$or": [{'uid': UserID}, {"phone": phone}, {'username': username}]})
+        if user:
+            # self.logging.info(u'该用户名或用户编号已经注册')
+            self.render("ok.html", myuser=self.user, url="/admin/adduser", tip=u"该用户名或用户编号或手机号已经注册")
+            # return self.write(json.dumps({"msg": u'该用户名或用户编号已经注册', "error": 'error'}))
+        else:
+            # baseurl = "http://cdn.zi-han.net/im/temp/"
+            user = {
+                'uid': UserID,
+                'pwd': pwd,
+                'username': username,
+                'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
+                'phone': phone,
+                'safe_pwd': pwd,
+                'is_check': False,
+                'reward': 0,
+                'money': 0,
+            }
+            # print 'user%s'%user
+            self.logging.info(('register user %s %s' % (user['uid'], user['pwd'])))
+            res = self.application.auth.register(user)
+            if not res:
+                print "register error"
+                self.render("ok.html", myuser=self.user, url="/admin/adduser", tip=u"注册失败")
+        self.redirect('/admin/userlist')
+
+
+class AdminUserResetPwd(BaseHandler):
+    """修改密码"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        uid = self.get_argument("uid", "")
+        info = self.db.user.find_one({"uid": uid})
+        self.render('admin/update_pwd.html', admin_nav=3, uid=uid, myuser=self.user, info=info)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        datas = self.request.arguments
+        # print datas
+        uid = self.get_argument("uid", '')
+        pwd = self.get_argument("pwd")
+        if not self.application.auth.changepwd(uid, pwd):
+            self.render("ok.html", url="/admin/userlist", tip="密码修改失败")
+        else:
+            self.render("ok.html", url="/admin/userlist", tip="密码已修改")
+        info = self.db.user.find_one({"uid": uid})
+        self.render('admin/update_pwd.html', admin_nav=3, myuser=self.user, info=info)
+
+
+class AdminUserResetPwdProtect(BaseHandler):
+    """修改密码密保"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        uid = self.get_argument("uid", "")
+        # print uid
+        info = self.db.user.find_one({"uid": uid})
+        if not info:
+            self.render("ok.html", url="/admin/userlist", tip="密码保护重置失败")
+        else:
+            self.db.user.update({"uid": uid}, {"$unset": {"question": 1, "answer": 1}})
+            self.render("ok.html", url="/admin/userlist", tip="密码保护已重置")
+
+
+class AdminUserFrozen(BaseHandler):
+    """冻结用户"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        uid = self.get_argument("uid", "")
+        type = self.get_argument("type", "")
+        # print uid
+        info = self.db.user.find_one({"uid": uid})
+        if not info:
+            self.render("ok.html", url="/admin/userlist", tip="冻结用户失败")
+        else:
+            if type == 'cancel':
+                self.db.user.update({"uid": uid}, {"$set": {"frozen": False}})
+                self.render("ok.html", url="/admin/userlist", tip="用户已解冻")
+            else:
+                self.db.user.update({"uid": uid}, {"$set": {"frozen": True}})
+                self.render("ok.html", url="/admin/userlist", tip="用户已被冻结")
+
+
+class AdminPetEdit(BaseHandler):
+    """宠物发布、编辑"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        pet_id = int(self.get_argument("id", 0))
+        pet = self.db.pet.find_one({"id": pet_id})
+        if not pet:
+            pet = {}
+        self.render("admin/pet_edit.html", myuser=self.user, pet=pet, pet_id=pet_id, admin_nav=3)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        info = self.request.arguments
+        for key, value in info.items():
+            info[key] = value[0]
+            print key, value[0]
+        del info['_xsrf']
+        info = dict(info)
+
+        news_id = int(info['id'])
+        del info['id']
+        if news_id:
+            self.db.pet.update({"id": news_id}, {"$set": info})
+        else:
+            # id自增1
+            last = self.db.pet.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last.count() > 0:
+                lastone = dict()
+                for item in last:
+                    lastone = item
+                info['id'] = int(lastone['id']) + 1
+            else:
+                info['id'] = 1
+            info['time'] = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+            self.db.pet.insert(info)
+            print info
+        return self.redirect("/admin/petlist")
+
+
+class AdminPetList(BaseHandler):
+    """宠物列表"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        pets = self.db.pet.find().sort("_id", pymongo.DESCENDING)
+        self.render("admin/pets.html", myuser=self.user, admin_nav=3, pets=pets)
+
+    @BaseHandler.admin_authed
+    def delete(self):
+        try:
+            for value in self.request.arguments.values():
+                self.db.pet.remove({"id": int(value[0])})
+        except Exception, e:
+            print e
+            self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))

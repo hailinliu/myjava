@@ -1,0 +1,20 @@
+{
+    "appkey" : "qytzim#webchat",
+    "org" : "qytzim",
+    "admin" : {
+        "username" : "qytzhc",
+        "password" : "qytzdeseka123456"
+    },
+    "app" : 
+        {
+            "name" : "webchat",
+            "credentials" : {
+                "client_id" : "YXA6ZjJh4FkDEeWU3mN70OLT1g",
+                "client_secret" : "YXA6ZDJHMXTF9GXBoKC3mM6EdaL9Gho"
+            },
+            "admin" : {
+                "username" : "test1",
+                "password" : "test1"
+            }
+        }
+}

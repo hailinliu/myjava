@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>注册用户</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="http://58.221.44.174:96/ui_yun/css/css.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            background: #977106;
+            min-width: 320px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container reg">
+    <div class="tit"><img src="http://58.221.44.174:96/ui_yun/images/logo.png"></div>
+    <div class="xlogin center-block">
+        <form action="" method="post">
+            {% module xsrf_form_html() %}
+            <div class="xlogin2 form-horizontal">
+                <div class="lo1">注册新用户</div>
+
+
+                <div class="form-group">
+                    <label for="x1" class="col-sm-4 control-label">直推会员:</label>
+
+                    <div class="col-sm-8">
+                        <input class="form-control" id="x1" name="rName" placeholder="请输入直推人的会员编号" value="{{r}}">
+                    </div>
+                </div>
+
+                <div class="lo4"></div>
+
+                <div class="form-group">
+                    <label for="x2" class="col-sm-4 control-label">玩家编号:</label>
+
+                    <div class="col-sm-8">
+                        <input class="form-control" id="x2" name="phone" placeholder="只能使用您的手机号码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="x3" class="col-sm-4 control-label">登录密码:</label>
+
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" name="password" id="x3" placeholder="6-30位任意字符">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="x4" class="col-sm-4 control-label">确认密码:</label>
+
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" name="password2" id="x4" placeholder="请再次输入您的密码">
+                    </div>
+                </div>
+
+                <!--  <div class="lo4"></div>
+
+                  <div class="form-group">
+                    <label for="x5" class="col-sm-4 control-label">玩家姓名:</label>
+                    <div class="col-sm-8">
+                      <input class="form-control" id="x5" placeholder="请输入您的姓名">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="x6" class="col-sm-4 control-label">安全问题:</label>
+                     <div class="col-sm-8">
+                        <select class="form-control" id="x6">
+                             <option value="" selected >请选择安全问题...</option>
+                             <option value="您的生日是什么时间？" >您的生日是什么时间？</option>
+                             <option value="您的爱人叫什么名字？" >您的爱人叫什么名字？</option>
+                             <option value="您最喜欢的是什么？" >您最喜欢的是什么？</option>
+                             <option value="您的父亲的姓名是什么？" >您的父亲的姓名是什么？</option>
+                             <option value="您的母亲的姓名是什么？" >您的母亲的姓名是什么？</option>
+                             <option value="您的小学名称叫什么名字？" >您的小学名称叫什么名字？</option>
+                        </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="x7" class="col-sm-4 control-label">安全答案:</label>
+                    <div class="col-sm-8">
+                      <input class="form-control" id="x7" placeholder="请输入您的身份证号码">
+                    </div>
+                  </div>-->
+
+                <div class="lo4"></div>
+
+                <div class="form-group">
+                    <label for="x8" class="col-sm-4 control-label">安全密码:</label>
+
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" name="safe_pwd" id="x8" placeholder="请输入您的安全密码">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="x9" class="col-sm-4 control-label">确认密码:</label>
+
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" name="safe_pwd2" id="x9" placeholder="请输入您的安全密码">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="x10" class="col-sm-4 control-label">验证码:</label>
+
+                    <div class="col-sm-4">
+                        <input class="form-control" id="x10" placeholder="验证码">
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="/verifycode" width="70" height="34" id="yzmpic" name="" class="loimg"
+                             onClick="refreshCode();"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-5">
+                        <div class="checkbox"><label><input type="checkbox" id="zhucetiaokuan" value="1"
+                                                            checked='CHECKED'>
+                            <a href="#">同意条款</a></label></div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary form-control reggo">注册</button>
+                    </div>
+                </div>
+                <div class="lo4"></div>
+                <div class="lo lo5">已经注册的有账户? <a href="login.asp">立即登录</a></div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="../ui/js/jquery.backstretch.min.js"></script>
+<script src="http://58.221.44.174:96/ui_yun/layer/layer.js"></script>
+<script src="http://58.221.44.174:96/ui_yun/js/long.js"></script>
+
+<script>
+
+    $(".reggo").click(function () {
+        denglu_go();
+        return false;
+    });
+    function denglu_go() {
+
+        var x1 = $("#x1").val();
+        var x2 = $("#x2").val();
+        var x3 = $("#x3").val();
+        var x4 = $("#x4").val();
+        //var x5=$("#x5").val();
+        //var x6=$("#x6").val();
+        //var x7=$("#x7").val();
+        var x8 = $("#x8").val();
+        var x9 = $("#x9").val();
+        var x10 = $("#x10").val();
+        if (x1 == "") {
+            tishi4('请输入直推人编号', '#x1')
+            return false;
+        }
+        if (!checkMobile(x1)) {
+            tishi4('直推人编号不正确,应该是手机号码形式的11位数字', '#x1')
+            return false;
+        }
+        if (x2 == "") {
+            tishi4('请填写您自己的编号', '#x2')
+            return false;
+        }
+        if (!checkMobile(x2)) {
+            tishi4('编号请填写您的手机号码,请勿用其他格式', '#x2')
+            return false;
+        }
+        if (!checkPwd(x3)) {
+            tishi4('请输入6-30位密码', '#x3')
+            return false;
+        }
+        if (x3 != x4) {
+            tishi4('两次密码输入的不一样', '#x4')
+            return false;
+        }
+
+        /*			if(!checkName(x5)){
+         tishi4('请输入您的姓名,最多10位','#x5')
+         return false;
+         }
+
+         if(x6==""){
+         tishi4('请选择您的安全问题','#x6')
+         return false;
+         }
+
+         if(x7==""){
+         tishi4('请输入您的密保信息,密码忘记时候,这是您取回密码的凭证','#x7')
+         return false;
+         }*/
+
+        if (!checkPwd(x8)) {
+            tishi4('请输入6-30位的安全密码', '#x8')
+            return false;
+        }
+        if (x8 != x9) {
+            tishi4('两次密码输入的不一样', '#x9')
+            return false;
+        }
+
+        if (x10 == "") {
+            tishi4('请输入您的验证码', '#x10')
+            return false;
+        }
+        $("form").submit()
+//        var url = "bin.asp?act=reg&x1=" + escape(x1) + "&x2=" + escape(x2) + "&x3=" + escape(x3) + "&x4=" + escape(x4) + "&x8=" + escape(x8) + "&x9=" + escape(x9) + "&x10=" + escape(x10);
+//        tishi2();
+//        $.ajax({type: "get", async: true, url: url, dataType: "jsonp"});
+    }
+
+    $.backstretch(["http://58.221.44.174:96/ui_yun/images/dl.jpg"], {
+        fade: 100,
+        duration: 100
+    });
+    function refreshCode() {
+        document.getElementById("imgcode").src = "/verifycode?" + Math.random();
+    }
+
+</script>
+
+</body>
+</html>"></script></div>
+</body>
+</html>

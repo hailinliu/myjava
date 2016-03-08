@@ -1,0 +1,209 @@
+<html>
+<head></head>
+<body>﻿
+
+<meta charset="UTF-8">
+<title>修改资料</title>
+<link rel="stylesheet" href="/static/img/uc.css?t=201303211742">
+<script language="javascript">
+    function CheckForm() {
+        UserCard = document.form1.UserCard.value;
+        UserName = document.form1.UserName.value;
+        UserTel = document.form1.UserTel.value;
+        UserAddress = document.form1.UserAddress.value;
+        BankCard = document.form1.BankCard.value;
+        BankUserName = document.form1.BankUserName.value;
+        BankAddress = document.form1.BankAddress.value;
+
+        if (UserCard.length == 0) {
+            alert("温馨提示:\n请输入身份证号码.");
+            document.form1.UserCard.focus();
+            return false;
+        }
+        if (UserName.length == 0) {
+            alert("温馨提示:\n请输入会员姓名.");
+            document.form1.UserName.focus();
+            return false;
+        }
+        if (UserTel.length == 0) {
+            alert("温馨提示:\n请输入联系电话.");
+            document.form1.UserTel.focus();
+            return false;
+        }
+        if (BankCard.length == 0) {
+            alert("温馨提示:\n请输入开户帐号.");
+            document.form1.BankCard.focus();
+            return false;
+        }
+        if (BankUserName.length == 0) {
+            alert("温馨提示:\n请输入开户昵称.");
+            document.form1.BankUserName.focus();
+            return false;
+        }
+        if (BankAddress.length == 0) {
+            alert("温馨提示:\n请输入开户地址.");
+            document.form1.BankAddress.focus();
+            return false;
+        }
+//	if(UserAddress.length == 0){
+//		alert("温馨提示:\n请输入联系地址.");
+//		document.form1.UserAddress.focus();
+//		return false;
+//	}
+        return true;
+    }
+</script>
+
+
+<div class="main_part"><h5 class="tit"><span class="tit_nm">修改资料</span><span class="tit_sp"></span></h5>
+
+    <div class="info" id="info_contain">
+        <form name="form1" method="post" action="" onsubmit="return CheckForm();">
+            {% module xsrf_form_html() %}
+            <table width="80%" border="0" align="center" cellpadding="0" cellspacing="0" style="font-size:14px">
+                <tbody>
+                <tr>
+                    <td height="30" colspan="2" align="left" style="font-size:15px; font-weight:bold; color:#888;"><img
+                            src="/static/images/roww2.gif">&nbsp;個人信息
+                    </td>
+                </tr>
+                <tr>
+                    <td height="1" colspan="2" background="/static/images/lin22.gif"></td>
+                </tr>
+                <tr>
+                    <td height="10" colspan="2" align="right">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="42%" height="30" align="right"> 会员编号：</td>
+                    <td>3704661</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right"> 加入日期：</td>
+                    <td width="78%">{{myuser.get('regtime','未知')}}</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right"> 会员姓名：</td>
+                    <td>{{myuser.get('username',"未知")}}</td>
+                </tr>
+                <tr>
+                    <td height="30" align="right"> 性别：</td>
+                    <td width="70%" align="left">
+                        <input name="sex" type="radio" id="sex" value="1">男
+                        <label for="radio">
+                            <input type="radio" name="sex" id="sex" value="0" checked="">女
+                        </label></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right"> 微信号：</td>
+                    <td><input name="wechat" type="text" value="{{myuser.get('wechat','')}}" id="wechat" class="txt">
+                        <span class="col">*</span></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right"> 支付宝：</td>
+                    <td><input name="alipay" type="text" value="{{myuser.get('alipay','')}}" id="alipay" class="txt">
+                        <span class="col">*</span></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right"> 手机号码：</td>
+                    <td><input name="UserTel" type="text" value="{{myuser.get('phone','')}}" id="UserTel" class="txt">
+                        <span class="col">*</span></td>
+                </tr>
+                <tr style="display:none">
+                    <td height="30" align="right"> 身份认证码：</td>
+                    <td><input name="UserCard" type="text" value="" id="UserCard" class="txt"></td>
+                </tr>
+                <tr>
+                    <td height="30" colspan="2" style="font-size:15px; font-weight:bold;"><img
+                            src="/static/images/roww2.gif">&nbsp;银行资料
+                    </td>
+                </tr>
+                <tr>
+                    <td height="1" colspan="2" background="/static/images/lin22.gif"></td>
+                </tr>
+                <tr>
+                    <td height="10" colspan="2" align="right">&nbsp;</td>
+                </tr>
+                <tr>
+                    {%set banks={u"农业银行":"中国农业银行",u"建设银行":"中国建设银行",u"工商银行":"中国工商银行",u"邮政储蓄":"中国邮政储蓄",u"农商银行":"农村商业银行",u"支付宝":"支付宝"}%}
+                    <td align="right">开户帐号：</td>
+                    <td align="left">
+                        <select name="bankname" id="bankname" class="txt">
+                            {%for k,v in banks.items()%}
+                            <option value="{{k}}"  {%if myuser.get('bank',{}).get('name')==k %}selected{%end%}>{{k}}</option>
+                            {%end%}
+                        </select></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right">开户帐号：</td>
+                    <td align="left">
+                        <input class="txt" name="BankCard" type="text" id="BankCard"
+                               onblur="Check('BankCard');" value="{{myuser.get('bank',{}).get('card','')}}"
+                               maxlength="20">
+                        &nbsp;<span id="span">*</span>&nbsp;<label id="BankCardlabel"></label></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right">开户姓名：</td>
+                    <td align="left"><input class="txt" name="BankUserName" type="text" id="BankUserName"
+                                            onblur="Check('BankUserName');"
+                                            value="{{myuser.get('bank',{}).get('user_name','')}}" maxlength="20">
+                        &nbsp;<span id="span">*</span>&nbsp;<label id="BankUserNamelabel"></label></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right">开户地址：</td>
+                    <td align="left"><input class="txt" name="BankAddress" type="text" id="BankAddress"
+                                            onblur="Check('BankAddress');"
+                                            value="{{myuser.get('bank',{}).get('address','')}}" maxlength="50">
+                        &nbsp;<span id="span">*</span>&nbsp;<label id="BankAddresslabel"></label></td>
+                </tr>
+                <tr>
+                    <td height="30" colspan="2" style="font-size:15px; font-weight:bold;"><img
+                            src="./images/images/roww2.gif">&nbsp;密保问题(修改资料前请正确填写密保问题)
+                    </td>
+                </tr>
+                <tr>
+                    <td height="1" colspan="2" background="./images/images/lin22.gif"></td>
+                </tr>
+                <tr>
+                    <td height="10" colspan="2" align="right">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="29%" height="30" align="right">密保问题1：</td>
+                    <td width="71%" height="30" align="left">
+                            <span class="col">
+								<select class="txt" name="passquestion1" height="30" readonly="readonly">
+                                    <option value="5">你的生日是？</option>
+                                    <option value="6">你的家乡是？</option>
+                                    <option value="7">你的学校是？</option>
+                                    <option value="8">你母亲的名字是？</option>
+                                    <option value="9">你父亲的名字是？</option>
+                                    <option value="10">你的学校是？</option>
+                                    <option value="11">你喜欢的食物是？</option>
+                                    <option value="12">你喜欢的颜色是？</option>
+                                    <option value="13">你喜欢的动物是？</option>
+                                    <option value="14">你最想去的地方是？</option>
+                                    <option value="15">你印象最深刻的地方是？</option>
+                                </select>
+                                *<label id="password1label">
+                            </label></span></td>
+                </tr>
+                <tr>
+                    <td height="30" align="right" style="height: 24px">密保答案1：</td>
+                    <td height="30" align="left">
+                        <input name="passanswer1" type="text" id="passanswer1" class="txt" value="">
+                                <span class="col">*<label id="password12label">
+                                </label></span></td>
+                </tr>
+                <tr>
+                    <td height="50" align="right">&nbsp;</td>
+                    <td><input type="submit" name="submit" value="提&nbsp;交" id="submit"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="/static/img/jquery.min.js"></script>
+<script type="text/javascript" src="/static/img/minfo.js?t=20150519"></script>
+
+</body>
+</html>

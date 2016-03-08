@@ -1,0 +1,41 @@
+<body style="width: 100%;background: #fff;">
+<style type="text/css">
+    a {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+        background-color: #f0ad4e;
+        background-image: none;
+        isplay: inline-block;
+        line-height: 1;
+        padding: 5px 10px;
+        color: #fff !important;
+        border: 0;
+        font-size: 14px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        transition: background-color .3s;
+        text-decoration: none;
+        margin: 0px auto;
+        padding: 0px auto;
+        display: block;
+        width: 60px;
+    }
+</style>
+<div>
+    <img src="/static/images/404.png" style="
+    margin: 0px auto;
+    padding: 0px auto;display: block;">
+    <a href="javascript:;" onclick="reload()" class="btn1 btn1-yellow3 drop-shadow load">返回首页</a>
+</div>
+<script type="text/javascript">
+    function reload() {
+        if (window.top == window.self) {//不存在父页面
+             window.location=history.go(-1);
+        } else {
+            parent.location.reload()
+        }
+    }
+</script>
+</body>

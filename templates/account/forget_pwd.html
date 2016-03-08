@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿
+<html>
+<head>
+    <title>找回密码</title>
+    <meta charset="utf-8">
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#userid").blur(function () {
+                if ($(this).val() == "") {
+                    $("#first").text("会员编号不能为空");
+                } else {
+                    $("#first").html("&nbsp;");
+                }
+                ;
+            });
+
+            $("#answer").blur(function () {
+                if ($(this).val() == "") {
+                    $("#third").text("密钥答案不能为空");
+                } else {
+                    $("#third").html("&nbsp;");
+                }
+                ;
+            });
+        })
+        function CheckForm() {
+            userid = document.form1.userid.value;
+            question = document.form1.question.value;
+            answer = document.form1.answer.value;
+            if (userid.length == 0) {
+                alert("请输入会员编号.");
+                document.form1.userid.focus();
+                return false;
+            }
+            if (answer.length == 0) {
+                alert("请输入密钥答案.");
+                document.form1.answer.focus();
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<!-----start-main---->
+<div class="login-form">
+    <h1>找回密码</h1>
+    <br>
+
+    <form name="form1" method="post" action="?" id="form1" style="height:100%" onSubmit="return CheckForm()">
+
+
+        <div id="reset_body">
+            <div id="reset_con">
+                <div class="reset_detail">
+                    <div class="right"><input id="userid" class="con" name="userid" type="text" value="会员编号"
+                                              onfocus="this.value = '';"
+                                              onblur="if (this.value == '') {this.value = '会员编号';}"/>
+
+                        <div id="first" class="note"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="reset_detail">
+                    <div class="right">
+                        <select class="con" name="question1" height="30">
+                            <option value="0">请选择密钥问题</option>
+                            <option value="5">你的生日是？</option>
+                            <option value="6">你的家乡是？</option>
+                            <option value="7">你的学校是？</option>
+                            <option value="8">你母亲的名字是？</option>
+                            <option value="9">你父亲的名字是？</option>
+                            <option value="10">你的学校是？</option>
+                            <option value="11">你喜欢的食物是？</option>
+                            <option value="12">你喜欢的颜色是？</option>
+                            <option value="13">你喜欢的动物是？</option>
+                            <option value="14">你最想去的地方是？</option>
+                            <option value="15">你印象最深刻的地方是？</option>
+                        </select>
+
+                        <div id="second" class="note"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="reset_detail">
+                    <div class="right"><input id="answer1" class="con" name="answer1" type="text" value="密钥答案"
+                                              onfocus="this.value = '';"
+                                              onblur="if (this.value == '') {this.value = '密保答案';}"/>
+
+                        <div id="third" class="note"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="button"><input id="button" name="next" type="submit" value="下一步"/></div>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+<!--//End-login-form-->
+</body>
+</html>

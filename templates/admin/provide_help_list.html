@@ -1,0 +1,428 @@
+{% extends "base.html" %}
+{% block title %}提供帮助列表{% end %}
+{% block content %}
+<div class="pace  pace-inactive">
+    <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+        <div class="pace-progress-inner"></div>
+    </div>
+    <div class="pace-activity"></div>
+</div>
+<div id="wrapper">
+    {% include 'admin_nav.html' %}
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            {% include 'header_nav.html' %}
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>排期列表</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/admin/home">主页</a>
+                    </li>
+
+                    <li>
+                        <strong>排期列表</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <!--<div class="row">-->
+                            <!--<div class="col-sm-3 m-b-xs">-->
+                            <!--<div data-toggle="buttons" class="btn-group">-->
+                            <!--<label class="btn btn-sm btn-white active">-->
+                            <!--<input type="radio" id="option1" name="options">天</label>-->
+                            <!--<label class="btn btn-sm btn-white">-->
+                            <!--<input type="radio" id="option2" name="options">周</label>-->
+                            <!--<label class="btn btn-sm btn-white">-->
+                            <!--<input type="radio" id="option3" name="options">月</label>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-9">-->
+                            <!--<div class="input-group">-->
+                            <!--<form action="" method="post" id="search">-->
+                            <!--{% module xsrf_form_html() %}-->
+                            <!--<input type="text" placeholder="查找排期,排期编号/用户名/会员编号" value="{{search}}"-->
+                            <!--name="search" class="input form-control">-->
+                            <!--<span class="input-group-btn">-->
+                            <!--<button type="submit" class="btn btn btn-primary"><i-->
+                            <!--class="fa fa-search"></i>-->
+                            <!--搜索-->
+                            <!--</button>-->
+                            <!--</span>-->
+                            <!--</form>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="row">
+                                <div class="col-sm-2"><label class="">排期时间</label></div>
+                                {%set days={"0":"今天","1":"昨天","2":"2天前","3":"3天前","4":"4天前","5":"5天前"} %}
+                                <div class="col-sm-5 m-b-xs">
+
+                                    {%for k,v in days.items() %}
+
+                                    <div data-toggle="buttons" class="btn-group help_days">
+                                        <label class="btn btn-sm btn-white {%if str(day)==k%}active{%end%}"
+                                               data-url="?day={{k}}">
+                                            <input type="radio" id="option1" name="options">{{v}}</label>
+                                    </div>
+                                    {%end%}
+                                </div>
+                                <form action="" method="post" id="search" class="col-sm-8">
+
+
+                                    {% module xsrf_form_html() %}
+                                    <div class="input-group col-sm-5" style="float: left">
+
+                                        <input type="text" placeholder="查找排期,排期编号/用户名/会员编号" value="{{search}}"
+                                               name="search" class="input form-control">
+
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" class="btn btn btn-primary"><i
+                                                class="fa fa-search"></i>
+                                            搜索
+                                        </button>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <style>
+                            th:first-child,
+                            .gradeX td:first-child {
+                                width: 20px;
+                                cursor: pointer;
+                            }
+
+                            th:first-child input,
+                            .gradeX td:first-child input {
+                                cursor: pointer;
+                            }
+                        </style>
+                            {%set provide_status={"waiting":"排单中","matching":"匹配中","matched":"已匹配","paid":"已打款","complete":"已完成"}%}
+                        <form action="javascript:;" method="post" name="login_form" id="login_form">
+                            {% module xsrf_form_html() %}
+                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="i-checks" id="userListCheck"/></th>
+                                    <th>排期编号</th>
+                                    <th>会员编号</th>
+                                    <th>会员姓名</th>
+                                    <th>申请金额</th>
+                                    <th>当前利息</th>
+                                    <th>上次结算</th>
+                                    <th>申请时间</th>
+                                    <th>状态</th>
+                                    <th>打款状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%for p in provide_help_list%}
+                                <tr class="gradeX">
+                                    <td><input type="checkbox" class="i-checks"></td>
+                                    <td class="userListId">{{p['number']}}</td>
+                                    <td>{{p['uid']}}</td>
+                                    <th>{{p.get('username')}}</th>
+                                    <td>{{p.get('jine')}}</td>
+                                    <td class="gain">{{p.get('gain',0)}}</td>
+                                    <td>{{p.get('check_day','')}}</td>
+                                    <td class="time" data-handle-id="{{p['number']}}" contenteditable="true">
+                                        {{p.get('time')}}
+                                    </td>
+                                    <td>{{provide_status.get(p.get('status'))}}</td>
+                                    <td> {%if p.get('status') =='paid' %}
+                                        <span style="color:red">已打款</span>
+                                        {%elif p.get('status')=='complete'%}
+                                        已打款
+                                        {%else%}
+                                        未打款
+                                        {%end%}
+                                    </td>
+                                    <td>
+                                        {%if not p.get('pay_match')%}
+                                        <a href="/admin/add_pay_match?id={{p.get('number')}}">人工匹配 </a>
+                                            {%else%}
+                                            已匹配
+                                       {%end%}
+
+                                    </td>
+                                </tr>
+                                {% end %}
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="dataTables_info" id="DataTables_Table_0_info" role="alert"
+                                         aria-live="polite" aria-relevant="all">第{{current_page}}页/总共{{pages}}页
+                                        总共{{counts}}条 每页20条
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="dataTables_paginate paging_simple_numbers"
+                                         id="DataTables_Table_0_paginate">
+                                        <ul class="pagination">
+                                            <!--<li class="paginate_button previous disabled"-->
+                                            <!--aria-controls="DataTables_Table_0" tabindex="0"-->
+                                            <!--id="DataTables_Table_0_previous"><a href="#">上一页</a></li>-->
+                                            {% if pages>1 %}
+                                            {% for p in range(1,pages+1) %}
+                                            <li class="paginate_button {%if current_page==p%}active{%end%}"
+                                                aria-controls="DataTables_Table_0"
+                                                tabindex="0"><a href="?day={{day}}&page={{p}}">{{ p }}</a></li>
+                                            {% end %}
+                                            {% end %}
+
+
+                                            <!--<li class="paginate_button next" aria-controls="DataTables_Table_0"-->
+                                            <!--tabindex="0" id="DataTables_Table_0_next"><a href="#">下一页</a></li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="button" class="btn btn-w-m btn-primary delete1" value="删除选中"
+                                   data-toggle="modal" data-target="#myModal5" disabled/>
+                            <input type="button" class="btn btn-w-m btn-primary cancel" value="取消排期"
+                                   data-toggle="modal" data-target="#myModal6" disabled/>
+
+                            <div class="col-sm-7" style="float:right;">
+
+                                <input type="text" class="form-control col-sm-3" value="" style="width:120px"
+                                       placeholder="输入匹配金额" name="match_money" id="match_money"/>
+                                <input type="text" class="form-control col-sm-2" value="" style="width:120px"
+                                       placeholder="输入会员编号" name="pay_uid" id="pay_uid"/>
+                                <input type="button" class="btn col-sm-1 btn-w-m btn-primary match1" value="确认匹配"
+                                       data-toggle="modal" data-target="#myModal7" disabled/>
+                            </div>
+                            <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span><span
+                                                    class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">删除排队</h4>
+                                            {#
+                                            <small class="font-bold">删除排队</small>
+                                            #}
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="delete1Content"></p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white deleteUserId"
+                                                    data-dismiss="modal">确定
+                                            </button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span><span
+                                                    class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">取消排期</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="cancelContent"></p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white cancelhelp"
+                                                    data-dismiss="modal">确定
+                                            </button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal inmodal fade" id="myModal7" tabindex="-1" role="dialog"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                    aria-hidden="true">&times;</span><span
+                                                    class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">确认匹配</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="matchContent"></p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white matchpay"
+                                                    data-dismiss="modal">确定
+                                            </button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <script>
+
+
+                            $(function () {
+
+                                var json1 = _alert('.btn.btn-w-m.delete1', '.modal-body .delete1Content', '您要删除的排期编号为');
+                                var json2 = _alert('.btn.btn-w-m.cancel', '.modal-body .cancelContent', '您要取消的排期编号为');
+                                var json3 = _alert('.btn.btn-w-m.match1', '.modal-body .matchContent', '您要匹配的排期编号为');
+
+                                var list_to_handle;
+
+                                $('tr.gradeX input[type="checkbox"],#userListCheck').click(function () {
+                                    list_to_handle = listNubmer();
+                                    console.log(listNubmer());
+                                });
+
+                                function getCookie(name) {
+                                    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+                                    return r ? r[1] : undefined;
+                                }
+
+                                $.ajaxSetup({
+                                    beforeSend: function (xhr, settings) {
+                                        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+                                            xhr.setRequestHeader("X-XSRFToken", getCookie("_xsrf"));
+                                        }
+                                    }
+                                });
+
+                                $('.btn.btn-white.deleteUserId').click(function () {
+                                    $.ajax({
+                                        url: '/admin/provide_help_list',
+                                        type: 'delete',
+                                        data: list_to_handle,
+                                        success: function (data) {
+                                            console.log(data);
+                                        },
+                                        error: function () {
+                                            alert('error');
+                                        }
+                                    });
+                                });
+
+                                $('.btn.btn-white.cancelhelp').click(function () {
+                                    $.ajax({
+                                        url: '/admin/cancel_provide_help',
+                                        type: 'put',
+                                        data: list_to_handle,
+                                        success: function (data) {
+                                            console.log(data);
+                                        },
+                                        error: function () {
+                                            alert('error');
+                                        }
+                                    });
+                                });
+                                $('.btn.btn-white.matchpay').click(function () {
+                                    var much_money = $("#match_money").val();
+                                    //alert (much_money);
+                                    var pay_uid = $("#pay_uid").val();
+                                    $.ajax({
+                                        url: '/admin/fast_pay_match?money=' + much_money + "&pay_uid=" + pay_uid,
+                                        type: 'post',
+                                        data: list_to_handle,
+                                        success: function (data) {
+                                            var j =jQuery.parseJSON(data);
+                                            if (j.status=='error'){
+                                                alert (j.msg);
+                                                location.reload()
+                                            }
+                                        },
+                                        error: function () {
+                                            alert('error');
+                                        }
+                                    });
+                                });
+
+                                $(".help_days label").click(function () {
+                                    var data_url = $(this).data("url");
+                                    window.location = data_url;
+                                })
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var focus_date;
+    $(".time").focus(function () {
+        focus_date = $(this).text()
+    })
+    $(".time").blur(function () {
+
+        if ($(this).text() != focus_date) {
+            var data = {};
+            var that = $(this);
+            data['number'] = $(this).data("handle-id");
+            data['date'] = that.text();
+            if (confirm("确认修改该排期日期吗？")) {
+                $.ajax({
+                    url: '/admin/update_provide_help_date',
+                    type: 'post',
+                    data: data,
+                    success: function (data) {
+                        var j = jQuery.parseJSON(data);
+                        if (j.status == 'ok') {
+                            that.parents("tr").find(".gain").text(j.gain);
+                            alert("修改成功")
+                        }
+                        else {
+                            alert(j.error);
+                            that.text(focus_date);
+                        }
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                });
+            }
+            else {
+                that.text(focus_date);
+            }
+        }
+    })
+</script>
+
+{% end %}

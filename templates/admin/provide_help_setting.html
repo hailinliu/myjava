@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}规则设置{% end %}
+{% block content %}
+<script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/kindeditor-min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/lang/zh_CN.js') }}"></script>
+<script type="text/javascript">
+    KindEditor.ready(function (K) {
+        window.editor = K.create('#desc', {
+            allowFileManager: true,
+            width: '700px',
+            height: '200px',
+            resizeType: 0,       //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
+            afterFocus: function () {
+            },
+            afterBlur: function () {
+                if (editor.html() == '') {
+                    $('p.desc_tip').html('规则不能为空！');
+                } else {
+                    $('p.textarea').html('');
+                }
+            }
+        });
+    });
+</script>
+<div class="pace  pace-inactive">
+    <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+        <div class="pace-progress-inner"></div>
+    </div>
+    <div class="pace-activity"></div>
+</div>
+<div id="wrapper">
+    {% include 'admin_nav.html' %}
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            {% include 'header_nav.html' %}
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>规则编辑</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/admin/home">主页</a>
+                    </li>
+                    <li>
+                        <a href="/admin/news">规则设置</a>
+                    </li>
+
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>
+
+                            </h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown"
+                                   href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <style>
+                                th:first-child,
+                                .gradeX td:first-child {
+                                    width: 20px;
+                                    cursor: pointer;
+                                }
+
+                                th:first-child input,
+                                .gradeX td:first-child input {
+                                    cursor: pointer;
+                                }
+                            </style>
+
+                            <form method="post" id="rule_setting_form" class="form-horizontal">
+                                {% module xsrf_form_html() %}
+                                <input name="id" type="hidden" value="">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">排期金额设置</label>
+
+                                    <div class="col-sm-2">
+                                        <input class="form-control" placeholder="最小金额(默认2000)" name="min" value="{{info.get('min','')}}"
+                                               id="min">
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <input class="form-control" placeholder="最大金额(默认5000)" name="max" value="{{info.get('max','')}}"
+                                               id="max">
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">提示</label>
+
+                                    <div class="col-sm-8">
+                                        <input class="form-control" placeholder="" name="tip" value="{{info.get('tip','')}}" id="tip">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">金额基数(单位)</label>
+
+                                    <div class="col-sm-2">
+                                        <input class="form-control" placeholder="500" name="base" value="{{info.get('base',500)}}" id="base">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">排期利息(%)</label>
+
+                                    <div class="col-sm-2">
+                                        <input class="form-control" placeholder="5%" name="percent" value="{{info.get('percent','')}}" id="percent">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">排期时间(天)</label>
+
+                                    <div class="col-sm-2">
+                                        <input class="form-control" placeholder="最少天数" name="least_days" value="{{info.get('least_days','')}}"
+                                               id="least_days">
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <input class="form-control" placeholder="最多天数" name="most_days" value="{{info.get('most_days','')}}"
+                                               id="most_days">
+                                    </div>
+
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">规则描述：</label>
+
+                                    <div class="col-sm-9">
+                                         <textarea id="desc" style="width:700px;height:20px;" name="desc"
+                                                   class="form-control">
+                                            {{ info.get('desc','') }}
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary " type="submit">保存内容</button>
+                                        <!--<button class="btn btn-white" type="reset">重置</button>-->
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% end %}

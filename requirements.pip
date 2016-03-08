@@ -1,0 +1,10 @@
+Tornado
+pymango
+passlib==1.4.0
+# mongoengine
+motor
+pillow
+ujson
+redis
+fabric
+pip install tornado-celery
