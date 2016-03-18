@@ -93,6 +93,7 @@ class Application(tornado.web.Application):
             (r"/admin/update_money", AdminUserUpdateMoney),
             (r"/admin/update_level", AdminUserUpdateLevel),
             (r"/admin/update_jinbi", AdminUserUpdateJinbi),
+            (r"/admin/trade_record", AdminUserTradeRecord),
             (r"/admin/adduser", AddUser),
             (r"/admin/petlist", AdminPetList),
             (r"/admin/addpet", AdminPetEdit),

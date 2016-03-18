@@ -403,7 +403,18 @@ class AdminUserUpdateJinbi(BaseHandler):
         else:
             return self.write(json.dumps({"status": "error", "error": "用户不存在"}))
 
+class AdminUserTradeRecord(BaseHandler):
+    """用户交易记录
+    :type 充值  转账
+    """
 
+    @BaseHandler.admin_authed
+    def get(self):
+        uid = self.get_argument("uid", None)
+        user = self.db.user.find_one({"uid": uid})
+        trade_records = self.db.trade_log.find({"uid": uid})
+        self.render('admin/user_trade_record.html', admin_nav=3, user=user, trade_records=trade_records,
+                    myuser=self.user)
 class AdminUserResetPwd(BaseHandler):
     """修改密码"""
 
