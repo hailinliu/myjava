@@ -16,8 +16,8 @@ from db import database
 # env.hosts = ['root@49.213.9.157:22']
 # env.password = 'TESTWSShc123'
 
-env.hosts = ['root@120.25.145.142:22']
-env.password = 'TESTWSShc123'
+env.hosts = ['root@47.89.47.34:22']
+env.password = 'Weikefarm654321'
 
 
 def test():
@@ -81,7 +81,7 @@ def back_deploy():
     """前后端代码部署"""
     # TODO
     # 部署
-    with cd('/webapps/wss'):
+    with cd('/webapps/weikefarm'):
         run('git reset --hard HEAD')
         run('git pull -f wss master')
         run('sudo supervisorctl restart wss')

@@ -51,7 +51,7 @@ class Application(tornado.web.Application):
             (r"/mynongchang", MyFarm),
             (r"/nongchangsd", FarmShop),
             (r"/shop", ProductList),
-            (r"/draw", ProductList),
+            (r"/draw", Draw),
             (r"/account/tjjg", TuijianJg),
             (r"/account/zhitui", Zhitui),
             (r"/account/jihuo", Jihuo),
