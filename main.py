@@ -141,7 +141,7 @@ class Application(tornado.web.Application):
             reward_type={"1": "推荐奖", "2": "团队奖"},
             notice=Notice(),
 
-            weburl="http://127.0.0.1:8000",
+            # weburl="http://127.0.0.1:8000",
             develop_env="true",
             session_secret="3cdcb1f00803b6e78ab50b466a40b9977db396840c28307f428b25e2277f1bcc",
             session_timeout=1800,
@@ -166,6 +166,7 @@ if __name__ == "__main__":
     # app.sentry_client = AsyncSentryClient(
     #     'http://9998b9254fa94d5ab6e7a1ee39a0aaa6:492a5997987c42b8be1c44541b1d2a93@120.25.105.117:9000/1')
     # print options.develop
+    print options.develop
     if not options.develop:
         from config import production
 
