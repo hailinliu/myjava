@@ -44,7 +44,7 @@
                             {%if myuser.get('level')==0%}
                             <span class="label label-default">VIP</span>
                             {%else%}
-                            <span class="label label-danger">VIP{{myuser.get('level')}}</span>
+                            <span class="label label-danger">VIP{{myuser.get('level',0)}}</span>
 
                             {%end%}
                         </td>

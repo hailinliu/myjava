@@ -5,5 +5,5 @@ from utils.Notice import Notice
 config = dict(
     DEBUG=False,
 
-    weburl="http://www.wknc2.com"
+    weburl="http://www.weikefarm.com"
 )

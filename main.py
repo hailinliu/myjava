@@ -29,7 +29,6 @@ define("develop", default=True, help="develop environment", type=bool)
         db  : weikefarm (mongodb)
         session : redis
         verify_code : 校验码验证--pillow
-        msg_code  : 短信验证码--云片网api  http://www.yunpian.com
 '''
 
 
@@ -184,7 +183,3 @@ if __name__ == "__main__":
     http_server.listen(options.port)
     print "visit at", "http://127.0.0.1:%s" % options.port
     tornado.ioloop.IOLoop.instance().start()
-    # 生成20个游客帐号
-    # r = _connect_redis()
-    # for i in range(1, 5):
-    #     r.set("youke"+str(1), 1)
