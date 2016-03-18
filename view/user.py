@@ -96,7 +96,9 @@ class UserHomeHandler(BaseHandler):
              {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
         if len(records_result) > 0:
             total_consume = records_result[0]['sum']
-        self.render("user/home.html", myuser=self.user, total_consume=total_consume, account_tab=1)
+        news=self.db.news.find().limit(5)
+        
+        self.render("user/home.html", myuser=self.user, total_consume=total_consume,news=news, account_tab=1)
 
 
 class MyFarm(BaseHandler):

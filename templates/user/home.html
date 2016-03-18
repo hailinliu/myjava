@@ -73,7 +73,7 @@
 
 
             <div class="panel panel-default">
-                <div class="panel-heading">最新系统公告 <a href="/users/index.asp?go=gg_list">查看全部公告</a></div>
+                <div class="panel-heading">最新系统公告 <a href="/news_list">查看全部公告</a></div>
                 <table class="table table-striped table-hover">
                     <tbody>
                     <tr>
@@ -81,15 +81,13 @@
                         <td>发布时间</td>
                     </tr>
 
+                    {%for n in news%}
                     <tr>
-                        <td>[系统公告] <a href="/users/index.asp?go=gg_neirong&amp;id=28">通知（会员必看）</a></td>
-                        <td>2016/2/17 10:47:21</td>
+                        <td>[系统公告] <a href="/news?id={{n.get('id')}}">{{n.get('title')}}</a></td>
+                        <td>{{n.get('time')}}</td>
                     </tr>
 
-                    <tr>
-                        <td>[系统公告] <a href="/users/index.asp?go=gg_neirong&amp;id=27">重要通知（会员必看）</a></td>
-                        <td>2016/2/14 8:52:47</td>
-                    </tr>
+                   {%end%}
                     </tbody>
                 </table>
             </div>

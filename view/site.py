@@ -211,7 +211,7 @@ class NoticeDetail(BaseHandler):
             news = self.db.news.find_one({"id": id})
         else:
             news = {}
-        self.render("site/notice_detail.html", news=news, myuser=self.user)
+        self.render("site/notice_detail.html", news=news, account_tab=1,myuser=self.user)
 
 
 class NoticeList(BaseHandler):
@@ -219,13 +219,7 @@ class NoticeList(BaseHandler):
 
     def get(self):
         news = self.db.news.find()
-        cookie_safe_pwd = self.get_secure_cookie("safe_pwd")
-        print cookie_safe_pwd
-        if not cookie_safe_pwd or cookie_safe_pwd != self.user.get("safe_pwd"):
-            if self.request.method in ("GET", "HEAD"):
-                url = '/account/safe_pwd_check' + "?" + urlencode(dict(next=self.request.uri))
-                return self.redirect(url)
-        self.render("site/notice_list.html", news=news, myuser=self.user)
+        self.render("site/notice_list.html", news=news, account_tab=1,myuser=self.user)
 
 
 class FarmShop(BaseHandler):
