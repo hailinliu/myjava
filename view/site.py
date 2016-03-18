@@ -109,7 +109,7 @@ class Register(BaseHandler):
         exist_user = self.db.user.find({'uid': phone})
         inviter = None
         if None in [pwd, phone, safe_pwd]:
-           return self.render("error.html", myuser=self.user, r=rName, error=u"请完善注册信息")
+            return self.render("error.html", myuser=self.user, r=rName, error=u"请完善注册信息")
         exist_phone = self.db.user.find_one({"phone": phone})
         if exist_phone:
             return self.render("error.html", myuser=self.user, r=rName, error=u"该手机号码已注册")
@@ -139,7 +139,7 @@ class Register(BaseHandler):
                 'admin': rName,
                 'money': 0,
                 'level': 0,
-                'jinbi':0,
+                'jinbi': 0,
                 'is_active': False,
             }
             logging.info(('register user %s %s' % (user['uid'], user['pwd'])))
@@ -174,6 +174,8 @@ class Draw(BaseHandler):
     @BaseHandler.authenticated
     def get(self):
         self.render('site/choujiang.html')
+
+
 class ForgetPwd(BaseHandler):
     """忘记密码"""
 
@@ -240,7 +242,7 @@ class FarmShop(BaseHandler):
         items = self.get_argument("items")
         items = eval(items)
         order_items = []
-        # print items
+        print items
         now_time = time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(time.time()))
         for i in items:
             pet = self.db.pet.find_one({"id": i['id']})
@@ -254,6 +256,10 @@ class FarmShop(BaseHandler):
                 "pid": i['id'],
                 "count": count,
                 "cost": item_cost})
+        if total_cost <= self.user.get("jinbi"):
+            self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
+        else:
+            return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"金币余额不足")
 
         self.db.order.insert(
             {"item": order_items, "uid": self.user.get('uid'), "cost": total_cost, "time": now_time})
@@ -270,12 +276,9 @@ class FarmShop(BaseHandler):
 
         self.db.jinbi.insert(
             {"uid": self.user.get("uid"), "type": "buy_pet", "id": consume_id, "time": now_time, "money": total_cost})
-        if total_cost <= self.user.get("jinbi"):
-            self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
+
         print total_cost
         return self.redirect('/nongchangsd')
-
-
 
 
 class error_403(BaseHandler):
@@ -391,8 +394,6 @@ class UploadImageFile(BaseHandler):
                 self.db.match_help.update({"order_id": order_id}, {"$set": {"pay_image": filename}})
 
             self.write(json.dumps({"status": 'ok', "msg": "", "base_url": "", "name": filename}))
-
-
 
 
 class UploadImage(BaseHandler):

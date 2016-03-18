@@ -475,19 +475,29 @@ class AdminPetEdit(BaseHandler):
 
     @BaseHandler.admin_authed
     def post(self):
-        info = self.request.arguments
-        for key, value in info.items():
-            info[key] = value[0]
-            print key, value[0]
-        del info['_xsrf']
-        info = dict(info)
+        try:
+            pet_id = int(self.get_argument("id", 0))
+            name = self.get_argument("name", "")
+            level = int(self.get_argument("level", 0))
+            price = int(self.get_argument("price", 0))
+            day_jinbi = int(self.get_argument("day_jinbi", 0))
+            life = int(self.get_argument("life", 0))
+            pet_image = self.get_argument("pet_image", "")
+        except:
+            return self.render("ok.html", myuser=self.user, url="/admin/pet_edit", tip=u"请输入合法的信息")
+        info = {
+            "id":pet_id,
+            "name": name,
+            "pet_image": pet_image,
+            "level": level,
+            "price": price,
+            "day_jinbi": day_jinbi,
+            "life": life
+        }
 
-        news_id = int(info['id'])
 
-        del info['id']
-
-        if news_id:
-            self.db.pet.update({"id": news_id}, {"$set": info})
+        if pet_id:
+            self.db.pet.update({"id": pet_id}, {"$set": info})
         else:
             # id自增1
             last = self.db.pet.find().sort("id", pymongo.DESCENDING).limit(1)
@@ -633,12 +643,12 @@ class AddressOrderShip(BaseHandler):
 
         order = self.db.product_order.find_one({"id": order_id})
         if not order:
-            order={}
-        self.render("admin/order_shipped.html", myuser=self.user, admin_nav=6, order_id=order_id,order=order)
+            order = {}
+        self.render("admin/order_shipped.html", myuser=self.user, admin_nav=6, order_id=order_id, order=order)
 
     @BaseHandler.admin_authed
     def post(self):
         order_id = int(self.get_argument("order_id", 0))
         remark = self.get_argument("remark", '')
-        self.db.product_order.update({"id": order_id}, {"$set": {"status": "shipped","remark":remark }})
+        self.db.product_order.update({"id": order_id}, {"$set": {"status": "shipped", "remark": remark}})
         self.redirect('/admin/orders')

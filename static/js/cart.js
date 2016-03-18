@@ -5,7 +5,8 @@ $(function () {
         var target_class = that.attr("class").split(" ")[1];
         var val;
         var tr = that.parents(".item");
-        var price = parseInt($("#j_zongjia").text());
+        var total_price = 0;
+         var select_item = 0;
 
         var unit_price = parseInt(tr.find(".price").text());
         if (target_class == 'jian') {
@@ -17,35 +18,46 @@ $(function () {
                 val--;
             }
             that.next().val(val);
-            if (price - unit_price > 0) {
-                price -= unit_price;
-            }
+
 
         }
         else {
             tr.find(".j_jian").removeAttr("disabled");
             val = $(this).prev().val();
             val++;
-            that.parent().children('#j_shuliang').val(val);
+            that.parent().children('.j_shuliang').val(val);
 
-            price += unit_price;
+
 
         }
         //小计
         tr.find("#j_danjia").text(unit_price * val);
+        $(".long_table").find(".item").each(function () {
+            var count = parseInt($(this).find(".j_shuliang").val());
+            var price = parseInt($(this).find(".price").text());
+            if (count != 0) {
+                select_item += 1;
+                total_price += price * count;
+
+            }
+        })
+        $("#j_zongshu").text(select_item);
         // 更新商品总价
-        $("#j_zongjia").text(price.toFixed(2).toString());
+        $("#j_zongjia").text(total_price);
     });
 
     $("#goumaigo").click(function () {
         var data = [];
-        var select_item=0;
+        var select_item = 0;
+        var total_price = 0;
         $(".long_table").find(".item").each(function () {
             var id = $(this).data("id");
 
-            var count = parseInt($(this).find("#j_shuliang").val());
+            var count = parseInt($(this).find(".j_shuliang").val());
+            var price = parseInt($(this).find(".price").val());
             if (count != 0) {
-                select_item += 1
+                total_price += price * count;
+                select_item += 1;
                 data.push({
                     'id': id,
                     'count': count
@@ -53,11 +65,12 @@ $(function () {
             }
         })
         if (select_item == 0) {
-            alert ("请至少选择一个商品再提交")
+            alert("请至少选择一个商品再提交")
             return false
         }
-        data= (JSON.stringify(data));
+        data = (JSON.stringify(data));
         $("#items").val(data);
+        $("#j_zongshu").val(select_item);
         $("form").submit();
 
     })

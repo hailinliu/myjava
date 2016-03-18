@@ -2,6 +2,7 @@
 {% block page_title %}我的农场{% end %}
 
 {% block content %}
+<script src="/static/js/cart.js"></script>
 <div class="countgo pull-left">
     <div class="zt">
         <!--MAN -->
@@ -59,7 +60,7 @@
                                 <span class="input-group-btn jian"><button class="btn btn-default j_jian" type="button"
                                                                            disabled="disabled"><span
                                         class="glyphicon glyphicon-minus " aria-hidden="true"></span></button></span>
-                                    <input type="text" class="form-control" value="0" maxlength="3" id="j_shuliang">
+                                    <input type="text" class="form-control j_shuliang" value="0" maxlength="3" >
                                 <span class="input-group-btn jia"><button class="btn btn-default j_jia"
                                                                           type="button"><span
                                         class="glyphicon glyphicon-plus " aria-hidden="true"></span></button></span>
@@ -105,5 +106,5 @@
         <!--MAN End-->
     </div>
 </div>
-<script src="/static/js/cart.js"></script>
+
 {%end%}

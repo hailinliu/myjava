@@ -90,13 +90,13 @@ class UserHomeHandler(BaseHandler):
     @BaseHandler.authenticated
     def get(self):
         type_list = ["in", "pet_produce", "qianggou"]
-        total_consume=0
+        total_consume = 0
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
              {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
         if len(records_result) > 0:
             total_consume = records_result[0]['sum']
-        self.render("user/home.html", myuser=self.user, total_consume=total_consume,account_tab=1)
+        self.render("user/home.html", myuser=self.user, total_consume=total_consume, account_tab=1)
 
 
 class MyFarm(BaseHandler):
@@ -111,8 +111,21 @@ class MyFarm(BaseHandler):
             record = self.db.pet.find_one({"id": pid})
             if not record:
                 return {}
+            else:
+                return record
 
-        self.render("farm/mynongchang.html", myuser=self.user, my_pets=my_pets, pet_info=pet_info, account_tab=2)
+        # 计算宠物当前存活天数
+        def cal_life_day(buy_time):
+            now_time=datetime.datetime.now()
+            b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
+            days= (now_time-b).days
+            return days
+
+        def check_progress(a, b):
+            return round(a / b, 2) * 100
+
+        self.render("farm/mynongchang.html", myuser=self.user, my_pets=my_pets, cal_life_day=cal_life_day,
+                    check_progress=check_progress, pet_info=pet_info, account_tab=2)
 
 
 def this_year():

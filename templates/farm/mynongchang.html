@@ -31,28 +31,42 @@
 
                     <div class="row">
                         {%for p in my_pets%}
-                        {%set pet=pet_info(p.get('pid'))%}
+                        {%set pet=pet_info(p['pid'])%}
                         {%if not pet%}
                         {%continue%}
+                        {%end%}
+                        {%set current_day=cal_life_day(p.get('time'))%}
+                        {%set product_jinbi=cal_life_day(p.get('time')) * pet.get('day_jinbi')%}
+                        {%set waiting_jinbi=(int(pet.get('life'))-cal_life_day(p.get('time')))* pet.get('day_jinbi')%}
+                         {%if current_day< pet.get('life')%}
+                        {%set progress=check_progress(current_day,pet.get('life'))  %}
+                        {%else%}
+                         {%set progress=100 %}
                         {%end%}
                         <div class="col-sm-6 col-md-3">
                             <div class="thumbnail">
                                 <!--<img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif">-->
-                                <img src="/static/media/pet_img/{{pet.get('image')}}">
+                                <img src="/static/images/{{pet.get('image')}}">
 
                                 <div class="caption">
-                                    <h3>{{pet.get('name')}} <span class="badge">10</span></h3>
+                                    <h3>{{pet.get('name')}} <span class="badge">{{pet.get('day_jinbi')}}</span></h3>
 
                                     <p>
                                     </p>
 
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-danger" role="progressbar"
-                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 83%;">
-                                            5天
+                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: {{progress}}%;">
+                                            {{current_day}}天
                                         </div>
                                     </div>
-                                    <p>已产金币: <strong>100 </strong>/待产金币: <strong>20 </strong></p>
+                                    <p>已产金币: <strong>{{product_jinbi}} </strong>/
+                                        {%if current_day< pet.get('life')%}
+                                        待产金币: <strong>{{waiting_jinbi}} </strong>
+                                        {%else%}
+                                        已完成生产
+                                        {%end%}
+                                    </p>
 
                                     <p>购买日期:{{p.get('time')}}</p>
 
