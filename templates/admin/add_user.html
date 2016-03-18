@@ -86,15 +86,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">编号</label>
+                                    <label class="col-sm-2 control-label">用户编号</label>
 
                                     <div class="col-sm-4">
-                                        <input class="form-control" placeholder="" name="UserID"
+                                        <input class="form-control" placeholder="即手机号" name="UserID"
                                                value="" id="UserID">
                                     </div>
-                                    <div class="col-sm-2">
-                                        <a href="javascript:" onclick="GetNickName()">随机编号</a>
-                                    </div>
+
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">手机号</label>
@@ -103,9 +101,35 @@
                                         <input class="form-control" placeholder="手机号" name="phone"
                                                onkeyup="usertitle()" maxlength="11" value="" id="phone">
                                     </div>
-                                    <div class="col-sm-2">
-                                        <a href="javascript:" id="check_phone">检测</a>
+                                    <!--<div class="col-sm-2">-->
+                                        <!--<a href="javascript:" id="check_phone">检测</a>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">级别</label>
+
+                                    <div class="col-sm-4">
+                                        <input class="form-control" placeholder="用户VIP级别，默认为0" name="level"
+                                               value="" id="level">
                                     </div>
+
+                                </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">激活币</label>
+
+                                    <div class="col-sm-4">
+                                        <input class="form-control"  name="money"
+                                               value="" id="money">
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">金币</label>
+
+                                    <div class="col-sm-4">
+                                        <input class="form-control" placeholder="金币" name="jinbi"
+                                               value="" id="jinbi">
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">密码</label>
@@ -278,7 +302,7 @@
         });
     })
     $(document).ready(function () {
-        GetNickName()
+      //  GetNickName()
     })
     function GetNickName() {
         var rnd = "";

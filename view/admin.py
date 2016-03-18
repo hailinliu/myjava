@@ -314,6 +314,9 @@ class AddUser(BaseHandler):
     @BaseHandler.admin_authed
     def post(self):
         UserID = self.get_argument('UserID', None)
+        level = int(self.get_argument('level', 0))
+        jinbi = int(self.get_argument('jinbi', 0))
+        money = int(self.get_argument('money', 0))
         phone = self.get_argument('phone', None)
         username = self.get_argument("username", None)
         pwd = self.get_argument("pwd", None)
@@ -327,13 +330,16 @@ class AddUser(BaseHandler):
             user = {
                 'uid': UserID,
                 'pwd': pwd,
-                'username': username,
-                'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                 'phone': phone,
+                'username': username,
+                'level': level,
+                'jinbi': jinbi,
+                'money': money,
+                'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                 'safe_pwd': pwd,
                 'is_check': False,
+                'is_active': True,
                 'reward': 0,
-                'money': 0,
             }
             # print 'user%s'%user
             self.logging.info(('register user %s %s' % (user['uid'], user['pwd'])))
@@ -403,6 +409,7 @@ class AdminUserUpdateJinbi(BaseHandler):
         else:
             return self.write(json.dumps({"status": "error", "error": "用户不存在"}))
 
+
 class AdminUserTradeRecord(BaseHandler):
     """用户交易记录
     :type 充值  转账
@@ -415,6 +422,8 @@ class AdminUserTradeRecord(BaseHandler):
         trade_records = self.db.trade_log.find({"uid": uid})
         self.render('admin/user_trade_record.html', admin_nav=3, user=user, trade_records=trade_records,
                     myuser=self.user)
+
+
 class AdminUserResetPwd(BaseHandler):
     """修改密码"""
 
@@ -458,7 +467,7 @@ class AdminUserFrozen(BaseHandler):
 
     @BaseHandler.admin_authed
     def get(self):
-        uid = self.get_argument("uid", "")
+        uid = int(self.get_argument("uid", 0))
         type = self.get_argument("type", "")
         # print uid
         info = self.db.user.find_one({"uid": uid})
@@ -497,7 +506,7 @@ class AdminPetEdit(BaseHandler):
         except:
             return self.render("ok.html", myuser=self.user, url="/admin/pet_edit", tip=u"请输入合法的信息")
         info = {
-            "id":pet_id,
+            "id": pet_id,
             "name": name,
             "pet_image": pet_image,
             "level": level,
@@ -505,7 +514,6 @@ class AdminPetEdit(BaseHandler):
             "day_jinbi": day_jinbi,
             "life": life
         }
-
 
         if pet_id:
             self.db.pet.update({"id": pet_id}, {"$set": info})

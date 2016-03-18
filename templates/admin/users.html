@@ -88,7 +88,7 @@
                                         <th>用户名</th>
                                         <th>手机号</th>
                                         <th>上级UID</th>
-                                        <!--<th>状态</th>-->
+                                        <th>状态</th>
                                         <th>级别</th>
                                         <th style="text-align: center" colspan="2">激活币</th>
                                         <th>金币</th>
@@ -110,13 +110,13 @@
                                         <td>{{ u.get('username','无') }}</td>
                                         <th>{{u.get('phone','无')}}</th>
                                         <th>{{u.get('admin','无')}}</th>
-                                        <!--<td>-->
-                                        <!--{%if u.get('is_check')%}-->
-                                        <!--已激活-->
-                                        <!--{%else%}-->
-                                        <!--未激活-->
-                                        <!--{%end%}-->
-                                        <!--</td>-->
+                                        <td>
+                                        {%if u.get('is_active')%}
+                                        已激活
+                                        {%else%}
+                                        未激活
+                                        {%end%}
+                                        </td>
                                         <td contenteditable="true" class="level_td" data-handle-id="{{u['uid']}}">
                                             {{u.get('level',0)}}
                                         </td>
@@ -137,8 +137,7 @@
                                             <a href="/admin/recharge?uid={{u.get('uid')}}">充值</a>
 
                                             <a href="/admin/reset_pwd?uid={{u.get('uid')}}">修改密码</a>
-                                            <a href="javascript:;" data-uid="{{u.get('uid')}}"
-                                               class="reset_pwd_protect">重置密保</a>
+
                                             {%if u.get('frozen') %}
                                             <a href="javascript:;" data-uid="{{u.get('uid')}}"
                                                class="unfrozen_user">解冻</a>
