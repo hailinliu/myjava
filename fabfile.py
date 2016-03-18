@@ -57,24 +57,24 @@ def test_deploy():
     # TODO
     with cd('/webapps/wss_test'):
         run('git reset --hard HEAD')
-        run('git pull -f wss wss_test')
-        run('sudo supervisorctl restart wss_test')
+        run('git pull -f farm master')
+        run('sudo supervisorctl restart farm')
 
 
 def restart_web():
     """重启web进程"""
     # TODO
     with cd('/webapps/kedou'):
-        run('sudo supervisorctl stop wss_test')
-        run('sudo supervisorctl restart wss')
+        run('sudo supervisorctl stop farm')
+        run('sudo supervisorctl restart farm')
 
 
 def front_deploy():
     """前端代码部署"""
     # TODO
     with cd('/webapps/kedou'):
-        run('sudo supervisorctl stop wss_test')
-        run('sudo supervisorctl restart wss')
+        run('sudo supervisorctl stop farm')
+        run('sudo supervisorctl restart farm')
 
 
 def back_deploy():
@@ -83,8 +83,8 @@ def back_deploy():
     # 部署
     with cd('/webapps/weikefarm'):
         run('git reset --hard HEAD')
-        run('git pull -f wss master')
-        run('sudo supervisorctl restart wss')
+        run('git pull -f farm master')
+        run('sudo supervisorctl restart farm')
 
 
 def back_deploy2():

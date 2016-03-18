@@ -106,6 +106,8 @@ def create_admin():
                 "pwd": pwd,
                 "phone":"18672196610",
                 "safe_pwd": pwd,
+                'jinbi':10000,
+                'money':100000,
                 "role": "superadmin",
                 'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
             }
