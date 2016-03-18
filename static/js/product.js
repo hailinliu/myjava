@@ -32,7 +32,7 @@ $(function () {
         $(".long_table").find(".item").each(function () {
             var count = parseInt($(this).find(".j_shuliang").val());
             var price = parseInt($(this).find(".price").text());
-            if (count != 0) {
+            if (count != 0 && count) {
                 select_item += 1;
                 total_price += price * count;
 
