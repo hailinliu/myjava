@@ -13,7 +13,7 @@
             </div>
             <div>
                 <ol class="breadcrumb">
-                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
                     </li>
                     <li><a href="#">交易管理</a></li>
                     <li class="active">金币转账</li>
@@ -27,34 +27,34 @@
 
                 <div class="panel-body">
                     <!--主-->
-                    <form class="form-horizontal">
-
+                    <form class="form-horizontal" action="" method="post">
+                        {% module xsrf_form_html() %}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-      <span style="color:#F00">
+                              <span style="color:#F00">
+                            您好! <strong></strong> ({{myuser.get('uid')}}). 您的可转出金币为:<span id="mejihuobi">{{myuser.get('jinbi')}}</span>
 
 
-  您好! <strong></strong> (18645586611). 您的可转出金币为:<span id="mejihuobi">246</span>
-
-
-      </span>
+                              </span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="x1" class="col-sm-2 control-label">转出金额</label>
+                            <label for="jinbi" class="col-sm-2 control-label">转出金额</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" id="x1" placeholder="请输入要转出的金额" value=""
+                                <input class="form-control form-long-w1" name="jinbi" id="jinbi" placeholder="请输入要转出的金额"
+                                       value=""
                                        maxlength="11">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="x2" class="col-sm-2 control-label">用户编号</label>
+                            <label for="uid" class="col-sm-2 control-label">用户编号</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" id="x2" placeholder="输入您要转给的用户" value="">
+                                <input class="form-control form-long-w1" name="uid" id="uid" placeholder="输入您要转给的用户"
+                                       value="">
                             </div>
                         </div>
 

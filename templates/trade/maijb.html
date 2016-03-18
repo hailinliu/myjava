@@ -13,7 +13,7 @@
             </div>
             <div>
                 <ol class="breadcrumb">
-                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
                     </li>
                     <li><a href="#">账户管理</a></li>
                     <li class="active">申请提现</li>
@@ -30,14 +30,14 @@
 
 
                     <!--主-->
-                    <form class="form-horizontal">
-
+                    <form class="form-horizontal" method="post">
+                        {% module xsrf_form_html() %}
                         <div class="form-group">
                             <label for="x1" class="col-sm-2 control-label">您的金币余额</label>
 
                             <div class="col-sm-10">
                                 <input disabled="disabled" class="form-control form-long-w1" id="x1"
-                                       placeholder="您的金币余额" value="246">
+                                       placeholder="您的金币余额" value="{{myuser.get('jinbi')}}">
                             </div>
                         </div>
 
@@ -45,7 +45,7 @@
                             <label for="x2" class="col-sm-2 control-label">提现金额</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" id="x2" placeholder="提现金额" value=""
+                                <input class="form-control form-long-w1"  name="money" id="x2" placeholder="提现金额" value=""
                                        maxlength="10">
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                             <label for="x3" class="col-sm-2 control-label">支付宝账号</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" id="x3" placeholder="收款的支付宝账号" value="">
+                                <input class="form-control form-long-w1" name="alipay_account" id="x3" placeholder="收款的支付宝账号" value="">
                             </div>
                         </div>
 
@@ -62,13 +62,13 @@
                             <label for="x4" class="col-sm-2 control-label">支付宝姓名</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" id="x4" placeholder="收款的支付宝账号姓名" value="">
+                                <input class="form-control form-long-w1" name="alipay_name" id="x4" placeholder="收款的支付宝账号姓名" value="">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
-                                    <label><input type="checkbox" checked="checked" id="x5"> 设置该支付宝账号为默认收款账号</label>
+                                    <label><input type="checkbox" name="checked" checked="checked" id="x5"> 设置该支付宝账号为默认收款账号</label>
                                 </div>
                             </div>
                         </div>

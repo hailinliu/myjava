@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block title %}订单列表{% end %}
+{% block content %}
+<div class="pace  pace-inactive">
+    <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+        <div class="pace-progress-inner"></div>
+    </div>
+    <div class="pace-activity"></div>
+</div>
+<div id="wrapper">
+    {% include 'admin_nav.html' %}
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            {% include 'header_nav.html' %}
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>订单管理</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/admin/home">主页</a>
+                    </li>
+                    <li>
+                        <a>订单列表</a>
+                    </li>
+
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>
+
+                            </h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown"
+                                   href="http://www.zi-han.net/theme/hplus/table_data_tables.html#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <style>
+                                th:first-child,
+                                .gradeX td:first-child {
+                                    width: 20px;
+                                    cursor: pointer;
+                                }
+
+                                th:first-child input,
+                                .gradeX td:first-child input {
+                                    cursor: pointer;
+                                }
+                            </style>
+
+
+                            <form action="javascript:;" method="post" name="login_form" id="login_form">
+                                {% module xsrf_form_html() %}
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" class="i-checks" id="userListCheck"/></th>
+                                        <th>ID</th>
+                                        <th>产品</th>
+                                        <th>用户</th>
+                                        <th>收货地址</th>
+                                        <th>总金额</th>
+                                        <th>状态</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for o in orders %}
+                                    {%set address=address_info(o.get('uid'))%}
+                                    <tr class="gradeX">
+                                        <td><input type="checkbox" class="i-checks"></td>
+                                        <td class="userListId">{{ o.get('id','无') }}</td>
+                                        <td>
+                                            {%for item in o.get('item')%}
+                                            {{product_info(item['pid']).get('name')}} * {{item['count']}},
+
+                                            {%end%}
+                                        </td>
+                                        <td>{{ o.get('uid','无') }}</td>
+                                        <td>{{ address.get('address') }} {{ address.get('username') }} {{
+                                            address.get('phone') }}
+                                        </td>
+                                        <td>{{ o.get('cost','无') }}</td>
+                                        <td>{{ order_status.get(o.get('status','无')) }}</td>
+                                        <td>{{ o.get('remark','无') }}</td>
+                                        <td>
+                                            {%if o.get('status') !='shipped'%}
+                                            <a href="/admin/order_shippd?id={{o.get('id')}}">设为发货</a>
+                                            {%else%}
+                                            已发货
+                                            {%end%}
+                                        </td>
+                                    </tr>
+                                    {% end %}
+                                    </tbody>
+                                </table>
+                                <input type="button" class="btn btn-w-m btn-primary delete1" value="删除选中"
+                                       data-toggle="modal" data-target="#myModal5" disabled/>
+
+
+                                <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span
+                                                        aria-hidden="true">&times;</span><span
+                                                        class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">删除公告</h4>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="delete1Content"></p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-white deleteUserId"
+                                                        data-dismiss="modal">确定
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">取消
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <script>
+
+
+                                $(function () {
+
+
+                                    var json1 = _alert('.btn.btn-w-m.delete1', '.modal-body .delete1Content', '您要删除的用户ID为');
+
+
+                                    var list_to_handle;
+
+                                    $('tr.gradeX input[type="checkbox"],#userListCheck').click(function () {
+                                        list_to_handle = listNubmer()
+                                        console.log(listNubmer());
+                                    });
+
+                                    function getCookie(name) {
+                                        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+                                        return r ? r[1] : undefined;
+                                    }
+
+                                    $.ajaxSetup({
+                                        beforeSend: function (xhr, settings) {
+                                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+                                                xhr.setRequestHeader("X-XSRFToken", getCookie("_xsrf"));
+                                            }
+                                        }
+                                    });
+
+                                    $('.btn.btn-white.deleteUserId').click(function () {
+                                        $.ajax({
+                                            url: '/admin/news',
+                                            type: 'delete',
+                                            data: list_to_handle,
+                                            success: function (data) {
+                                                console.log(data);
+                                            },
+                                            error: function () {
+                                                alert('error');
+                                            }
+                                        });
+                                    });
+
+                                    $('.btn.btn-white.auditUserId').click(function () {
+                                        $.ajax({
+                                            url: '/admin/news',
+                                            type: 'put',
+                                            data: list_to_handle,
+                                            success: function (data) {
+                                                console.log(data);
+                                            },
+                                            error: function () {
+                                                alert('error');
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% end %}

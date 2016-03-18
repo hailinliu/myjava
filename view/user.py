@@ -30,7 +30,7 @@ class RegisterSendCode(BaseHandler):
         mobile_number = self.get_argument("mobile_number")
         msg_code = random.randint(100000, 999999)
         self.set_cookie('msg_code', str(msg_code))
-        print self.get_cookie('msg_code')
+        # print self.get_cookie('msg_code')
 
         last_request_time = datetime.datetime.now() - datetime.timedelta(minutes=1)
         # 查找一分钟内的register 验证码请求记录
@@ -89,7 +89,14 @@ class UserHomeHandler(BaseHandler):
 
     @BaseHandler.authenticated
     def get(self):
-        self.render("user/home.html", myuser=self.user, account_tab=1)
+        type_list = ["in", "pet_produce", "qianggou"]
+        total_consume=0
+        records_result = self.db.jinbi.aggregate(
+            [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
+             {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
+        if len(records_result) > 0:
+            total_consume = records_result[0]['sum']
+        self.render("user/home.html", myuser=self.user, total_consume=total_consume,account_tab=1)
 
 
 class MyFarm(BaseHandler):
@@ -97,7 +104,15 @@ class MyFarm(BaseHandler):
 
     @BaseHandler.authenticated
     def get(self):
-        self.render("farm/mynongchang.html", myuser=self.user, account_tab=2)
+        self._template_loaders.clear()
+        my_pets = self.db.my_pet.find({"uid": self.user.get('uid')})
+
+        def pet_info(pid):
+            record = self.db.pet.find_one({"id": pid})
+            if not record:
+                return {}
+
+        self.render("farm/mynongchang.html", myuser=self.user, my_pets=my_pets, pet_info=pet_info, account_tab=2)
 
 
 def this_year():
@@ -280,8 +295,6 @@ class MessageCenter(BaseHandler):
 
         for n in unread_notices:
             self.db.notice.update({"_id": ObjectId(n["_id"])}, {"$set": {"unread": 0}})
-        # for m in unread_messages:
-        #     self.db.message.update({"_id": ObjectId(m["_id"])}, {"$set": {"unread": 0}})
 
         total_unread = unread_notices.count() + unread_messages.count()
         self.db.user.update({"uid": self.user['uid']}, {"$set": {"unread": total_unread}})

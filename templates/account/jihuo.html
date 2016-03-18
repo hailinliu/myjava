@@ -3,77 +3,89 @@
 
 
 {% block content %}
-<div class="countgo pull-left"><div class="zt">
-<!--MAN -->
-<div class="remain" style="height: 553px;">
-<div class="gao1"></div>
-<div class="page-header long-header">
-  <h3>账户管理 <small> 激活会员</small></h3>
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>账户管理
+                    <small> 激活会员</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">激活会员</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">激活会员</div>
+
+
+                <div class="panel-body">
+                    <!--主-->
+                    <form class="form-horizontal" method="post">
+                        {% module xsrf_form_html() %}
+                        <div class="form-group">
+                            <label for="x1" class="col-sm-2 control-label">您的玩家编号</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" id="x1"
+                                       placeholder="您的玩家编号" value="{{myuser.get('uid')}}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="x2" class="col-sm-2 control-label">您的激活币余额</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" id="x2"
+                                       placeholder="您的激活币余额" value="{{myuser.get('money',0)}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="x3" class="col-sm-2 control-label">所需激活币</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" id="x3" placeholder="所需激活币"
+                                       value="50">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="x4" class="col-sm-2 control-label">激活玩家编号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" name="uid" id="x4" placeholder="请输入需要激活的玩家编号" value=""
+                                       maxlength="11">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning jihuowanjia_go">激活玩家</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--End-->
+                </div>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
 </div>
-<div>
-<ol class="breadcrumb">
-  <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a></li>
-  <li><a href="#">账户管理</a></li>
-  <li class="active">激活会员</li>
-</ol>
-</div>
-
-
-<div class="panel panel-default">
-  <div class="panel-heading">激活会员</div>
-
-
-  <div class="panel-body">
-
-   <!--主-->
-   <form class="form-horizontal">
-  <div class="form-group">
-    <label for="x1" class="col-sm-2 control-label">您的玩家编号</label>
-    <div class="col-sm-10">
-      <input disabled="disabled" class="form-control form-long-w1" id="x1" placeholder="您的玩家编号" value="18645586611">
-    </div>
-  </div>
-
-
-  <div class="form-group">
-    <label for="x2" class="col-sm-2 control-label">您的激活币余额</label>
-    <div class="col-sm-10">
-      <input disabled="disabled" class="form-control form-long-w1" id="x2" placeholder="您的激活币余额" value="0">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="x3" class="col-sm-2 control-label">所需激活币</label>
-    <div class="col-sm-10">
-      <input disabled="disabled" class="form-control form-long-w1" id="x3" placeholder="所需激活币" value="50">
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="x4" class="col-sm-2 control-label">激活玩家编号</label>
-    <div class="col-sm-10">
-      <input class="form-control form-long-w1" id="x4" placeholder="请输入需要激活的玩家编号" value="" maxlength="11">
-    </div>
-  </div>
-
-    <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-warning jihuowanjia_go">激活玩家</button>
-    </div>
-  </div>
-</form>
-
-    <!--End-->
-  </div>
-
-
-
-</div>
-</div>
-<!--MAN End-->
-</div></div>
 {%end%}

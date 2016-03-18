@@ -1,0 +1,13 @@
+Sat, 19 Mar 2016 00:26:14 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
+Sat, 19 Mar 2016 00:26:14 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 31.00ms
+Sat, 19 Mar 2016 00:26:14 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 347.00ms
+Sat, 19 Mar 2016 00:26:14 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 2.00ms
+Sat, 19 Mar 2016 00:26:14 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 2.00ms
+Sat, 19 Mar 2016 00:26:14 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 1.00ms
+Sat, 19 Mar 2016 00:26:17 web.py[line:1908] INFO 200 GET /account/zhitui?p=1 (127.0.0.1) 9.00ms
+Sat, 19 Mar 2016 00:26:19 web.py[line:1908] INFO 200 GET /account/zhitui?p=1 (127.0.0.1) 7.00ms
+Sat, 19 Mar 2016 00:26:21 web.py[line:1908] INFO 200 GET /account/zhitui?p=1 (127.0.0.1) 4.00ms
+Sat, 19 Mar 2016 00:26:53 web.py[line:1908] INFO 200 GET /account/jihuojl (127.0.0.1) 15.00ms
+Sat, 19 Mar 2016 00:27:23 web.py[line:1908] INFO 200 GET /account/jihuojl (127.0.0.1) 16.00ms
+Sat, 19 Mar 2016 00:29:45 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 14.00ms
+Sat, 19 Mar 2016 00:29:47 web.py[line:1908] WARNING 404 GET /users/index.asp?go=gg_list (127.0.0.1) 1.00ms

@@ -7,6 +7,7 @@ import math
 from passlib.handlers.pbkdf2 import pbkdf2_sha512
 import time
 from pymongo import DESCENDING, ASCENDING
+import pymongo
 
 from BaseHandler import BaseHandler
 from utils.uploadsets import process_question
@@ -23,60 +24,307 @@ class LogoutHandler(BaseHandler):
         self.redirect('/login')
 
 
-class AccountActivate(BaseHandler):
-    """账户激活"""
+class TuijianJg(BaseHandler):
+    """推荐结构"""
 
+    @BaseHandler.authenticated
     def get(self):
-        if self.get_argument("page", None) in ["", None]:
-            current_page = 1
+
+        members=self.db.user.find({"admin": str(self.user.get("uid"))})
+        def member_count(uid):
+            return self.db.user.find({"admin": str(uid)}).count()
+
+        def sub_members(uid):
+            self.db.user.find({"admin": str(uid)})
+
+        self.render("account/tjjg.html", member_count=member_count, members=members,sub_members=sub_members,myuser=self.user,
+                    account_tab=4)
+
+
+class Zhitui(BaseHandler):
+    """直推"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        per = 10
+        records = self.db.user.find({"admin": str(self.user.get("uid"))})
+        counts = records.count()
+        current_page = int(self.get_argument("p", 1))
+        pages = int(round(counts / 10.0))
+        if pages == 0:
+            pages = 1
+        if current_page <= 1:
+            prev_page = 1
+            next_page = 1
         else:
-            current_page = int(self.get_argument("page"))
-        members = self.db.user.find({"admin": self.user.get("uid")}).sort("active_time", ASCENDING)
-        per = 10.0
-        print members.count() / per
-        print math.ceil(members.count() / per)
-        pages = int(math.ceil(members.count() / per))
-        members = members.skip(int(per) * (current_page - 1)).limit(int(per))
-        counts = members.count()
+            prev_page = current_page - 1
+            next_page = current_page + 1
+        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
+        self.render("account/zhitui.html", account_tab=5, current_page=current_page, counts=counts,
+                    records=records, pages=pages, prev_page=prev_page, next_page=next_page,
+                    myuser=self.user)
 
-        self.render("account/member_activate.html", current_tab=1, members=members, current_page=current_page,
-                    counts=counts, pages=pages, myuser=self.user)
+class Jihuo(BaseHandler):
+    """激活账号"""
 
+    @BaseHandler.authenticated
+    def get(self):
+        self.render("account/jihuo.html", account_tab=6, myuser=self.user)
+
+    @BaseHandler.authenticated
     def post(self):
         uid = self.get_argument("uid", None)
-        reid = self.get_argument("reid", None)
         info = {}
         try:
             my_money = int(self.user.get("money", 0))
         except ValueError:
             my_money = 0
 
-        if my_money < 100:
-            # 转账金额一定要小于用户余额
-            self.render("ok.html", url="/account/activate", tip="您的激活币不足，请联系上级充值")
+        if my_money < 50:
+            # 金额一定要小于用户余额
+            self.render("ok.html", url="/account/jihuo", tip="您的激活币不足，请联系上级充值")
             return
         member = self.db.user.find_one({"uid": uid})
 
         if member:
-            if not member.get("is_check"):
-                # TODO 未激活-->激活则从用户余额扣除100
+            # trade_log_id自增1
+            last_trade_log = self.db.trade_log.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last_trade_log.count() > 0:
+                lastone = dict()
+                for item in last_trade_log:
+                    lastone = item
+                trade_log_id = int(lastone.get('id', 0)) + 1
+            else:
+                trade_log_id = 1
+
+            if not member.get("is_active"):
+                # TODO 未激活-->激活则从用户余额扣除50
                 # 更新发放激活币的用户的余额
-                admin_money = my_money - 100
+                admin_money = my_money - 50
                 self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"money": admin_money}})
                 tip = "激活成功"
-                info.update({"is_check": True, 'active_time': time.strftime("%Y-%m-%d %H:%M:%S",
-                                                                            time.localtime(time.time()))})
+                info.update({"is_active": True, 'active_time': time.strftime("%Y-%m-%d %H:%M:%S",
+                                                                             time.localtime(time.time()))})
                 self.db.user.update({"uid": uid}, {"$set": info})
                 # 转账记录
                 self.db.trade_log.insert({
+                    "type": "jihuo",
+                    "id": trade_log_id,
                     "uid": self.user.get("uid"),
-                    "mid": uid, "money": 100,
+                    "mid": uid, "money": 50,
                     "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
             else:
                 tip = "该会员已激活，无需再激活"
-            self.render("ok.html", url="/account/activate", tip=tip)
+            self.render("ok.html", url="/account/jihuo", tip=tip)
         else:
-            self.render("ok.html", url="/account/activate", tip="该会员不存在")
+            self.render("ok.html", url="/account/jihuo", tip="该会员不存在")
+
+
+class JihuoRecord(BaseHandler):
+    """激活记录"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        record = self.db.trade_log.find({"uid": self.user.get("uid"), "type": "jihuo"})
+        self.render("account/jihuojl.html", account_tab=7, record=record, myuser=self.user)
+
+
+class JiHuobiLog(BaseHandler):
+    """激活币收入"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        per = 10
+        records = self.db.trade_log.find({"mid": self.user.get("uid")})
+        counts = records.count()
+        current_page = int(self.get_argument("p", 1))
+        pages = int(round(counts / 10.0))
+        if pages == 0:
+            pages = 1
+        if current_page <= 1:
+            prev_page = 1
+            next_page = 1
+        else:
+            prev_page = current_page - 1
+            next_page = current_page + 1
+        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
+        self.render("finance/jihuobi_log.html", account_tab=8, current_page=current_page, counts=counts,
+                    records=records, pages=pages, prev_page=prev_page, next_page=next_page,
+                    myuser=self.user)
+
+
+class JiHuobiLog2(BaseHandler):
+    """激活币支出"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        type_dict = {"jihuo": "账户激活", "transfer": "激活币转账"}
+        per = 10
+        records = self.db.trade_log.find({"uid": self.user.get("uid")})
+        counts = records.count()
+        current_page = int(self.get_argument("p", 1))
+        pages = int(round(counts / 10.0))
+        if pages == 0:
+            pages = 1
+        if current_page <= 1:
+            prev_page = 1
+            next_page = 1
+        else:
+            prev_page = current_page - 1
+            next_page = current_page + 1
+        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
+        self.render("finance/jihuobi_log2.html", account_tab=9, records=records, counts=counts, pages=pages,
+                    current_page=current_page, prev_page=prev_page, next_page=next_page, type_dict=type_dict,
+                    myuser=self.user)
+
+
+class JinBiLog(BaseHandler):
+    """金币收入"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        # 宠物生产,pet_id
+        per = 10
+        total_consume = 0
+        type_list = ["in", "pet_produce", "qianggou"]
+        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币"}
+        records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
+        records_result = self.db.jinbi.aggregate(
+            [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
+             {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
+        if len(records_result) > 0:
+            total_consume = records_result[0]['sum']
+        counts = records.count()
+        current_page = int(self.get_argument("p", 1))
+        pages = int(round(counts / 10.0))
+        if pages == 0:
+            pages = 1
+        if current_page <= 1:
+            prev_page = 1
+            next_page = 1
+        else:
+            prev_page = current_page - 1
+            next_page = current_page + 1
+
+        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
+
+        self.render("finance/jinbi_log.html", account_tab=10, records=records, counts=counts, tip_dict=tip_dict,
+                    current_page=current_page, pages=pages, total_consume=total_consume, prev_page=prev_page,
+                    next_page=next_page, myuser=self.user)
+
+
+class JinBiLog2(BaseHandler):
+    """金币支出"""
+    # status
+    # submit:已提交,等待发货
+    # shipped:已发货
+
+    @BaseHandler.authenticated
+    def get(self):
+        per = 10
+        total_consume = 0
+        type_list = ["transfer", "buy_pet", "guadan", "get_crash", "draw"]
+        tip_dict = {"transfer": "金币转账", "buy_pet": "宠物消费", "guadan": "金币拍卖", "get_crash": "金币提现", "draw": "抽奖消费"}
+        records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
+        records_result = self.db.jinbi.aggregate(
+            [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
+             {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
+        if len(records_result) > 0:
+            total_consume = records_result[0]['sum']
+        counts = records.count()
+        current_page = int(self.get_argument("p", 1))
+        pages = int(round(counts / 10.0))
+        if pages == 0:
+            pages = 1
+        if current_page <= 1:
+            prev_page = 1
+            next_page = 1
+        else:
+            prev_page = current_page - 1
+            next_page = current_page + 1
+
+        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
+
+        self.render("finance/jinbi_log2.html", account_tab=11, records=records, counts=counts, tip_dict=tip_dict,
+                    current_page=current_page, pages=pages, total_consume=total_consume, prev_page=prev_page,
+                    next_page=next_page, myuser=self.user)
+
+
+class UserAddressSetting(BaseHandler):
+    """收货地址设置"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        self.render("account/address_info.html", account_tab=20, myuser=self.user)
+
+    @BaseHandler.authenticated
+    def post(self):
+        city = self.get_argument("city", "")
+        address = self.get_argument("address", "")
+        username = self.get_argument("username", "")
+        phone = self.get_argument("phone", "")
+        if "" in [address, phone]:
+            self.render("ok.html", url="/account/address_setting", tip="请填写完整信息")
+        address_info = {}
+        address_info.update({"province_city": city, "address": address, "username": username, "phone": phone})
+        self.db.user.update({"uid": self.user.get('uid')}, {"$set": {"address_info": address_info}})
+        self.redirect('/account/address_setting')
+
+
+class UserAlipaySetting(BaseHandler):
+    """支付宝信息设置"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        self.render("account/alipay_setting.html", account_tab=1, myuser=self.user)
+
+    @BaseHandler.authenticated
+    def post(self):
+        alipay_account = self.get_argument("alipay_account", "")
+        alipay_name = self.get_argument("alipay_name", "")
+        if "" in [alipay_name, alipay_account]:
+            self.render("ok.html", url="/account/alipay_setting", tip="请填写完整信息")
+        alipay_info = {}
+        alipay_info.update({"name": alipay_name, "account": alipay_account})
+        self.db.user.update({"uid": self.user.get('uid')}, {"$set": {"alipay": alipay_info}})
+        self.redirect('/trade/jinbi_guadan')
+
+
+class MyOrder(BaseHandler):
+    """我的订单"""
+
+    @BaseHandler.authenticated
+    def get(self):
+
+        per = 10
+        total_consume = 0
+        order_status = {"submit": "待发货", "shipped": "已发货"}
+        records = self.db.product_order.find({"uid": self.user.get("uid")})
+        records_result = self.db.product_order.aggregate(
+            [{"$match": {"uid": self.user.get("uid")}}, {"$group": {'_id': "", 'sum': {'$sum': '$cost'}}}])['result']
+        if len(records_result) > 0:
+            total_consume = records_result[0]['sum']
+        counts = records.count()
+        current_page = int(self.get_argument("p", 1))
+        pages = int(round(counts / 10.0))
+        if pages == 0:
+            pages = 1
+        if current_page <= 1:
+            prev_page = 1
+            next_page = 1
+        else:
+            prev_page = current_page - 1
+            next_page = current_page + 1
+
+        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
+
+        def product_info(pid):
+            return self.db.product.find_one({"id": pid})
+
+        self.render("account/my_order.html", account_tab=20, records=records, counts=counts, product_info=product_info,
+                    order_status=order_status, current_page=current_page, pages=pages, total_consume=total_consume,
+                    prev_page=prev_page,
+                    next_page=next_page, myuser=self.user)
 
 
 class AccountInfoSetting(BaseHandler):
@@ -125,8 +373,6 @@ class AccountInfoSetting(BaseHandler):
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
             self.render("ok.html", url="/account/info_setting", tip="资料修改成功")
         self.render("account/info_setting.html", current_tab=1, myuser=self.user)
-
-
 
 
 class AccountPwdUpdate(BaseHandler):

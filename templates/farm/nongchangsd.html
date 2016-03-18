@@ -1,7 +1,6 @@
 {% extends "../base.html" %}
 {% block page_title %}我的农场{% end %}
 
-
 {% block content %}
 <div class="countgo pull-left">
     <div class="zt">
@@ -15,7 +14,7 @@
             </div>
             <div>
                 <ol class="breadcrumb">
-                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
                     </li>
                     <li><a href="#">农场管理</a></li>
                     <li class="active">农场商店</li>
@@ -25,81 +24,86 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">农场商店</div>
+                <form method="post" action="">
+                    {% module xsrf_form_html() %}
+                    <input type="hidden" id="items" name="items" value="">
+                    <table class="long_table">
+                        <tbody>
+                        <tr class="tb_top">
+                            <td></td>
+                            <td>宠物</td>
+                            <td align="center">单价(金币)</td>
+                            <td align="center">数量</td>
+                            <td>小计</td>
+                        </tr>
+                        {%for p in pets%}
+
+                        <tr uid="{{p.get('id')}}" vip="{{p.get('level',1)}}" class="item" data-id="{{p.get('id')}}">
+                            <td align="center" valign="middle" width="200">
+                                <!--<img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif" style="height:100px; width:auto;">-->
+                                <img src="/static/media/pet_img/{{p.get('image')}}" style="height:100px; width:auto;">
+                            </td>
+                            <td><h5><strong>{{p.get('name')}}</strong></h5>
+
+                                <p>{{p.get('desc','')}}</p>
+                                {%if int(p.get('level'))<1%}
+                                <p>需要等级: <span class="label label-default">VIP</span></p>
+                                {%else%}
+                                <p>需要等级: <span class="label label-danger">VIP{{ p.get('level')}}</span></p>
+                                {%end%}
+                            </td>
+                            <td valign="middle" align="center" class="price">{{p.get('price','')}}</td>
+                            <td valign="middle" align="center">
+                                {%if myuser.get('level',0)>= int(p.get('level')) %}
+                                <div class="input-group" style="width:130px;">
+                                <span class="input-group-btn jian"><button class="btn btn-default j_jian" type="button"
+                                                                           disabled="disabled"><span
+                                        class="glyphicon glyphicon-minus " aria-hidden="true"></span></button></span>
+                                    <input type="text" class="form-control" value="0" maxlength="3" id="j_shuliang">
+                                <span class="input-group-btn jia"><button class="btn btn-default j_jia"
+                                                                          type="button"><span
+                                        class="glyphicon glyphicon-plus " aria-hidden="true"></span></button></span>
+                                </div>
+                                {%else%}
+                                等级不足
+                                {%end%}
+
+                            </td>
+                            <td valign="middle" align="left" width="100"><span style="font-weight:bold;"
+                                                                               id="j_danjia">0</span></td>
+                        </tr>
+                        {%end%}
+
+                        <tr class="tb_bottom">
+                            <td colspan="5" align="right">
+
+                                您的当前等级是:
+                                {%if myuser.get('level',0)<1%}
+                                <span class="label label-default">VIP</span>
+                                {%else%}
+                                <span class="label label-danger">VIP{{ myuser.get('level',)}}</span>
+                                {%end%}
+                                您的当前金币余额为:<span
+                                    style="color:#C30; font-weight:bold;"><span class="glyphicon glyphicon-yen"
+                                                                                aria-hidden="true"></span><span
+                                    id="j_jinbi">{{myuser.get('jinbi',0)}}</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您已选择<span
+                                    id="j_zongshu">0</span>个商品&nbsp;&nbsp;&nbsp;&nbsp;总价(金币):<span
+                                    style="color:#C30; font-weight:bold;"><span class="glyphicon glyphicon-yen"
+                                                                                aria-hidden="true"></span><span
+                                    id="j_zongjia">0</span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-danger" id="goumaigo">立即购买</button>
+                            </td>
+                        </tr>
 
 
-                <table class="long_table">
-                    <tbody>
-                    <tr class="tb_top">
-                        <td></td>
-                        <td>宠物</td>
-                        <td align="center">单价(金币)</td>
-                        <td align="center">数量</td>
-                        <td>小计</td>
-                    </tr>
-                    {%for p in pets%}
+                        </tbody>
+                    </table>
+                </form>
 
-                    <tr uid="{{p.get('id')}}" vip="{{p.get('level',1)}}">
-                        <td align="center" valign="middle" width="200">
-                            <!--<img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif" style="height:100px; width:auto;">-->
-                            <img src="/static/media/pet_img/{{p.get('image')}}" style="height:100px; width:auto;">
-                        </td>
-                        <td><h5><strong>{{p.get('name')}}</strong></h5>
-
-                            <p>{{p.get('desc','')}}</p>
-                            {%if p.get('level')<1%}
-                            <p>需要等级: <span class="label label-default">VIP</span></p>
-                            {%else%}
-                            <p>需要等级: <span class="label label-danger">VIP{{ p.get('level')}}</span></p>
-                            {%end%}
-                        </td>
-                        <td valign="middle" align="center">{{p.get('price','')}}</td>
-                        <td valign="middle" align="center">
-                             {%if myuser.get('level',0)>= p.get('level') %}
-                            <div class="input-group" style="width:130px;">
-                                <span class="input-group-btn"><button class="btn btn-default j_jian" type="button"
-                                                                      disabled="disabled"><span
-                                        class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></span>
-                                <input type="text" class="form-control" value="0" maxlength="3" id="j_shuliang">
-                                <span class="input-group-btn"><button class="btn btn-default j_jia" type="button"><span
-                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></span>
-                            </div>
-                            {%else%}
-                            等级不足
-                            {%end%}
-
-                        </td>
-                        <td valign="middle" align="left" width="100"><span style="font-weight:bold;"
-                                                                           id="j_danjia">0</span></td>
-                    </tr>
-                    {%end%}
-
-                    <tr class="tb_bottom">
-                        <td colspan="5" align="right">
-
-                            您的当前等级是:
-                             {%if myuser.get('level',0)<1%}
-                            <span class="label label-default">VIP</span>
-                            {%else%}
-                            <span class="label label-danger">VIP{{ myuser.get('level',)}}</span>
-                            {%end%}
-                            您的当前金币余额为:<span
-                                style="color:#C30; font-weight:bold;"><span class="glyphicon glyphicon-yen"
-                                                                            aria-hidden="true"></span><span
-                                id="j_jinbi">{{myuser.get('money',0)}}</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您已选择<span
-                                id="j_zongshu">0</span>个商品&nbsp;&nbsp;&nbsp;&nbsp;总价(金币):<span
-                                style="color:#C30; font-weight:bold;"><span class="glyphicon glyphicon-yen"
-                                                                            aria-hidden="true"></span><span
-                                id="j_zongjia">0</span></span>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn btn-danger" id="goumaigo">立即购买</button>
-                        </td>
-                    </tr>
-
-
-                    </tbody>
-                </table>
             </div>
         </div>
         <!--MAN End-->
     </div>
 </div>
+<script src="/static/js/cart.js"></script>
 {%end%}

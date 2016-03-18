@@ -41,10 +41,29 @@
                         <td>抢购时间</td>
                         <td>操作</td>
                     </tr>
-
+                    {%if record.count()==0%}
                     <tr>
                         <td colspan="6">暂无记录</td>
                     </tr>
+                    {%else%}
+                    {%for r in record%}
+                    <tr>
+                        <td>{{r.get('id')}}</td>
+                        <td>{{r.get('uid')}}</td>
+                        <td>{{alipay_info(r.get('uid')).get('name')}} {{alipay_info(r.get('uid')).get('account')}}</td>
+                        <td>{{r.get('money')}}</td>
+                        <td>{{r.get('pay_time')}}</td>
+                        <td>
+                            {%if r.get('status')=='confirm'%}
+                            <a href="/trade/jinbi_confirm_pay?id={{r.get('id')}}">我已付款</a>
+                            <a href="javascript:;" data-id="{{r.get('id')}}" class="cancel_trade">放弃交易</a>
+                            {%elif r.get('status')=='paid'%}
+                            已付款,等待收款<a href="/static/media/pay_image/{{r.get('pay_image')}}" target="_blank">[查看]</a>
+                            {%end%}
+                        </td>
+                    </tr>
+                    {%end%}
+                    {%end%}
                     </tbody>
                 </table>
 
@@ -54,4 +73,12 @@
         <!--MAN End-->
     </div>
 </div>
+<script type="text/javascript">
+    $(".cancel_trade").click(function(){
+        var id=$(this).data("id");
+        if (confirm("主动放弃交易将扣除2金币")){
+            location.href="/trade/jinbi_cancel_pay?id="+id;
+        }
+    })
+</script>
 {%end%}

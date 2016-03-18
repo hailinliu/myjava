@@ -4,23 +4,23 @@
 <script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/kindeditor-min.js') }}"></script>
 <script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/lang/zh_CN.js') }}"></script>
 <!--<script type="text/javascript">-->
-    <!--KindEditor.ready(function (K) {-->
-        <!--window.editor = K.create('#desc', {-->
-            <!--allowFileManager: true,-->
-            <!--width: '700px',-->
-            <!--height: '400px',-->
-            <!--resizeType: 0,       //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。-->
-            <!--afterFocus: function () {-->
-            <!--},-->
-            <!--afterBlur: function () {-->
-                <!--if (editor.html() == '') {-->
-                    <!--$('p.desc_tip').html('详情不能为空！');-->
-                <!--} else {-->
-                    <!--$('p.textarea').html('');-->
-                <!--}-->
-            <!--}-->
-        <!--});-->
-    <!--});-->
+<!--KindEditor.ready(function (K) {-->
+<!--window.editor = K.create('#desc', {-->
+<!--allowFileManager: true,-->
+<!--width: '700px',-->
+<!--height: '400px',-->
+<!--resizeType: 0,       //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。-->
+<!--afterFocus: function () {-->
+<!--},-->
+<!--afterBlur: function () {-->
+<!--if (editor.html() == '') {-->
+<!--$('p.desc_tip').html('详情不能为空！');-->
+<!--} else {-->
+<!--$('p.textarea').html('');-->
+<!--}-->
+<!--}-->
+<!--});-->
+<!--});-->
 <!--</script>-->
 <div class="pace  pace-inactive">
     <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
@@ -63,6 +63,7 @@
                             <h5>
 
                             </h5>
+
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -99,40 +100,78 @@
                                     <label class="col-sm-2 control-label">名称:</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" placeholder="不多于25个字" name="name"  value="{{ pet.get('name','') }}" id="name">
+                                        <input class="form-control" placeholder="不多于25个字" name="name"
+                                               value="{{ pet.get('name','') }}" id="name">
                                     </div>
                                 </div>
-                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">图片:</label>
-                                    {% set image_url="/static/media/pet_img/"+pet.get('pic','') %}
+                                <!--<div class="form-group">-->
+                                <!--<label class="col-sm-2 control-label">图片:</label>-->
+                                <!--{% set image_url="/static/media/pet_img/"+pet.get('image','') %}-->
 
-                                    <div class="col-sm-9">
-                                        <img src="{{ image_url }}"
-                                             style="margin-top: 10px;max-width: 400px;width: 100%;"
-                                             class=" {% if not pet.get('image','') %}hide{% end %} imageview">
-                                        <input type="file" name="" class="form-control " id="index_image">
+                                <!--<div class="col-sm-9">-->
+                                <!--<img src="{{ image_url }}"-->
+                                <!--style="margin-top: 10px;max-width: 400px;width: 100%;"-->
+                                <!--class=" {% if not pet.get('image','') %}hide{% end %} imageview">-->
+                                <!--<input type="file" name="" class="form-control " id="index_image">-->
+                                <!--</div>-->
+                                <!--<input type="text" name="image" id="image_url" style="display: none">-->
+                                <!--</div>-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">类型:</label>
+                                    {% set image_url="/static/images/"+pet.get('image','') %}
+
+                                    <div class="col-sm-10">
+                                        <select name="image" class="form-control" id="pet_image">
+                                            <option value="1.gif">鹅</option>
+                                            <option value="2.gif">猴</option>
+                                            <option value="3.gif">羊</option>
+                                            <option value="4.gif">龙</option>
+                                        </select>
+                                        <img src="{{ image_url }}" width="50"
+                                         style="margin-top: 10px;"
+                                         class=" {% if not pet.get('image','') %}hide{% end %} imageview">
                                     </div>
-                                    <input type="text" name="image" id="image_url" style="display: none">
+
+                                    <!--<input type="text" name="image" id="image_url" style="display: none">-->
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">价格:</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" placeholder="单价" name="price"  value="{{ pet.get('price','') }}" id="price">
+                                        <input class="form-control" placeholder="单价" name="price"
+                                               value="{{ pet.get('price','') }}" id="price">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">需要等级:</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" placeholder="等级>=" name="level"  value="{{ pet.get('level','') }}" id="level">
+                                        <input class="form-control" placeholder="等级>=" name="level"
+                                               value="{{ pet.get('level','') }}" id="level">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">日产金币:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="日产金币" name="day_jinbi"
+                                               value="{{ pet.get('day_jinbi','') }}" id="day_jinbi">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">存活时间:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control"  type="number" placeholder="生存周期" name="life"
+                                               value="{{ pet.get('life','') }}" id="life">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">说明:</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" placeholder="说明" name="desc"  value="{{ pet.get('price','') }}" id="desc">
+                                        <input class="form-control" placeholder="说明" name="desc"
+                                               value="{{ pet.get('desc','') }}" id="desc">
                                     </div>
                                 </div>
 
@@ -153,6 +192,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#pet_image").change(function(){
+        var base_url='/static/images/';
+        var val=$(this).val();
+        $(".imageview").attr("src",base_url+val);
+    })
+
+</script>
 <script type="text/javascript" src="{{ static_url('plupload/js/plupload.full.min.js') }}"></script>
 <script type="text/javascript">
     function getCookie(name) {

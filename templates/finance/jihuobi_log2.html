@@ -11,9 +11,10 @@
                     <small> 激活币支出</small>
                 </h3>
             </div>
+
             <div>
                 <ol class="breadcrumb">
-                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
                     </li>
                     <li><a href="#">财务管理</a></li>
                     <li class="active">激活币支出明细</li>
@@ -37,10 +38,35 @@
                         <td>奖金说明</td>
                         <td>发放时间</td>
                     </tr>
-
+                    {%if records.count()==0%}
                     <tr>
                         <td colspan="5">暂无记录</td>
                     </tr>
+                    {%else%}
+                    {%for r in records%}
+                    <tr>
+                        <td>{{r.get('id',0)}}</td>
+                        <td>{{type_dict.get(r.get('type','transfer'))}}</td>
+                        <td>-{{r.get('money')}}</td>
+                        <td>{{type_dict.get(r.get('type','transfer'))}}</td>
+                        <td>{{r.get('time')}}</td>
+                    </tr>
+                    {%end%}
+                     <tr>
+                        <td colspan="5">
+                            <div class="clearfix">
+                                <div class="btn-group pull-left" role="group"><a class="btn btn-default" href="#"
+                                                                                 role="button">首页</a><a
+                                        class="btn btn-default" href="?p={{prev_page}}" role="button">上一页</a><a class="btn btn-default"
+                                                                                                 href="?p={{next_page}}">下一页</a><a
+                                        class="btn btn-default" href="?p={{pages}}">尾页</a></div>
+                                <div class="pull-right pt1">&nbsp;页次：<strong><font color="red">{{current_page}}</font>/{{pages}}</strong>页
+                                    &nbsp;共<b><font color="#FF0000">{{counts}}</font></b>条记录
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {%end%}
                     </tbody>
                 </table>
 

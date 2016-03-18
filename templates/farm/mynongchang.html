@@ -1,8 +1,8 @@
 {% extends "../base.html" %}
 {% block page_title %}我的农场{% end %}
 
-
 {% block content %}
+
 <div class="countgo pull-left">
     <div class="zt">
         <!--MAN -->
@@ -15,7 +15,7 @@
             </div>
             <div>
                 <ol class="breadcrumb">
-                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
                     </li>
                     <li><a href="#">农场管理</a></li>
                     <li class="active">我的农场</li>
@@ -30,14 +30,18 @@
 
 
                     <div class="row">
-
-
+                        {%for p in my_pets%}
+                        {%set pet=pet_info(p.get('pid'))%}
+                        {%if not pet%}
+                        {%continue%}
+                        {%end%}
                         <div class="col-sm-6 col-md-3">
                             <div class="thumbnail">
-                                <img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif">
+                                <!--<img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif">-->
+                                <img src="/static/media/pet_img/{{pet.get('image')}}">
 
                                 <div class="caption">
-                                    <h3>小天鹅1920915号 <span class="badge">10</span></h3>
+                                    <h3>{{pet.get('name')}} <span class="badge">10</span></h3>
 
                                     <p>
                                     </p>
@@ -50,87 +54,14 @@
                                     </div>
                                     <p>已产金币: <strong>100 </strong>/待产金币: <strong>20 </strong></p>
 
-                                    <p>购买日期:2016/2/15 12:01:19</p>
+                                    <p>购买日期:{{p.get('time')}}</p>
 
                                 </div>
                             </div>
+
+
                         </div>
-
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="thumbnail">
-                                <img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif">
-
-                                <div class="caption">
-                                    <h3>小天鹅2132211号 <span class="badge">10</span></h3>
-
-                                    <p>
-                                    </p>
-
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar"
-                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 50%;">
-                                            3天
-                                        </div>
-                                    </div>
-                                    <p>已产金币: <strong>60 </strong>/待产金币: <strong>60 </strong></p>
-
-                                    <p>购买日期:2016/2/17 7:57:38</p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="thumbnail">
-                                <img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif">
-
-                                <div class="caption">
-                                    <h3>小天鹅2392762号 <span class="badge">10</span></h3>
-
-                                    <p>
-                                    </p>
-
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar"
-                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 17%;">
-                                            1天
-                                        </div>
-                                    </div>
-                                    <p>已产金币: <strong>20 </strong>/待产金币: <strong>100 </strong></p>
-
-                                    <p>购买日期:2016/2/19 10:04:44</p>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="thumbnail">
-                                <img src="http://58.221.44.174:96/ui_yun/images/nc/1.gif">
-
-                                <div class="caption">
-                                    <h3>小天鹅2514788号 <span class="badge">10</span></h3>
-
-                                    <p>
-                                    </p>
-
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar"
-                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%;">
-                                            0天
-                                        </div>
-                                    </div>
-                                    <p>已产金币: <strong>0 </strong>/待产金币: <strong>120 </strong></p>
-
-                                    <p>购买日期:2016/2/20 10:10:14</p>
-
-                                </div>
-                            </div>
-                        </div>
-
+                        {%end%}
 
                     </div>
 
@@ -143,4 +74,5 @@
         <!--MAN End-->
     </div>
 </div>
+
 {%end%}

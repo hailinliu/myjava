@@ -1,0 +1,140 @@
+{% extends "../base.html" %}
+{% block page_title %}金币抢购{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>交易系统
+                    <small> 金币抢购</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">交易系统</a></li>
+                    <li class=""><a href="/trade/jinbi_guadan">金币抢购</a></li>
+                    <li class="active">确认付款</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">确认付款</div>
+                <div class="panel-body">
+                    <p>注:您当前金币余额:{{myuser.get('jinbi',0)}}</p>
+
+
+                    <!--主-->
+                    <form class="form-horizontal" method="post">
+                        {% module xsrf_form_html() %}
+
+                        <input type="hidden" id="image" name="pay_image" value="{{record.get('pay_image')}}">
+
+                        <div class="form-group">
+                            <label for="x3" class="col-sm-2 control-label">单号ID</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" name="id" id="x3"
+                                       value="{{record.get('id')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="money" class="col-sm-2 control-label">抢购金额</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" name="money" id="money"
+                                       value="{{record.get('money')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alipay_name" class="col-sm-2 control-label">对方支付宝姓名</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" name="jinbi"
+                                       id="alipay_name" value="{{aliplay_info.get('name')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alipay_account" class="col-sm-2 control-label">对方支付宝账号</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" name="jinbi"
+                                       id="alipay_account" value="{{aliplay_info.get('account')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">上传打款凭证</label>
+
+                            <div class="col-sm-10">
+                                <a href="javascript:;" id="upload" class="form-control  form-long-w1 "
+                                   data-id="{{record.get('id')}}">上传</a>
+                                {%if record.get('pay_image')%}<a class="image"
+                                    href="/static/media/paid_img/{{record.get('pay_image')}}">[查看]</a>{%end%}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning goumai_go">确认提交</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--End-->
+                </div>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+<script type="text/javascript" src="/static/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript">
+    var order_id;
+    $(".upload").click(function () {
+        order_id = ($(this).data("id"));
+    })
+    $(function () {
+        order_id = ($("#upload").data("id"));
+        var uploader = new plupload.Uploader({
+            browse_button: 'upload',
+            url: "/ajax/upload_image?path=pay_image&order_id=" + order_id,
+            multipart_params: {
+                'order_id': order_id,
+                '_xsrf': $("input[name='_xsrf']").val()
+            }
+        });
+
+        uploader.init();
+
+        // 文件添加后立即上传
+        uploader.bind('FilesAdded', function (up, files) {
+            plupload.each(files, function (file) {
+                uploader.start();
+            });
+        });
+
+        // 上传图片
+        uploader.bind('FileUploaded', function (up, file, info) {
+            var base = '/static/media/pay_image/';
+            var response = $.parseJSON(info.response);
+            if (response.status == 'ok') {
+                $("#upload").parent("div").find(".image").remove();
+                $("#upload").parent("div").append("<a target='_blank' class='image' href='" + base + response.name + "'>[查看]</a>");
+                $("#image").val(response.name);
+            } else {
+                $('.upload-error-info').text(response.error);
+            }
+        });
+    })
+
+</script>
+{%end%}

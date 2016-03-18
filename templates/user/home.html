@@ -16,7 +16,7 @@
 
             <div>
                 <ol class="breadcrumb">
-                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/ser/home">主页</a>
                     </li>
                 </ol>
             </div>
@@ -41,14 +41,19 @@
                             0
                         </td>
                         <td>会员等级:
+                            {%if myuser.get('level')==0%}
                             <span class="label label-default">VIP</span>
+                            {%else%}
+                            <span class="label label-danger">VIP{{myuser.get('level')}}</span>
+
+                            {%end%}
                         </td>
                     </tr>
                     <tr>
-                        <td>激活币余: 0</td>
-                        <td>金币余额: {{myuser.get('money',0)}}</td>
+                        <td>激活币余: {{myuser.get('money',0)}}</td>
+                        <td>金币余额: {{myuser.get('jinbi',0)}}</td>
                         <td>金币收益总计:
-                            {{myuser.get('gain',0)}}
+                            {{total_consume}}
 
                             <strong> 今日下属分红:
                                 0</strong>
@@ -58,7 +63,7 @@
                     <tr>
                         <td colspan="3">
 
-                            推广链接: <a href="http://www.5612363.com/users/reg.asp?t=18645586611" target="_blank">http://www.5612363.com/users/reg.asp?t=18645586611</a>
+                            推广链接: <a href="{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}" target="_blank">{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}</a>
                         </td>
                     </tr>
 

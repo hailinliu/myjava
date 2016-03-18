@@ -5,7 +5,6 @@
     <file url="file://$PROJECT_DIR$/log/warn.log" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/main.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/push.bat" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/push_test.bat" charset="GBK" />
     <file url="file://$PROJECT_DIR$/requirements.pip" charset="GBK" />
     <file url="file://$PROJECT_DIR$/session/auth.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/static/WdatePicker" charset="GBK" />
@@ -28,7 +27,6 @@
     <file url="file://$PROJECT_DIR$/templates/ok.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/site/notice_detail.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/templates/site/notice_list.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/templates/site/right.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/work_help.py" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />

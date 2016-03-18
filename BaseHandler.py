@@ -99,7 +99,6 @@ class BaseHandler(tornado.web.RequestHandler):
         # user = self.db.user.find_one({'uid': name}, {'pwd': 0, '_id': 0})
         user = self.db.user.find_one({'phone': name},{'pwd': 0, '_id': 0})
         data = user
-        print user
         self.logging.info(('login', data))
 
         # id = self.application.sessions.new_session(data).hex
@@ -182,12 +181,12 @@ class BaseHandler(tornado.web.RequestHandler):
                     return
                     # 不抛异常
                     # raise HTTPError(403)
-            current_hour = int(time.strftime('%H', time.localtime(time.time())))
-            current_minute = int(time.strftime('%M', time.localtime(time.time())))
-            if current_hour >= 12 and current_hour <= 13:
-
-                self.render("pause.html")
-                return
+            # current_hour = int(time.strftime('%H', time.localtime(time.time())))
+            # current_minute = int(time.strftime('%M', time.localtime(time.time())))
+            # if current_hour >= 12 and current_hour <= 13:
+            #
+            #     self.render("pause.html")
+            #     return
             return method(self, *args, **kwargs)
 
         return wrapper

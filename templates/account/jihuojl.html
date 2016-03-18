@@ -1,45 +1,58 @@
 {% extends "../base.html" %}
 {% block page_title %}激活记录{% end %}
 {% block content %}
-<div class="countgo pull-left"><div class="zt">
-<!--MAN -->
-<div class="remain" style="height: 553px;">
-<div class="gao1"></div>
-<div class="page-header long-header">
-  <h3>账户管理 <small> 激活记录</small></h3>
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>账户管理
+                    <small> 激活记录</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">激活记录列表</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">激活记录</div>
+
+
+                <table class="table table-striped table-hover">
+                    <tbody>
+                    <tr>
+                        <td>玩家编号</td>
+                        <td>消耗激活币</td>
+                        <td>激活时间</td>
+                    </tr>
+                    {%if record.count()>0%}
+                    {%for r in record%}
+                    <tr>
+                        <td>{{r.get('mid')}}</td>
+                        <td>{{r.get('money')}}</td>
+                        <td>{{r.get('time')}}</td>
+                    </tr>
+                    {%end%}
+                    {%else%}
+                    <tr>
+
+                        <td colspan="3">暂无记录</td>
+                    </tr>
+                    {%end%}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
 </div>
-<div>
-<ol class="breadcrumb">
-  <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a></li>
-  <li><a href="#">账户管理</a></li>
-  <li class="active">激活记录列表</li>
-</ol>
-</div>
-
-
-<div class="panel panel-default">
-  <div class="panel-heading">激活记录</div>
-
-
-
-<table class="table table-striped table-hover">
-  <tbody><tr>
-    <td>玩家编号</td>
-    <td>消耗激活币</td>
-    <td>激活时间</td>
-  </tr>
-
- <tr><td colspan="3">暂无记录</td></tr>
-</tbody></table>
-
-
-
-
-
-
-
-</div>
-</div>
-<!--MAN End-->
-</div></div>
 {%end%}

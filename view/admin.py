@@ -192,7 +192,8 @@ class AdminUserList(BaseHandler):
     def get(self):
         if not self.user:
             self.redirect('/admin/login')
-        query = {"role": {"$ne": 'superadmin'}, "blacklist": {"$ne": 1}}
+        # query = {"role": {"$ne": 'superadmin'}, "blacklist": {"$ne": 1}}
+        query = {"blacklist": {"$ne": 1}}
         search = ""
         role = self.get_argument("role", None)
         if role:
@@ -343,6 +344,66 @@ class AddUser(BaseHandler):
         self.redirect('/admin/userlist')
 
 
+class AdminUserUpdateMoney(BaseHandler):
+    """修改用户激活币"""
+
+    @BaseHandler.admin_authed
+    def post(self):
+        uid = self.get_argument("uid")
+        money = self.get_argument("money")
+        try:
+            money = int(money)
+        except Exception:
+            return self.write(json.dumps({"status": "error", "error": "请输入合法的金额"}))
+
+        exist_user = self.db.user.find_one({"uid": uid})
+        if exist_user:
+            self.db.user.update({"uid": uid}, {"$set": {"money": money}})
+            self.write(json.dumps({"status": "ok"}))
+        else:
+            return self.write(json.dumps({"status": "error", "error": "用户不存在"}))
+
+
+class AdminUserUpdateLevel(BaseHandler):
+    """修改用户级别"""
+
+    @BaseHandler.admin_authed
+    def post(self):
+        uid = self.get_argument("uid")
+        level = self.get_argument("level", 0)
+        try:
+            level = int(level)
+        except Exception:
+            return self.write(json.dumps({"status": "error", "error": "请输入合法的金额"}))
+
+        exist_user = self.db.user.find_one({"uid": uid})
+        if exist_user:
+            self.db.user.update({"uid": uid}, {"$set": {"level": level}})
+            self.write(json.dumps({"status": "ok"}))
+        else:
+            return self.write(json.dumps({"status": "error", "error": "用户不存在"}))
+
+
+class AdminUserUpdateJinbi(BaseHandler):
+    """修改用户金币"""
+
+    @BaseHandler.admin_authed
+    def post(self):
+        uid = self.get_argument("uid")
+        jinbi = self.get_argument("jinbi", 0)
+        try:
+            jinbi = int(jinbi)
+        except Exception:
+            return self.write(json.dumps({"status": "error", "error": "请输入合法的数字"}))
+
+        exist_user = self.db.user.find_one({"uid": uid})
+        if exist_user:
+            self.db.user.update({"uid": uid}, {"$set": {"jinbi": jinbi}})
+            self.write(json.dumps({"status": "ok"}))
+        else:
+            return self.write(json.dumps({"status": "error", "error": "用户不存在"}))
+
+
 class AdminUserResetPwd(BaseHandler):
     """修改密码"""
 
@@ -422,7 +483,9 @@ class AdminPetEdit(BaseHandler):
         info = dict(info)
 
         news_id = int(info['id'])
+
         del info['id']
+
         if news_id:
             self.db.pet.update({"id": news_id}, {"$set": info})
         else:
@@ -437,7 +500,7 @@ class AdminPetEdit(BaseHandler):
                 info['id'] = 1
             info['time'] = time.strftime('%Y-%m-%d', time.localtime(time.time()))
             self.db.pet.insert(info)
-            print info
+            # print info
         return self.redirect("/admin/petlist")
 
 
@@ -461,3 +524,121 @@ class AdminPetList(BaseHandler):
             count = len(self.request.arguments)
             print 'handle %d itmes' % count
             self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
+
+
+class AdminProductAdd(BaseHandler):
+    """商品发布、编辑"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        product_id = int(self.get_argument("id", 0))
+        product = self.db.product.find_one({"id": product_id})
+        if not product:
+            product = {}
+        self.render("admin/add_product.html", myuser=self.user, product=product, product_id=product_id, admin_nav=5)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        info = self.request.arguments
+        for key, value in info.items():
+            info[key] = value[0]
+            print key, value[0]
+        del info['_xsrf']
+        info = dict(info)
+
+        news_id = int(info['id'])
+
+        del info['id']
+
+        if news_id:
+            self.db.product.update({"id": news_id}, {"$set": info})
+        else:
+            # id自增1
+            last = self.db.product.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last.count() > 0:
+                lastone = dict()
+                for item in last:
+                    lastone = item
+                info['id'] = int(lastone['id']) + 1
+            else:
+                info['id'] = 1
+            info['time'] = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+            self.db.product.insert(info)
+            # print info
+        return self.redirect("/admin/products")
+
+
+class AdminProductList(BaseHandler):
+    """商品列表"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        products = self.db.product.find().sort("_id", pymongo.DESCENDING)
+        self.render("admin/products.html", myuser=self.user, admin_nav=5, products=products)
+
+    @BaseHandler.admin_authed
+    def delete(self):
+        try:
+            for value in self.request.arguments.values():
+                self.db.product.remove({"id": int(value[0])})
+        except Exception, e:
+            print e
+            self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
+
+
+class AdminOrder(BaseHandler):
+    """订单列表"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        order_status = {"submit": "待发货", "shipped": "已发货"}
+        orders = self.db.product_order.find().sort("_id", pymongo.DESCENDING)
+
+        def address_info(uid):
+            return self.db.user.find_one({"uid": uid}).get("address_info", {})
+
+        def product_info(pid):
+            return self.db.product.find_one({"id": pid})
+
+        self.render("admin/orders.html", myuser=self.user, admin_nav=6, address_info=address_info,
+                    product_info=product_info, order_status=order_status, orders=orders)
+
+    @BaseHandler.admin_authed
+    def delete(self):
+        try:
+            for value in self.request.arguments.values():
+                self.db.product_order.remove({"id": int(value[0])})
+        except Exception, e:
+            print e
+            self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
+
+
+class AddressOrderShip(BaseHandler):
+    """订单设为发货"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        try:
+            order_id = int(self.get_argument("id", 0))
+        except Exception, e:
+            order_id = 0
+
+        order = self.db.product_order.find_one({"id": order_id})
+        if not order:
+            order={}
+        self.render("admin/order_shipped.html", myuser=self.user, admin_nav=6, order_id=order_id,order=order)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        order_id = int(self.get_argument("order_id", 0))
+        remark = self.get_argument("remark", '')
+        self.db.product_order.update({"id": order_id}, {"$set": {"status": "shipped","remark":remark }})
+        self.redirect('/admin/orders')

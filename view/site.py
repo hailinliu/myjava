@@ -36,12 +36,11 @@ class LoginHandler(BaseHandler):
         if 'Referer' in self.request.headers:
             referer_url = '/' + '/'.join(self.request.headers['Referer'].split("/")[3:])
             print referer_url
-        # if self.user:
-        #     if 'register' not in referer_url:
-        #         self.redirect(referer_url)
+
         if not next_url:
             next_url = referer_url
-
+        if referer_url == '/':
+            next_url = '/user/home'
         self.render("account/login.html", url=next_url, error="")
 
     def post(self):
@@ -51,7 +50,6 @@ class LoginHandler(BaseHandler):
             url = self.get_argument("url", None)
             pwd = self.get_argument("password", None)
             phone = self.get_argument("name", None)
-            print "phone:", phone
         except Exception, e:
             print e
             self.render("account/login.html", url="", error=u"登录异常")
@@ -70,7 +68,7 @@ class LoginHandler(BaseHandler):
                 self.render("account/login.html", url=url, error=u"该用户已被冻结")
             res = self.begin_session(phone, pwd)
             if not res:
-                self.render("account/login.html", url=url, error=u"用户名或密码不正确")
+                return self.render("account/login.html", url=url, error=u"用户名或密码不正确")
             if self.user:
                 # 登录记录
                 get_ip = self.request.remote_ip
@@ -80,7 +78,7 @@ class LoginHandler(BaseHandler):
                 self.db.logininfo.insert(
                     {"uid": self.user.get("uid"), "ip": get_ip, "time": log_time})
                 self.db.user.update({"uid": self.user['uid']}, {"$set": {"login": {"time": log_time, "ip": get_ip}}})
-
+            print url
             if 'register' in url:
                 return self.redirect('/login')
             elif 'login' in url:
@@ -111,22 +109,22 @@ class Register(BaseHandler):
         exist_user = self.db.user.find({'uid': phone})
         inviter = None
         if None in [pwd, phone, safe_pwd]:
-            self.render("error.html", myuser=self.user, r=rName, error=u"请完善注册信息")
+           return self.render("error.html", myuser=self.user, r=rName, error=u"请完善注册信息")
         exist_phone = self.db.user.find_one({"phone": phone})
         if exist_phone:
-            self.render("error.html", myuser=self.user, r=rName, error=u"该手机号码已注册")
+            return self.render("error.html", myuser=self.user, r=rName, error=u"该手机号码已注册")
         if exist_user.count() > 0:
             logging.info(u'该用户编号已存在')
-            self.render("error.html", myuser=self.user, r=rName, error=u"该用户编号或用户名已存在")
+            return self.render("error.html", myuser=self.user, r=rName, error=u"该用户编号或用户名已存在")
         else:
             if not rName:
-                self.render("error.html", myuser=self.user, r=rName, error=u"请输入介绍人编号")
+                return self.render("error.html", myuser=self.user, r=rName, error=u"请输入介绍人编号")
             else:
                 exist_reco_user = self.db.user.find_one({"phone": rName})
                 if exist_reco_user:
                     inviter = exist_reco_user
                 else:
-                    self.render("error.html", myuser=self.user, r=rName, error=u"该直推人会员编号不存在")
+                    return self.render("error.html", myuser=self.user, r=rName, error=u"该直推人会员编号不存在")
             if pwd == "":
                 self.render("error.html", myuser=self.user, r=rName, error=u"密码不能为空")
             if phone == "":
@@ -140,21 +138,21 @@ class Register(BaseHandler):
                 'safe_pwd': safe_pwd,
                 'admin': rName,
                 'money': 0,
-                'level':0,
+                'level': 0,
+                'jinbi':0,
                 'is_active': False,
             }
             logging.info(('register user %s %s' % (user['uid'], user['pwd'])))
             res = self.application.auth.register(user)
             if not res:
                 print "register error"
-                self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")
+
 
                 # 如果与介绍人编号一致的用户存在
                 if inviter:
                     info = {
                         "no": "1",
                         "uid": rName,
-                        "": "",
                         "type": 1,
                         "money": inviter.get("money", 0) * 0.1,
                         "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
@@ -164,10 +162,18 @@ class Register(BaseHandler):
                     # # TODO 更新上级代理的奖金  10%
                     # self.db.user.update({"uid": rName}, {
                     #     "$set": {"reward": inviter.get("reward", 0) + inviter.get("money", 0) * 0.1}})
+
+                return self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")
             else:
-                self.render("ok.html", myuser=self.user, r=rName, url="/user/home", tip=u"注册成功")
+                return self.render("ok.html", myuser=self.user, r=rName, url="/user/home", tip=u"注册成功")
 
 
+class Draw(BaseHandler):
+    """抽奖"""
+
+    @BaseHandler.authenticated
+    def get(self):
+        self.render('site/choujiang.html')
 class ForgetPwd(BaseHandler):
     """忘记密码"""
 
@@ -225,8 +231,51 @@ class FarmShop(BaseHandler):
 
     @BaseHandler.authenticated
     def get(self):
-        pets=self.db.pet.find()
-        self.render("farm/nongchangsd.html", myuser=self.user, pets=pets,account_tab=2)
+        pets = self.db.pet.find()
+        self.render("farm/nongchangsd.html", myuser=self.user, pets=pets, account_tab=3)
+
+    @BaseHandler.authenticated
+    def post(self):
+        total_cost = 0
+        items = self.get_argument("items")
+        items = eval(items)
+        order_items = []
+        # print items
+        now_time = time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(time.time()))
+        for i in items:
+            pet = self.db.pet.find_one({"id": i['id']})
+            count = i['count']
+            price = pet['price']
+            item_cost = int(price) * int(count)
+            total_cost += item_cost
+            self.db.my_pet.insert({"pid": i['id'], "count": count, "uid": self.user.get('uid'),
+                                   "time": now_time})
+            order_items.append({
+                "pid": i['id'],
+                "count": count,
+                "cost": item_cost})
+
+        self.db.order.insert(
+            {"item": order_items, "uid": self.user.get('uid'), "cost": total_cost, "time": now_time})
+
+        # id自增1
+        last = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+        if last.count() > 0:
+            lastone = dict()
+            for item in last:
+                lastone = item
+            consume_id = int(lastone.get('id', 0)) + 1
+        else:
+            consume_id = 1
+
+        self.db.jinbi.insert(
+            {"uid": self.user.get("uid"), "type": "buy_pet", "id": consume_id, "time": now_time, "money": total_cost})
+        if total_cost <= self.user.get("jinbi"):
+            self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
+        print total_cost
+        return self.redirect('/nongchangsd')
+
+
 
 
 class error_403(BaseHandler):
@@ -242,6 +291,70 @@ class error_404(BaseHandler):
 class error_500(BaseHandler):
     def get(self):
         self.render("500.html")
+
+
+class ProductList(BaseHandler):
+    @BaseHandler.authenticated
+    def get(self):
+        member_count = self.db.user.find({"admin": self.user.get('uid')}).count()
+        products = self.db.product.find().sort("_id", pymongo.DESCENDING)
+
+        self.render("product/list.html", account_tab=19, products=products, member_count=member_count, myuser=self.user)
+
+    @BaseHandler.authenticated
+    def post(self):
+        if not self.user.get("address_info"):
+            return self.render("ok.html", myuser=self.user, url="/account/address_setting", tip=u"请先完善收货地址")
+        total_cost = 0
+        items = self.get_argument("items")
+        items = eval(items)
+        order_items = []
+        # print items
+        now_time = time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(time.time()))
+        for i in items:
+            product = self.db.product.find_one({"id": i['id']})
+            count = i['count']
+            price = product['price']
+            item_cost = int(price) * int(count)
+            total_cost += item_cost
+
+            order_items.append({
+                "pid": i['id'],
+                "count": count,
+                "cost": item_cost})
+        if total_cost > int(self.user.get("jinbi")):
+            return self.render("ok.html", myuser=self.user, url="/shop", tip=u"金币余额不足")
+
+        # id自增1
+        last = self.db.product_order.find().sort("id", pymongo.DESCENDING).limit(1)
+        if last.count() > 0:
+            lastone = dict()
+            for item in last:
+                lastone = item
+            order_id = int(lastone.get('id', 0)) + 1
+        else:
+            order_id = 1
+        self.db.product_order.insert(
+            {"id": order_id, "item": order_items, "uid": self.user.get('uid'), "cost": total_cost, "status": "submit",
+             "time": now_time})
+
+        # id自增1
+        last = self.db.consume.find().sort("id", pymongo.DESCENDING).limit(1)
+        if last.count() > 0:
+            lastone = dict()
+            for item in last:
+                lastone = item
+            consume_id = int(lastone.get('id', 0)) + 1
+        else:
+            consume_id = 1
+
+        self.db.consume.insert(
+            {"uid": self.user.get("uid"), "type": "buy_pet", "id": consume_id, "time": now_time, "cost": total_cost})
+
+        if total_cost <= self.user.get("jinbi"):
+            self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
+        print total_cost
+        return self.redirect('/shop')
 
 
 class UploadImageFile(BaseHandler):
@@ -280,46 +393,6 @@ class UploadImageFile(BaseHandler):
             self.write(json.dumps({"status": 'ok', "msg": "", "base_url": "", "name": filename}))
 
 
-class UploadAttachment(BaseHandler):
-    @BaseHandler.authenticated
-    def post(self):
-        project_id = int(self.get_argument("project_id"))
-        if not self.db.project.find({"id": project_id}).count():
-            return self.write(json.dumps({"status": "error", "msg": u"项目信息不存在！"}))
-        path = self.get_argument("path", "attachment")
-        upload_path = os.path.join(self.settings['upload_path'], path)
-        # 若不存在此目录，则创建之
-        if not os.path.isdir(upload_path):
-            os.mkdir(upload_path)
-        file_metas = self.request.files.get('file', [])
-        data = []
-        try:
-            for meta in file_metas:
-                raw_filename = meta['filename']
-                attachment = dict()
-                attachment["project_id"] = project_id
-                attachment["raw_filename"] = raw_filename
-                ext = os.path.splitext(raw_filename)[1]
-                # 生成随机文件名
-                rand_filename = str(uuid.uuid4())
-                uploaded_filename = '%s%s' % (rand_filename, ext)
-                file_path = os.path.join(upload_path, uploaded_filename)
-                with open(file_path, 'wb') as up:
-                    up.write(meta['body'])
-                attachment["uploaded_filename"] = uploaded_filename
-                attach_cursor = self.db.attachment.find()
-                if not attach_cursor.count():
-                    attachment["id"] = 1
-                else:
-                    attachment["id"] = attach_cursor.sort("id", DESCENDING).limit(1).next().get("id") + 1
-                attachment['time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                data.append(attachment.copy())
-                self.db.attachment.insert(attachment)
-        except Exception, e:
-            return self.write(json.dumps({"status": 'error', "msg": u"上传失败，请重新上传"}))
-        else:
-            return self.write(json.dumps({
-                "status": 'ok', "data": json.dumps(data)}))
 
 
 class UploadImage(BaseHandler):

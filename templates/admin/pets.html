@@ -77,6 +77,8 @@
                                         <th>图片</th>
                                         <th>单价</th>
                                         <th>所需等级</th>
+                                        <th>日产金币</th>
+                                        <th>存活时间</th>
                                         <th>描述</th>
                                         <th>操作</th>
                                     </tr>
@@ -87,11 +89,13 @@
                                         <td><input type="checkbox" class="i-checks"></td>
                                         <td class="userListId">{{ n.get('id','无') }}</td>
                                         <td>{{ n.get('name','无') }}</td>
-                                        <td>{{ n.get('pic','无') }}</td>
+                                        <td><img  width="50" src="/static/images/{{ n.get('image','无') }}" /></td>
                                         <td>{{ n.get('price','无') }}</td>
                                         <td>{{ n.get('level','无') }}</td>
+                                        <td>{{ n.get('day_jinbi','无') }}</td>
+                                        <td>{{ n.get('life','无') }}</td>
                                         <td>{{ n.get('desc','无') }}</td>
-                                        <td><a href="/admin/pet_edit?id={{n.get('id','')}}">修改</a></td>
+                                        <td><a href="/admin/addpet?id={{n.get('id','')}}">修改</a></td>
                                     </tr>
                                     {% end %}
                                     </tbody>

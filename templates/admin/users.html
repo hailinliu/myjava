@@ -88,9 +88,10 @@
                                         <th>用户名</th>
                                         <th>手机号</th>
                                         <th>上级UID</th>
-                                        <th>状态</th>
+                                        <!--<th>状态</th>-->
+                                        <th>级别</th>
                                         <th style="text-align: center" colspan="2">激活币</th>
-                                        <th>奖金</th>
+                                        <th>金币</th>
                                         <th>会员数</th>
                                         <th>注册时间</th>
                                         <th>最近登录时间</th>
@@ -109,19 +110,24 @@
                                         <td>{{ u.get('username','无') }}</td>
                                         <th>{{u.get('phone','无')}}</th>
                                         <th>{{u.get('admin','无')}}</th>
-                                        <td>
-                                            {%if u.get('is_check')%}
-                                            已激活
-                                            {%else%}
-                                            未激活
-                                            {%end%}
+                                        <!--<td>-->
+                                        <!--{%if u.get('is_check')%}-->
+                                        <!--已激活-->
+                                        <!--{%else%}-->
+                                        <!--未激活-->
+                                        <!--{%end%}-->
+                                        <!--</td>-->
+                                        <td contenteditable="true" class="level_td" data-handle-id="{{u['uid']}}">
+                                            {{u.get('level',0)}}
                                         </td>
                                         <td contenteditable="true" class="money_td" data-handle-id="{{u['uid']}}">
                                             {{u.get('money',0)}}
                                         </td>
                                         <td><a href="/admin/trade_record?uid={{u.get('uid')}}">转账笔数({{trade_count(u.get('uid'))}})</a>
                                         </td>
-                                        <td>{{u.get('reward',0)}}</td>
+                                        <td contenteditable="true" class="jinbi_td" data-handle-id="{{u['uid']}}">
+                                            {{u.get('jinbi',0)}}
+                                        </td>
                                         <td><a href="/admin/userlist?uid={{u.get('uid')}}">{{member_count(u.get('uid'))}}</a>
                                         </td>
                                         <td>{{ u.get('regtime','未知') }}</td>
@@ -318,6 +324,71 @@
                 if (confirm("确认修改该用户激活币吗？")) {
                     $.ajax({
                         url: '/admin/update_money',
+                        type: 'post',
+                        data: data,
+                        success: function (data) {
+                            var j = jQuery.parseJSON(data);
+                            if (j.status == 'ok') {
+                                alert("修改成功")
+                            }
+                            else {
+                                alert(j.error);
+                                that.text(focus_money);
+                            }
+                        },
+                        error: function () {
+                            alert('error');
+                        }
+                    });
+                }
+                else {
+                    that.text(focus_money);
+                }
+            }
+        })
+
+        $(".level_td").blur(function () {
+
+            if ($(this).text() != focus_money) {
+                var data = {};
+                var that = $(this);
+                data['level'] = $(this).text();
+                data['uid'] = $(this).data("handle-id");
+                if (confirm("确认修改该用户级别吗？")) {
+                    $.ajax({
+                        url: '/admin/update_level',
+                        type: 'post',
+                        data: data,
+                        success: function (data) {
+                            var j = jQuery.parseJSON(data);
+                            if (j.status == 'ok') {
+                                alert("修改成功")
+                            }
+                            else {
+                                alert(j.error);
+                                that.text(focus_money);
+                            }
+                        },
+                        error: function () {
+                            alert('error');
+                        }
+                    });
+                }
+                else {
+                    that.text(focus_money);
+                }
+            }
+        });
+         $(".jinbi_td").blur(function () {
+
+            if ($(this).text() != focus_money) {
+                var data = {};
+                var that = $(this);
+                data['jinbi'] = $(this).text();
+                data['uid'] = $(this).data("handle-id");
+                if (confirm("确认修改该用户级别吗？")) {
+                    $.ajax({
+                        url: '/admin/update_jinbi',
                         type: 'post',
                         data: data,
                         success: function (data) {

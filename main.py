@@ -8,10 +8,12 @@ from session.auth import MongoAuthentication
 from session.session import MongoSessions
 from utils.Notice import Notice
 from utils.UImodule import *
-from view.account import AccountActivate, SafePwdCheck, AccountPwdUpdate, AccountPwdProtect, AccountInfoSetting, \
-    AccountMembers, AccountAwardDetail, LogoutHandler
+from view.account import SafePwdCheck, AccountPwdUpdate, AccountPwdProtect, AccountInfoSetting, \
+    AccountMembers, AccountAwardDetail, LogoutHandler, TuijianJg, Zhitui, Jihuo, JihuoRecord, JiHuobiLog, JiHuobiLog2, \
+    JinBiLog, JinBiLog2, MyOrder, UserAddressSetting, UserAlipaySetting
 from view.admin import *
 from view.site import *
+from view.trade import *
 from view.user import *
 from utils import VerifyCode
 from utils.session import *
@@ -48,14 +50,37 @@ class Application(tornado.web.Application):
             (r"/news_list", NoticeList),
             (r"/mynongchang", MyFarm),
             (r"/nongchangsd", FarmShop),
-            (r"/account/activate", AccountActivate),
+            (r"/shop", ProductList),
+            (r"/draw", ProductList),
+            (r"/account/tjjg", TuijianJg),
+            (r"/account/zhitui", Zhitui),
+            (r"/account/jihuo", Jihuo),
+            (r"/account/jihuojl", JihuoRecord),
+            (r"/account/jihuobi_log", JiHuobiLog),
+            (r"/account/jihuobi_log2", JiHuobiLog2),
+            (r"/account/jinbi_log", JinBiLog),
+            (r"/account/jinbi_log2", JinBiLog2),
+            (r"/account/orders", MyOrder),
+            (r"/account/address_setting", UserAddressSetting),
+            (r"/account/alipay_setting", UserAlipaySetting),
             (r"/account/info_setting", AccountInfoSetting),
             (r"/account/pwd_update", AccountPwdUpdate),
             (r"/account/pwd_protect", AccountPwdProtect),
             (r"/account/safe_pwd_check", SafePwdCheck),
             (r"/account/members", AccountMembers),
             (r"/account/reward_detail", AccountAwardDetail),
-            (r"/member/activate", AccountActivate),
+            (r"/trade/zhuanjihuobi", Zhuanjihuobi),
+            (r"/trade/zhuanjinbi", Zhuanjinbi),
+            (r"/trade/maijb", GetCrash),
+            (r"/trade/jbdingdan", GetCrashLog),
+            (r"/trade/jinbi_guadan", JinBiPaiMai),
+            (r"/trade/woyao_guadan", JinBiGuadan),
+            (r"/trade/jinbi_mai", JinBiGoumai),
+            (r"/trade/jinbi_mai2", JinBiMai),
+            (r"/trade/jinbi_qianggou", JinBiQianggou),
+            (r"/trade/jinbi_confirm_pay", JinBiQuerenPay),
+            (r"/trade/jinbi_cancel_pay", JinbiQianggouCancel),
+            (r"/trade/jinbi_confirm_paid", JinBiConfirmPaid),
             (r"/admin/login", AdminLoginHandler),
             (r"/admin/loginout", AdminLogoutHandler),
             (r"/admin/home", AdminHomeHandler),
@@ -66,13 +91,19 @@ class Application(tornado.web.Application):
             (r"/admin/reset_pwd_protect", AdminUserResetPwdProtect),
             (r"/admin/frozen_user", AdminUserFrozen),
             (r"/admin/check_phone", AdminCheckPhone),
+            (r"/admin/update_money", AdminUserUpdateMoney),
+            (r"/admin/update_level", AdminUserUpdateLevel),
+            (r"/admin/update_jinbi", AdminUserUpdateJinbi),
             (r"/admin/adduser", AddUser),
             (r"/admin/petlist", AdminPetList),
             (r"/admin/addpet", AdminPetEdit),
+            (r"/admin/add_product", AdminProductAdd),
+            (r"/admin/products", AdminProductList),
+            (r"/admin/orders", AdminOrder),
+            (r"/admin/order_shippd", AddressOrderShip),
             (r"/verifycode", VerifyCode),
             (r"/sendcode", RegisterSendCode),
             (r"/ajax/upload_image", UploadImageFile),
-            (r"/ajax/upload_attachment", UploadAttachment),
             (r"/kindeditor_upload_json", KindeditorUploadImage),
             (r"/file_manager_json", FileManagerJson),
 
@@ -111,12 +142,11 @@ class Application(tornado.web.Application):
             reward_type={"1": "推荐奖", "2": "团队奖"},
             notice=Notice(),
 
-            # weburl="http://www.wss123.cc",
+            weburl="http://127.0.0.1:8000",
             develop_env="true",
             session_secret="3cdcb1f00803b6e78ab50b466a40b9977db396840c28307f428b25e2277f1bcc",
             session_timeout=1800,
             store_options={
-                # 'redis_host': '120.25.145.142',
                 'redis_host': '127.0.0.1',
                 'redis_port': 6379,
                 'redis_pass': '',

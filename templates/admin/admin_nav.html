@@ -55,6 +55,26 @@
                     </li>
                 </ul>
             </li>
+             <li class="{% if admin_nav==5 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">商品管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/products">商品列表</a>
+                    </li>
+                    <li>
+                        <a href="/admin/add_product">发布商品</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="{% if admin_nav==6 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">订单管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/orders">订单列表</a>
+                    </li>
+
+                </ul>
+            </li>
 
         </ul>
 
