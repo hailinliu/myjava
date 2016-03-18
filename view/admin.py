@@ -410,7 +410,7 @@ class AdminUserTradeRecord(BaseHandler):
 
     @BaseHandler.admin_authed
     def get(self):
-        uid = self.get_argument("uid", None)
+        uid = int(self.get_argument("uid", ""))
         user = self.db.user.find_one({"uid": uid})
         trade_records = self.db.trade_log.find({"uid": uid})
         self.render('admin/user_trade_record.html', admin_nav=3, user=user, trade_records=trade_records,
