@@ -35,12 +35,12 @@
                 </ul>
             </li>
              <li class="{% if admin_nav==3 %}active{% end %}">
-                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">农场管理</span> <span
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">矿区管理</span> <span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                    <li><a href="/admin/petlist">宠物列表</a></li>
+                    <li><a href="/admin/petlist">矿机列表</a></li>
 
-                    <li><a href="/admin/addpet">添加宠物</a></li>
+                    <li><a href="/admin/addpet">添加矿机</a></li>
                 </ul>
             </li>
 
@@ -72,10 +72,25 @@
                 <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                     <li><a href="/admin/orders">订单列表</a>
                     </li>
+                </ul>
+            </li>
+            <li class="{% if admin_nav==7 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">奖励管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/leader_reward">领导奖</a></li>
+                    <li><a href="/admin/member_reward">下属分红</a></li>
 
                 </ul>
             </li>
+             <li class="{% if admin_nav==8 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">提现管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/crash_record">提现记录</a></li>
 
+                </ul>
+            </li>
         </ul>
 
     </div>

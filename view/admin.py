@@ -424,6 +424,37 @@ class AdminUserTradeRecord(BaseHandler):
                     myuser=self.user)
 
 
+class AdminUserApplyCrashRecord(BaseHandler):
+    """用户申请提现记录
+    :type 充值  转账
+    """
+
+    @BaseHandler.admin_authed
+    def get(self):
+        query = {}
+        if self.get_argument("page", None) in ["", None]:
+            current_page = 1
+        else:
+            current_page = int(self.get_argument("page"))
+
+        search = ""
+        records = self.db.apply_crash.find()
+        per = 20.0
+        pages = int(math.ceil(records.count() / per))
+        records = records.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
+        counts = records.count()
+
+        def user_info(uid):
+            info = self.db.user.find_one({"uid": uid})
+            if not info:
+                info = {}
+            return info
+
+        self.render('admin/crash_log.html', admin_nav=8, user_info=user_info, pages=pages, counts=counts,
+                    records=records,
+                    current_page=current_page, myuser=self.user, search=search)
+
+
 class AdminUserResetPwd(BaseHandler):
     """修改密码"""
 
@@ -467,12 +498,12 @@ class AdminUserFrozen(BaseHandler):
 
     @BaseHandler.admin_authed
     def get(self):
-        uid = int(self.get_argument("uid", 0))
+        uid = self.get_argument("uid", 0)
         type = self.get_argument("type", "")
-        # print uid
+        print uid
         info = self.db.user.find_one({"uid": uid})
         if not info:
-            self.render("ok.html", url="/admin/userlist", tip="冻结用户失败")
+            self.render("ok.html", url="/admin/userlist", tip="用户不存在")
         else:
             if type == 'cancel':
                 self.db.user.update({"uid": uid}, {"$set": {"frozen": False}})
@@ -480,6 +511,31 @@ class AdminUserFrozen(BaseHandler):
             else:
                 self.db.user.update({"uid": uid}, {"$set": {"frozen": True}})
                 self.render("ok.html", url="/admin/userlist", tip="用户已被冻结")
+
+
+class AdminPaidCrash(BaseHandler):
+    """确认提现"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        id = int(self.get_argument("id", 0))
+        type = self.get_argument("type", "paid")
+        print id
+        info = self.db.apply_crash.find_one({"id": id})
+        update_info = {}
+
+        if not info:
+            self.render("ok.html", url="/admin/crash_record", tip="该记录不存在")
+        else:
+            update_info = {"handle_time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))}
+            if type == 'paid':
+                update_info.update({"status": "paid"})
+                self.db.apply_crash.update({"id": id}, {"$set": update_info})
+                self.render("ok.html", url="/admin/crash_record", tip="已处理")
+            else:
+                update_info.update({"status": "refuse"})
+                self.db.apply_crash.update({"id": id}, {"$set": update_info})
+                self.render("ok.html", url="/admin/crash_record", tip="已处理")
 
 
 class AdminPetEdit(BaseHandler):
@@ -671,3 +727,36 @@ class AddressOrderShip(BaseHandler):
         remark = self.get_argument("remark", '')
         self.db.product_order.update({"id": order_id}, {"$set": {"status": "shipped", "remark": remark}})
         self.redirect('/admin/orders')
+
+
+class AdminRecharge(BaseHandler):
+    """充值激活币"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        if not self.user:
+            self.redirect('/admin/login')
+        uid = self.get_argument("uid", None)
+        if uid:
+            user_info = self.db.user.find_one({"uid": uid})
+        else:
+            user_info = None
+        self.render("admin/recharge.html", myuser=self.user, uid=uid, user_info=user_info, admin_nav=2)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        money = int(self.get_argument("money", 0))
+
+        uid = self.get_argument("uid", None)
+        user_info = self.db.user.find_one({"uid": uid})
+        handle = {"money": user_info.get('money', 0) + money}
+        if not user_info.get("is_check"):
+            handle.update(
+                {"is_check": True, "money": user_info.get('money', 0) + money - 100,
+                 'active_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+
+        self.db.user.update({"uid": uid}, {"$set": handle})
+        # 充值记录 TODO
+        self.db.provide_money.insert(
+            {"money": money, 'time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+        return self.redirect('/admin/userlist')
