@@ -183,21 +183,52 @@ class GetPrize(BaseHandler):
         pass
 
     @BaseHandler.authenticated
+    def get(self):
+        prize = [{"id": 1, "prize": "商城价值500的商品", "v": 1.0}, {"id": 2, "prize": "100金币", "v": 1.5},
+                 {"id": 3, "prize": "10金币", "v": 2.0}]
+        left_jinbi = self.db.user.find_one({"uid": self.user.get("uid")}).get("jinbi", 0)
+        return self.write(json.dumps({"status": "ok", "prize": prize, "jinbi": left_jinbi}))
+
+    @BaseHandler.authenticated
+    def put(self):
+        prize = int(self.get_argument("prize", 0))
+        handle_id = int(self.get_argument("handle_id", 0))
+        left_jinbi = self.user.get("jinbi")
+        if prize in [1, 2]:
+            if prize == 1:
+                prize_jinbi = 100
+            else:
+                prize_jinbi = 10
+            self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": left_jinbi + prize_jinbi}})
+            self.db.draw.update({"id": handle_id}, {"$set": {"prize": prize}})
+        left_jinbi = self.db.user.find_one({"uid": self.user.get("uid")}).get("jinbi", 0)
+        print left_jinbi
+        return self.write(json.dumps({"status": "ok", "jinbi": left_jinbi}))
+
+    @BaseHandler.authenticated
     def post(self):
         prize = [{"id": 1, "prize": "商城价值500的商品", "v": 1.0}, {"id": 2, "prize": "100金币", "v": 1.5},
                  {"id": 3, "prize": "10金币", "v": 2.0}]
-        left_jinbi =self.db.user.find_one({"uid":self.user.get("uid")}).get("jinbi", 0)
-        date=str(datetime.datetime.today().date())
-        print left_jinbi
-        draw_count=self.db.draw.find({"uid":self.user.get("uid"),"date":date}).count()
+        left_jinbi = self.db.user.find_one({"uid": self.user.get("uid")}).get("jinbi", 0)
+        date = str(datetime.datetime.today().date())
+        draw_count = self.db.draw.find({"uid": self.user.get("uid"), "date": date}).count()
+        # id自增1
+        last = self.db.draw.find().sort("id", pymongo.DESCENDING).limit(1)
+        if last.count() > 0:
+            lastone = dict()
+            for item in last:
+                lastone = item
+            draw_id = int(lastone.get('id', 0)) + 1
+        else:
+            draw_id = 1
         if left_jinbi > 2:
-            if draw_count<100:
-                date=str(datetime.datetime.today().date())
+            if draw_count < 100:
+                date = str(datetime.datetime.today().date())
                 self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": left_jinbi - 2}})
-                self.db.draw.insert({"uid":self.user.get("uid"),"date":date})
+                self.db.draw.insert({"id": draw_id, "uid": self.user.get("uid"), "date": date})
             else:
-                return self.write(json.dumps({"status": "error","error":"今天抽奖机会已用完"}))
-        return self.write(json.dumps({"status": "ok", "prize": prize,"jinbi": left_jinbi}))
+                return self.write(json.dumps({"status": "error", "error": "今天抽奖机会已用完"}))
+        return self.write(json.dumps({"status": "ok", "prize": prize, "jinbi": left_jinbi}))
 
 
 class ForgetPwd(BaseHandler):

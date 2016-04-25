@@ -95,14 +95,16 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.backstretch.min.js"></script>
 <script type="text/javascript" src="/static/js/jQueryRotate.2.2.js"></script>
-
+<script src="http://58.221.44.174:96/ui_yun/layer/layer.js"></script>
 <script type="text/javascript">
     var left_jinbi = parseInt($("#jinbi").text());
-    var prize_data;
+    var prize_data = get_prize('get');
+    var handle_id=0;
     $(function () {
         $(".rotate-con-zhen").rotate({
             bind: {
                 click: function () {
+                    get_prize('post');
                     var a = runzp();
                     $(this).rotate({
                         duration: 3000,               //转动时间
@@ -110,17 +112,18 @@
                         animateTo: 1440 + a.angle,      //结束的角度
                         easing: $.easing.easeOutSine,//动画效果，需加载jquery.easing.min.js
                         callback: function () {
-                            alert(a.prize + a.message);//简单的弹出获奖信息
+                            //    alert(a.prize + a.message);//简单的弹出获奖信息
+                            layer.msg(a.message + "抽中" + a.prize);
                         }
                     });
                 }
             }
         });
     });
-    function get_prize() {
+    function get_prize(type) {
         $.ajax({
             url: '/get_prize',
-            type: 'post',
+            type: type,
             data: {},
             success: function (data) {
                 console.log(data);
@@ -128,6 +131,8 @@
                 if (j['status'] == 'ok') {
                     prize_data = j['prize'];
                     left_jinbi = j['jinbi'];
+                    handle_id=j['handle_id'];
+                    $("#jinbi").text(left_jinbi)
 
                 }
                 else {
@@ -148,7 +153,7 @@
     }
     function runzp() {
 
-        var obj =get_prize();
+        var obj = prize_data;
         var result = randomnum(1, 100);
         var line = 0;
         var temp = 0;
@@ -192,6 +197,27 @@
                     angle = r2;
                     break;
             }
+            //抽中后像服务器发请求
+            $.ajax({
+                url: '/get_prize',
+                type: 'put',
+                data: {"prize":index,"hanle_id":handle_id},
+                success: function (data) {
+                    console.log(data);
+                    var j = jQuery.parseJSON(data);
+                    if (j['status'] == 'ok') {
+                        left_jinbi = j['jinbi'];
+                        $("#jinbi").text( j['jinbi'])
+                    }
+                    else {
+                        alert(j.error)
+                    }
+
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
             myreturn.prize = returnobj.prize;
         } else {// 没有
             message = "再接再厉";
