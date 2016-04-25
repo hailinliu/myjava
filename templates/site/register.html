@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="container reg">
-    <div class="tit"><img src="http://58.221.44.174:96/ui_yun/images/logo.png"></div>
+    <div class="tit"><img src="/static/images/logo.png"></div>
     <div class="xlogin center-block">
         <form action="" method="post">
             {% module xsrf_form_html() %}
@@ -124,18 +124,13 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-5">
-                        <div class="checkbox"><label><input type="checkbox" id="zhucetiaokuan" value="1"
-                                                            checked='CHECKED'>
-                            <a href="#">同意条款</a></label></div>
-                    </div>
 
-                    <div class="col-sm-4">
+                    <div class="lo lo5">
                         <button type="submit" class="btn btn-primary form-control reggo">注册</button>
                     </div>
                 </div>
                 <div class="lo4"></div>
-                <div class="lo lo5">已经注册的有账户? <a href="login.asp">立即登录</a></div>
+                <div class="lo lo2">已经注册的有账户? <a href="/login" class="btn  form-control">立即登录</a></div>
             </div>
         </form>
     </div>
@@ -144,10 +139,16 @@
 
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="../ui/js/jquery.backstretch.min.js"></script>
 <script src="http://58.221.44.174:96/ui_yun/layer/layer.js"></script>
 <script src="http://58.221.44.174:96/ui_yun/js/long.js"></script>
+<script src="/static/js/jquery.backstretch.min.js"></script>
+<script>
+    $.backstretch(["/static/images/bg.jpg"], {
+        fade: 100,
+        duration: 100
+    });
 
+</script>
 <script>
 
     $(".reggo").click(function () {
@@ -225,10 +226,7 @@
 //        $.ajax({type: "get", async: true, url: url, dataType: "jsonp"});
     }
 
-    $.backstretch(["http://58.221.44.174:96/ui_yun/images/dl.jpg"], {
-        fade: 100,
-        duration: 100
-    });
+
     function refreshCode() {
         document.getElementById("imgcode").src = "/verifycode?" + Math.random();
     }

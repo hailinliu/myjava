@@ -345,3 +345,5 @@ class DelNoticeHandler(BaseHandler):
         for n in notice_ids:
             self.db.notice.remove({"_id": ObjectId(n), "uid": self.user['uid']})
         self.write(json.dumps({"status": "ok", "msg": u"已删除"}))
+
+

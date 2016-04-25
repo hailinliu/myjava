@@ -7,6 +7,7 @@
     <title>登录到系统</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="http://58.221.44.174:96/ui_yun/css/css.css" rel="stylesheet">
+    <link href="/static/css/login_style.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -21,61 +22,79 @@
 <body>
 
 
-<div class="container log">
-    <div class="tit"><img src="http://58.221.44.174:96/ui_yun/images/logo.png"></div>
-    <div class="xlogin center-block">
-        <form action="" method="post">
-           {% module xsrf_form_html() %}
-            <input type="hidden" name="url" id="url" value="{{url}}">
-            <div class="xlogin2 form-horizontal">
-                <div class="lo1">用户登录</div>
-                <div class="form-group">
-                    <label for="x1" class="col-sm-4 control-label">玩家编号:</label>
+<!--<div class="container log">-->
+<!--<div class="tit"><img src="/static/images/logo.png"></div>-->
+<!--<div class="xlogin center-block">-->
+<!--<form action="" method="post">-->
+<!--{% module xsrf_form_html() %}-->
+<!--<input type="hidden" name="url" id="url" value="{{url}}">-->
+<!--<div class="xlogin2 form-horizontal">-->
+<!--<div class="lo1">用户登录</div>-->
+<!--<div class="form-group">-->
+<!--<label for="x1" class="col-sm-4 control-label">玩家编号:</label>-->
 
-                    <div class="col-sm-8">
-                        <input class="form-control" name="name" id="x1" placeholder="请输入您的手机号码" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="x2" class="col-sm-4 control-label">登录密码:</label>
+<!--<div class="col-sm-8">-->
+<!--<input class="form-control" name="name" id="x1" placeholder="请输入您的手机号码" value="">-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="x2" class="col-sm-4 control-label">登录密码:</label>-->
 
-                    <div class="col-sm-8">
-                        <input type="password" name="password" class="form-control" id="x2" placeholder="请输入您的密码">
-                    </div>
-                </div>
+<!--<div class="col-sm-8">-->
+<!--<input type="password" name="password" class="form-control" id="x2" placeholder="请输入您的密码">-->
+<!--</div>-->
+<!--</div>-->
 
-                <!--  <div class="form-group">
-                    <label for="x3" class="col-sm-4 control-label">验 证 码:</label>
-                    <div class="col-sm-4">
-                      <input class="form-control" id="x3" placeholder="验证码">
-                    </div>
-                    <div class="col-sm-4">
-                      <img src="" width="70" height="34" id="yzmpic" class="loimg" onclick="sxyzm();"/>
-                    </div>
-                  </div> -->
+<!--&lt;!&ndash;  <div class="form-group">-->
+<!--<label for="x3" class="col-sm-4 control-label">验 证 码:</label>-->
+<!--<div class="col-sm-4">-->
+<!--<input class="form-control" id="x3" placeholder="验证码">-->
+<!--</div>-->
+<!--<div class="col-sm-4">-->
+<!--<img src="" width="70" height="34" id="yzmpic" class="loimg" onclick="sxyzm();"/>-->
+<!--</div>-->
+<!--</div> &ndash;&gt;-->
 
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-5">
-                        <div class="checkbox"><label><input type="checkbox" id="x4" value="1" checked='CHECKED'>
-                            保存登录</label></div>
-                    </div>
+<!--<div class="form-group">-->
+<!--<div class="col-sm-offset-3 col-sm-5">-->
+<!--<div class="checkbox"><label><input type="checkbox" id="x4" value="1" checked='CHECKED'>-->
+<!--保存登录</label></div>-->
+<!--</div>-->
 
-                    <div class="col-sm-4">
-                        <button type="submit" class="btn btn-primary form-control denglugo">登录</button>
-                    </div>
-                </div>
+<!--<div class="col-sm-4">-->
+<!--<button type="submit" class="btn btn-primary form-control denglugo">登录</button>-->
+<!--</div>-->
+<!--</div>-->
 
-                <div class="lo lo2">密码忘记了?</div>
-                <div class="lo lo3">点击<a href="#">这里</a>,使用密码保护找回您的密码.</div>
-                <div class="lo4"></div>
-                <div class="lo lo5">还不是微客农场的会员? <a href="reg.asp">创建一个新账户</a></div>
-            </div>
-        </form>
-    </div>
+<!--<div class="lo lo2">密码忘记了?</div>-->
+<!--<div class="lo lo3">点击<a href="#">这里</a>,使用密码保护找回您的密码.</div>-->
+<!--<div class="lo4"></div>-->
+<!--<div class="lo lo5">还不是微客农场的会员? <a href="reg.asp">创建一个新账户</a></div>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
 
+<!--</div>-->
+
+<div class="page-container" style="margin: 20px auto 0 auto;">
+    <div class="tit"><img src="/static/images/logo.png"></div>
+    <h1>登录</h1>
+
+    <form action="" method="post">
+        {% module xsrf_form_html() %}
+        <input type="hidden" name="url" id="url" value="{{url}}">
+        <input type="text" name="name" class="username" id="x1" placeholder="请输入您的用户名！">
+        <input type="password" name="password" class="password" id="x2" placeholder="请输入您的用户密码！">
+        <input type="Captcha" class="Captcha" name="Captcha" id="x3" placeholder="请输入验证码！">
+
+        <img src='/verifycode' width="70" height="34" id="yzmpic" class=" loimg" style="margin-top: 30px"/>
+
+        <button type="submit" class="btn btn-primary form-control denglugo">登录</button>
+        <div class="error"><span>+</span></div>
+    </form>
+    <div class="lo lo5"><a href="/">创建一个新账户</a></div>
 </div>
-
-
+<div class="lo lo3">点击<a href="/register">这里</a>,使用密码保护找回您的密码.</div>
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="http://58.221.44.174:96/ui_yun/js/jquery.backstretch.min.js"></script>
@@ -92,10 +111,10 @@
 
         var x1 = $("#x1").val();
         var x2 = $("#x2").val();
-        //var x3=$("#x3").val();
-        var x4 = $("#x4").prop('checked');
+        var x3 = $("#x3").val();
+        //  var x4 = $("#x4").prop('checked');
         if (x1 == "") {
-            tishi4('请输入您的玩家编号', '#x1')
+            tishi4('请输入您的用户名', '#x1')
             return false;
         }
         if (!checkMobile(x1)) {
@@ -107,18 +126,20 @@
             tishi4('请输入您的密码', '#x2')
             return false;
         }
-        /*			if(x3==""){
-         tishi4('请输入验证码','#x3')
-         return false;
-         }*/
+        if (x3 == "") {
+            tishi4('请输入验证码', '#x3')
+            return false;
+        }
         $("form").submit();
 //        var url = "/login?act=dl&x1=" + escape(x1) + "&x2=" + escape(x2) + "&x4=" + escape(x4.toString());
 //        tishi2();
 //        $.ajax({type: "post", async: true, url: url, dataType: "jsonp"});
 
     }
-
-    $.backstretch(["http://58.221.44.174:96/ui_yun/images/dl.jpg"], {
+    function refreshCode() {
+        document.getElementById("imgcode").src = "/verifycode?" + Math.random();
+    }
+    $.backstretch(["/static/images/bg.jpg"], {
         fade: 100,
         duration: 100
     });

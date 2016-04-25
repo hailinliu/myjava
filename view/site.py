@@ -173,7 +173,31 @@ class Draw(BaseHandler):
 
     @BaseHandler.authenticated
     def get(self):
-        self.render('site/choujiang.html')
+        self.render('site/choujiang.html', myuser=self.user)
+
+
+class GetPrize(BaseHandler):
+    """获取奖品数据"""
+
+    def check_xsrf_cookie(self):
+        pass
+
+    @BaseHandler.authenticated
+    def post(self):
+        prize = [{"id": 1, "prize": "商城价值500的商品", "v": 1.0}, {"id": 2, "prize": "100金币", "v": 1.5},
+                 {"id": 3, "prize": "10金币", "v": 2.0}]
+        left_jinbi =self.db.user.find_one({"uid":self.user.get("uid")}).get("jinbi", 0)
+        date=str(datetime.datetime.today().date())
+        print left_jinbi
+        draw_count=self.db.draw.find({"uid":self.user.get("uid"),"date":date}).count()
+        if left_jinbi > 2:
+            if draw_count<100:
+                date=str(datetime.datetime.today().date())
+                self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": left_jinbi - 2}})
+                self.db.draw.insert({"uid":self.user.get("uid"),"date":date})
+            else:
+                return self.write(json.dumps({"status": "error","error":"今天抽奖机会已用完"}))
+        return self.write(json.dumps({"status": "ok", "prize": prize,"jinbi": left_jinbi}))
 
 
 class ForgetPwd(BaseHandler):
@@ -211,7 +235,7 @@ class NoticeDetail(BaseHandler):
             news = self.db.news.find_one({"id": id})
         else:
             news = {}
-        self.render("site/notice_detail.html", news=news, account_tab=1,myuser=self.user)
+        self.render("site/notice_detail.html", news=news, account_tab=1, myuser=self.user)
 
 
 class NoticeList(BaseHandler):
@@ -219,7 +243,7 @@ class NoticeList(BaseHandler):
 
     def get(self):
         news = self.db.news.find()
-        self.render("site/notice_list.html", news=news, account_tab=1,myuser=self.user)
+        self.render("site/notice_list.html", news=news, account_tab=1, myuser=self.user)
 
 
 class FarmShop(BaseHandler):
