@@ -45,7 +45,13 @@ class LoginHandler(BaseHandler):
 
     def post(self):
         self.logging.info(('LoginHandler argument %s') % (self.request.arguments))
-
+        cap_ch = self.get_argument("cap_ch", None)
+        cookiecode = self.get_secure_cookie('verify_code')
+        if cap_ch:
+            if cap_ch != cookiecode:
+                return self.render("account/login.html", url="", error=u"验证码不正确")
+            else:
+                self.set_secure_cookie("checked", "checked")
         try:
             url = self.get_argument("url", None)
             pwd = self.get_argument("password", None)
@@ -65,7 +71,7 @@ class LoginHandler(BaseHandler):
 
             # 查询用户是否被冻结
             if exist_user.get("frozen"):
-                self.render("account/login.html", url=url, error=u"该用户已被冻结")
+                return self.render("account/login.html", url=url, error=u"该账号已被冻结")
             res = self.begin_session(phone, pwd)
             if not res:
                 return self.render("account/login.html", url=url, error=u"用户名或密码不正确")

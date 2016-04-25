@@ -1,9 +1,0 @@
-Tue, 26 Apr 2016 07:38:11 web.py[line:1908] INFO 200 GET /draw (127.0.0.1) 9.00ms
-Tue, 26 Apr 2016 07:38:12 web.py[line:1908] INFO 304 GET /static/js/jquery.backstretch.min.js (127.0.0.1) 425.00ms
-Tue, 26 Apr 2016 07:38:12 web.py[line:1908] INFO 304 GET /static/js/jQueryRotate.2.2.js (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 07:38:12 web.py[line:1908] INFO 304 GET /static/images/disk.jpg (127.0.0.1) 2.00ms
-Tue, 26 Apr 2016 07:38:12 web.py[line:1908] INFO 304 GET /static/images/start.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 07:38:12 web.py[line:1908] INFO 200 GET /get_prize (127.0.0.1) 4.00ms
-Tue, 26 Apr 2016 07:38:12 web.py[line:1908] INFO 304 GET /static/images/bg.jpg (127.0.0.1) 5.00ms
-Tue, 26 Apr 2016 07:38:13 web.py[line:1908] INFO 200 POST /get_prize (127.0.0.1) 10.00ms
-Tue, 26 Apr 2016 07:38:17 web.py[line:1908] INFO 200 POST /get_prize (127.0.0.1) 7.00ms

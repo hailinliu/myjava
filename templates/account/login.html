@@ -85,10 +85,10 @@
         <input type="hidden" name="url" id="url" value="{{url}}">
         <input type="text" name="name" class="username" id="x1" placeholder="请输入您的用户名！">
         <input type="password" name="password" class="password" id="x2" placeholder="请输入您的用户密码！">
-        <input type="Captcha" class="Captcha" name="Captcha" id="x3" placeholder="请输入验证码！">
+        <input type="Captcha" class="Captcha" name="cap_ch" id="x3" placeholder="请输入验证码！">
 
         <img src='/verifycode' width="70" height="34" id="yzmpic" class=" loimg" style="margin-top: 30px"/>
-
+        <span style="color:red">{{error}}</span>
         <button type="submit" class="btn btn-primary form-control denglugo">登录</button>
         <div class="error"><span>+</span></div>
     </form>
