@@ -762,3 +762,11 @@ class AdminRecharge(BaseHandler):
         self.db.provide_money.insert(
             {"money": money, 'time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
         return self.redirect('/admin/userlist')
+
+
+class BuyPetRecord(BaseHandler):
+    """购买宠物记录"""
+    @BaseHandler.authenticated
+    def get(self):
+        record=self.db.my_pet.find()
+        self.render("admin/buy_pet_record.html", myuser=self.user, record=record, admin_nav=2)
