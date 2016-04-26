@@ -107,6 +107,7 @@ class Application(tornado.web.Application):
             (r"/admin/products", AdminProductList),
             (r"/admin/orders", AdminOrder),
             (r"/admin/order_shippd", AddressOrderShip),
+            (r"/admin/leader_award_setting", AdminLeaderRewardSetting),
             (r"/verifycode", VerifyCode),
             (r"/sendcode", RegisterSendCode),
             (r"/ajax/upload_image", UploadImageFile),

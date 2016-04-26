@@ -162,9 +162,9 @@ class Register(BaseHandler):
                     if not setting:
                         gain = 12
                     else:
-                        gain = setting.get("recommend_award", 12)
+                        gain = setting.get("recommend_award", 18)
                     self.db.user.update({"uid": rName}, {
-                        "$set": {"jinbi": inviter.get("reward", 0) + 12}})
+                        "$set": {"jinbi": inviter.get("jinbi", 0) + 18}})
                     self.db.jinbi.insert({"type": 'tuijian', 'money': gain, "time": now_time})
 
                 return self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")

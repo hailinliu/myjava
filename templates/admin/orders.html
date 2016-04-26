@@ -96,11 +96,11 @@
                                             {%end%}
                                         </td>
                                         <td>{{ o.get('uid','无') }}</td>
-                                        <td>{{ address.get('address') }} {{ address.get('username') }} {{
-                                            address.get('phone') }}
+                                        <td>{{ address.get('address',"") }} {{ address.get('username',"") }} {{
+                                            address.get('phone',"") }}
                                         </td>
                                         <td>{{ o.get('cost','无') }}</td>
-                                        <td>{{ order_status.get(o.get('status','无')) }}</td>
+                                        <td>{{ order_status.get(o.get('status',''),"") }}</td>
                                         <td>{{ o.get('remark','无') }}</td>
                                         <td>
                                             {%if o.get('status') !='shipped'%}

@@ -686,8 +686,10 @@ class AdminOrder(BaseHandler):
         orders = self.db.product_order.find().sort("_id", pymongo.DESCENDING)
 
         def address_info(uid):
-            return self.db.user.find_one({"uid": uid}).get("address_info", {})
-
+            info=self.db.user.find_one({"uid": uid})
+            if not info:
+                return {}
+            return info.get("address_info", {})
         def product_info(pid):
             return self.db.product.find_one({"id": pid})
 
@@ -825,3 +827,29 @@ class CheckoutJinBi(BaseHandler):
                 self.db.jinbi.insert({"type": 'pet_produce', 'money': gain, "pet_id": pet_id, "time": str(now_time)})
                 self.db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
         self.redirect("/admin/buy_pet_record")
+
+class AdminLeaderRewardSetting(BaseHandler):
+    """领导奖设置"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        info = self.db.setting.find_one({"type": 1})
+        if not info:
+            info = {}
+        self.render('admin/leader_award_setting.html', admin_nav=3, myuser=self.user, info=info)
+
+    @BaseHandler.admin_authed
+    def post(self):
+        datas = self.request.arguments
+        print datas
+        info = self.db.setting.find_one({"type": 1})
+        if not info:
+            info = {}
+
+        if self.get_argument("recommend_award") == "":
+            recommend_jinbi =18
+        else:
+            recommend_jinbi = int(self.get_argument("recommend_award", 18))
+        self.db.setting.update({"type": 1}, {
+            "$set": {"recommend_award": recommend_jinbi}},upsert=True)
+        self.render('admin/leader_award_setting.html', admin_nav=3, myuser=self.user, info=info)
