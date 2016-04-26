@@ -559,6 +559,7 @@ class AdminPetEdit(BaseHandler):
             day_jinbi = int(self.get_argument("day_jinbi", 0))
             life = int(self.get_argument("life", 0))
             pet_image = self.get_argument("pet_image", "")
+            desc = self.get_argument("desc", "")
         except:
             return self.render("ok.html", myuser=self.user, url="/admin/pet_edit", tip=u"请输入合法的信息")
         info = {
@@ -568,7 +569,8 @@ class AdminPetEdit(BaseHandler):
             "level": level,
             "price": price,
             "day_jinbi": day_jinbi,
-            "life": life
+            "life": life,
+            "desc":desc
         }
 
         if pet_id:
