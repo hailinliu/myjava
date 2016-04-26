@@ -99,26 +99,28 @@
 <script type="text/javascript">
     var left_jinbi = parseInt($("#jinbi").text());
     var prize_data = get_prize('get');
-    var handle_id=0;
+    var handle_id = 0;
+    var end = false;
+
     $(function () {
-        $(".rotate-con-zhen").rotate({
-            bind: {
-                click: function () {
-                    get_prize('post');
-                    var a = runzp();
-                    $(this).rotate({
-                        duration: 3000,               //转动时间
-                        angle: 0,                    //起始角度
-                        animateTo: 1440 + a.angle,      //结束的角度
-                        easing: $.easing.easeOutSine,//动画效果，需加载jquery.easing.min.js
-                        callback: function () {
-                            //    alert(a.prize + a.message);//简单的弹出获奖信息
-                            layer.msg(a.message + "抽中" + a.prize);
-                        }
-                    });
-                }
+        $(".rotate-con-zhen").click(function () {
+            var return_=get_prize('post');
+            if (!return_) {
+                var a = runzp();
+                $(this).rotate({
+                    duration: 3000,               //转动时间
+                    angle: 0,                    //起始角度
+                    animateTo: 1440 + a.angle,      //结束的角度
+                    easing: $.easing.easeOutSine,//动画效果，需加载jquery.easing.min.js
+                    callback: function () {
+                        //    alert(a.prize + a.message);//简单的弹出获奖信息
+                        layer.msg(a.message + "抽中" + a.prize);
+                    }
+                });
             }
         });
+
+
     });
     function get_prize(type) {
         $.ajax({
@@ -131,25 +133,23 @@
                 if (j['status'] == 'ok') {
                     prize_data = j['prize'];
                     left_jinbi = j['jinbi'];
-                    handle_id=j['handle_id'];
+                    handle_id = j['handle_id'];
                     $("#jinbi").text(left_jinbi)
 
                 }
                 else {
-                    alert(j.error)
+                    end = true;
+                     layer.msg(j.error);
                 }
-
-
-            },
-            error: function () {
-                alert('error');
             }
+
         });
         if (left_jinbi < 2) {
+            end = true;
             alert('金币余额不足');
             return false;
         }
-        return prize_data;
+        return end;
     }
     function runzp() {
 
@@ -201,15 +201,16 @@
             $.ajax({
                 url: '/get_prize',
                 type: 'put',
-                data: {"prize":index,"hanle_id":handle_id},
+                data: {"prize": index, "hanle_id": handle_id},
                 success: function (data) {
                     console.log(data);
                     var j = jQuery.parseJSON(data);
                     if (j['status'] == 'ok') {
                         left_jinbi = j['jinbi'];
-                        $("#jinbi").text( j['jinbi'])
+                        $("#jinbi").text(j['jinbi'])
                     }
                     else {
+                        end = true;
                         alert(j.error)
                     }
 

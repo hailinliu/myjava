@@ -187,7 +187,7 @@ class JinBiLog(BaseHandler):
         per = 10
         total_consume = 0
         type_list = ["in", "pet_produce", "qianggou"]
-        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币"}
+        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币","tuijian":"推荐奖"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},

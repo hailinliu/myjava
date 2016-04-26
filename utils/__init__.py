@@ -32,7 +32,7 @@ class VerifyCode(BaseHandler):
 
 def send_short_msg(tpl_id='908659', tpl_value="#code#=123456", mobile_number='18672196610'):
     url = 'http://yunpian.com/v1/sms/tpl_send.json'
-    values = {'apikey': '1d3f6b7def6125c47d56583116fd938b',
+    values = {'apikey': '0cae3c9d6ecade53a787efabb4a16729',
               'mobile': mobile_number,
               'tpl_id': tpl_id,
               'tpl_value': tpl_value,

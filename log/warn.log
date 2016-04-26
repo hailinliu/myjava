@@ -1,77 +1,115 @@
-Tue, 26 Apr 2016 12:03:55 web.py[line:1908] INFO 304 GET / (127.0.0.1) 10.00ms
-Tue, 26 Apr 2016 12:03:56 web.py[line:1908] INFO 304 GET /static/images/a2.png (127.0.0.1) 363.00ms
-Tue, 26 Apr 2016 12:03:56 web.py[line:1908] INFO 304 GET /static/js/jquery.backstretch.min.js (127.0.0.1) 8.00ms
-Tue, 26 Apr 2016 12:03:56 web.py[line:1908] INFO 304 GET /static/images/bg.jpg (127.0.0.1) 4.00ms
-Tue, 26 Apr 2016 12:04:01 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
-Tue, 26 Apr 2016 12:04:01 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 20.00ms
-Tue, 26 Apr 2016 12:04:02 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 6.00ms
-Tue, 26 Apr 2016 12:04:05 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 31.00ms
-Tue, 26 Apr 2016 12:04:06 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 16.00ms
-Tue, 26 Apr 2016 12:04:13 web.py[line:1908] INFO 302 POST /nongchangsd (127.0.0.1) 17.00ms
-Tue, 26 Apr 2016 12:04:13 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 4.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] INFO 302 GET /admin/login (127.0.0.1) 4.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1496] ERROR Uncaught exception GET /admin/login (127.0.0.1)
-HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/admin/login', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; _xsrf=2|6d4f5dc3|de4baabf83d6add76b7088bb3140eb72|1461468084; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; checked="2|1:0|10:1461628041|7:checked|12:Y2hlY2tlZA==|11c5bdd434f5c71d5c16b20d6face211f345931387d36d1702fcadf965ac448d"; verify_code="2|1:0|10:1461628048|11:verify_code|8:dG4xag==|f502a21e7a02c1ab716ae1eb4b43c2cf7e1797da2fb24bc622540795692761bc"; verification="2|1:0|10:1461637763|12:verification|88:MmI2OGMyMWM5ZGY0YTc2MDg4MThkMGUwZjA3YTEyOGI5Mjg3MDY5OWU4Njg3YjA5NTcwMWJkMjkyMGM3MmZiYQ==|b39ec443c5f74c842801c276e96fea1c4bb9f076fb143f11fec6c2b8898b9a0c"; session_id="2|1:0|10:1461637763|10:session_id|88:YWFhZjE3NGU5YzAzODVkNzIzN2RiOGMxMWU5YzJhZjY3YTYxYmJiMjc1NGFiOWE0YTc2M2I5NWMzOWQ3MTAyMw==|41a9a94a1705515a154bd4082bde9a6c5779663420e55dd99789507499df23a4"', 'Upgrade-Insecure-Requests': '1'})
-Traceback (most recent call last):
-  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
-    result = method(*self.path_args, **self.path_kwargs)
-  File "F:\TornadoProject\weikefarm\view\admin.py", line 44, in get
-    self.render("admin/login.html", url=next, myuser=self.user, error=error)
-  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
-    html = self.render_string(template_name, **kwargs)
-  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
-    namespace = self.get_template_namespace()
-  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
-    namespace.update(self.ui)
-TypeError: 'NoneType' object is not iterable
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] INFO 200 GET /admin/home (127.0.0.1) 20.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=1280 (127.0.0.1) 2.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 3.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-1.png (127.0.0.1) 0.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-3.png (127.0.0.1) 0.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-2.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] INFO 302 GET /admin/login (127.0.0.1) 6.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1496] ERROR Uncaught exception GET /admin/login (127.0.0.1)
-HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/admin/login', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; _xsrf=2|6d4f5dc3|de4baabf83d6add76b7088bb3140eb72|1461468084; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; checked="2|1:0|10:1461628041|7:checked|12:Y2hlY2tlZA==|11c5bdd434f5c71d5c16b20d6face211f345931387d36d1702fcadf965ac448d"; verify_code="2|1:0|10:1461628048|11:verify_code|8:dG4xag==|f502a21e7a02c1ab716ae1eb4b43c2cf7e1797da2fb24bc622540795692761bc"; verification="2|1:0|10:1461637763|12:verification|88:MmI2OGMyMWM5ZGY0YTc2MDg4MThkMGUwZjA3YTEyOGI5Mjg3MDY5OWU4Njg3YjA5NTcwMWJkMjkyMGM3MmZiYQ==|b39ec443c5f74c842801c276e96fea1c4bb9f076fb143f11fec6c2b8898b9a0c"; session_id="2|1:0|10:1461637763|10:session_id|88:YWFhZjE3NGU5YzAzODVkNzIzN2RiOGMxMWU5YzJhZjY3YTYxYmJiMjc1NGFiOWE0YTc2M2I5NWMzOWQ3MTAyMw==|41a9a94a1705515a154bd4082bde9a6c5779663420e55dd99789507499df23a4"', 'Upgrade-Insecure-Requests': '1'})
-Traceback (most recent call last):
-  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
-    result = method(*self.path_args, **self.path_kwargs)
-  File "F:\TornadoProject\weikefarm\view\admin.py", line 44, in get
-    self.render("admin/login.html", url=next, myuser=self.user, error=error)
-  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
-    html = self.render_string(template_name, **kwargs)
-  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
-    namespace = self.get_template_namespace()
-  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
-    namespace.update(self.ui)
-TypeError: 'NoneType' object is not iterable
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] INFO 200 GET /admin/home (127.0.0.1) 12.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=2276 (127.0.0.1) 2.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 4.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-1.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-3.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:17 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-2.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:18 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:19 web.py[line:1908] INFO 200 GET /admin/userlist (127.0.0.1) 25.00ms
-Tue, 26 Apr 2016 12:04:19 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=2512 (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:19 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:20 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 3.00ms
-Tue, 26 Apr 2016 12:04:20 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:20 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:24 web.py[line:1908] INFO 200 GET /admin/buy_pet_record (127.0.0.1) 23.00ms
-Tue, 26 Apr 2016 12:04:24 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=1740 (127.0.0.1) 2.00ms
-Tue, 26 Apr 2016 12:04:24 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:24 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 3.00ms
-Tue, 26 Apr 2016 12:04:24 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 0.00ms
-Tue, 26 Apr 2016 12:04:24 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:41 web.py[line:1908] INFO 302 GET /admin/checkout_day_jinbi (127.0.0.1) 7.00ms
-Tue, 26 Apr 2016 12:04:41 web.py[line:1908] INFO 200 GET /admin/buy_pet_record (127.0.0.1) 16.00ms
-Tue, 26 Apr 2016 12:04:41 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=2672 (127.0.0.1) 2.00ms
-Tue, 26 Apr 2016 12:04:41 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 26 Apr 2016 12:04:42 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 4.00ms
-Tue, 26 Apr 2016 12:04:42 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 2.00ms
-Tue, 26 Apr 2016 12:04:42 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
+Tue, 26 Apr 2016 21:03:58 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
+Tue, 26 Apr 2016 21:03:58 web.py[line:1908] INFO 200 GET /account/jinbi_log2 (127.0.0.1) 25.00ms
+Tue, 26 Apr 2016 21:04:01 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:04:03 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:04:04 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 5.00ms
+Tue, 26 Apr 2016 21:04:05 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 21:04:06 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 9.00ms
+Tue, 26 Apr 2016 21:04:07 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 32.00ms
+Tue, 26 Apr 2016 21:04:08 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 10.00ms
+Tue, 26 Apr 2016 21:04:09 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 8.00ms
+Tue, 26 Apr 2016 21:04:16 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:04:17 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 21:04:19 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 10.00ms
+Tue, 26 Apr 2016 21:04:19 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 431.00ms
+Tue, 26 Apr 2016 21:04:19 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 28.00ms
+Tue, 26 Apr 2016 21:04:19 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 13.00ms
+Tue, 26 Apr 2016 21:04:19 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 10.00ms
+Tue, 26 Apr 2016 21:04:36 web.py[line:1908] INFO 200 GET /trade/jinbi_mai (127.0.0.1) 24.00ms
+Tue, 26 Apr 2016 21:04:37 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 13.00ms
+Tue, 26 Apr 2016 21:04:38 web.py[line:1908] INFO 200 GET /trade/zhuanjinbi (127.0.0.1) 43.00ms
+Tue, 26 Apr 2016 21:04:39 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 46.00ms
+Tue, 26 Apr 2016 21:04:40 web.py[line:1908] INFO 200 GET /trade/jinbi_guadan (127.0.0.1) 11.00ms
+Tue, 26 Apr 2016 21:04:42 web.py[line:1908] INFO 200 GET /account/jihuobi_log (127.0.0.1) 42.00ms
+Tue, 26 Apr 2016 21:04:42 web.py[line:1908] INFO 200 GET /account/jihuobi_log2 (127.0.0.1) 13.00ms
+Tue, 26 Apr 2016 21:04:43 web.py[line:1908] INFO 200 GET /account/jinbi_log (127.0.0.1) 32.00ms
+Tue, 26 Apr 2016 21:04:45 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 56.00ms
+Tue, 26 Apr 2016 21:04:46 web.py[line:1908] INFO 200 GET /account/jihuo (127.0.0.1) 43.00ms
+Tue, 26 Apr 2016 21:04:49 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 26.00ms
+Tue, 26 Apr 2016 21:04:49 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 11.00ms
+Tue, 26 Apr 2016 21:04:51 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 21.00ms
+Tue, 26 Apr 2016 21:04:59 web.py[line:1908] INFO 200 POST /get_prize (127.0.0.1) 4.00ms
+Tue, 26 Apr 2016 21:05:06 web.py[line:1908] INFO 200 POST /get_prize (127.0.0.1) 5.00ms
+Tue, 26 Apr 2016 21:05:16 web.py[line:1908] INFO 200 GET /account/jinbi_log2 (127.0.0.1) 18.00ms
+Tue, 26 Apr 2016 21:05:19 web.py[line:1908] INFO 200 GET /draw (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 21:05:19 web.py[line:1908] INFO 304 GET /static/js/jquery.backstretch.min.js (127.0.0.1) 1.00ms
+Tue, 26 Apr 2016 21:05:19 web.py[line:1908] INFO 304 GET /static/js/jQueryRotate.2.2.js (127.0.0.1) 1.00ms
+Tue, 26 Apr 2016 21:05:19 web.py[line:1908] INFO 304 GET /static/images/disk.jpg (127.0.0.1) 3.00ms
+Tue, 26 Apr 2016 21:05:19 web.py[line:1908] INFO 304 GET /static/images/start.png (127.0.0.1) 2.00ms
+Tue, 26 Apr 2016 21:05:19 web.py[line:1908] INFO 200 GET /get_prize (127.0.0.1) 4.00ms
+Tue, 26 Apr 2016 21:05:19 web.py[line:1908] INFO 304 GET /static/images/bg.jpg (127.0.0.1) 5.00ms
+Tue, 26 Apr 2016 21:05:20 web.py[line:1908] INFO 200 POST /get_prize (127.0.0.1) 4.00ms
+Tue, 26 Apr 2016 21:05:21 web.py[line:1908] INFO 200 POST /get_prize (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 21:05:36 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 38.00ms
+Tue, 26 Apr 2016 21:05:38 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 21.00ms
+Tue, 26 Apr 2016 21:05:40 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 20.00ms
+Tue, 26 Apr 2016 21:06:17 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 16.00ms
+Tue, 26 Apr 2016 21:06:23 web.py[line:1908] INFO 302 POST /nongchangsd (127.0.0.1) 16.00ms
+Tue, 26 Apr 2016 21:06:23 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:06:26 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 21.00ms
+Tue, 26 Apr 2016 21:06:30 web.py[line:1908] INFO 200 GET /draw (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:06:30 web.py[line:1908] INFO 200 GET /get_prize (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 21:06:31 web.py[line:1908] INFO 200 POST /get_prize (127.0.0.1) 33.00ms
+Tue, 26 Apr 2016 21:06:39 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 22.00ms
+Tue, 26 Apr 2016 21:06:46 web.py[line:1908] INFO 200 GET /account/jinbi_log2 (127.0.0.1) 17.00ms
+Tue, 26 Apr 2016 21:06:54 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 22.00ms
+Tue, 26 Apr 2016 21:06:56 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 9.00ms
+Tue, 26 Apr 2016 21:07:05 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 5.00ms
+Tue, 26 Apr 2016 21:07:06 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:07:08 web.py[line:1908] INFO 200 GET /account/jinbi_log2?p=1 (127.0.0.1) 10.00ms
+Tue, 26 Apr 2016 21:07:16 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 20.00ms
+Tue, 26 Apr 2016 21:07:19 web.py[line:1908] INFO 200 GET /account/jihuobi_log (127.0.0.1) 11.00ms
+Tue, 26 Apr 2016 21:07:21 web.py[line:1908] INFO 200 GET /account/jinbi_log (127.0.0.1) 26.00ms
+Tue, 26 Apr 2016 21:07:22 web.py[line:1908] INFO 200 GET /account/jihuobi_log2 (127.0.0.1) 24.00ms
+Tue, 26 Apr 2016 21:07:24 web.py[line:1908] INFO 200 GET /account/jihuobi_log2?p=1 (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:07:25 web.py[line:1908] INFO 200 GET /account/jihuobi_log2?p=1 (127.0.0.1) 15.00ms
+Tue, 26 Apr 2016 21:07:29 web.py[line:1908] INFO 200 GET /account/jinbi_log2 (127.0.0.1) 18.00ms
+Tue, 26 Apr 2016 21:07:33 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 14.00ms
+Tue, 26 Apr 2016 21:07:35 web.py[line:1908] INFO 200 GET /trade/jinbi_mai (127.0.0.1) 18.00ms
+Tue, 26 Apr 2016 21:07:36 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 21:07:48 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 10.00ms
+Tue, 26 Apr 2016 21:07:51 web.py[line:1908] INFO 200 GET /trade/zhuanjinbi (127.0.0.1) 12.00ms
+Tue, 26 Apr 2016 21:07:52 web.py[line:1908] INFO 200 GET /trade/maijb (127.0.0.1) 53.00ms
+Tue, 26 Apr 2016 21:07:54 web.py[line:1908] INFO 200 GET /trade/jbdingdan (127.0.0.1) 101.00ms
+Tue, 26 Apr 2016 21:07:56 web.py[line:1908] INFO 200 GET /trade/jinbi_guadan (127.0.0.1) 14.00ms
+Tue, 26 Apr 2016 21:07:58 web.py[line:1908] INFO 200 GET /trade/jinbi_mai (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:07:59 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 9.00ms
+Tue, 26 Apr 2016 21:08:00 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 3.00ms
+Tue, 26 Apr 2016 21:08:01 web.py[line:1908] INFO 200 GET /trade/zhuanjinbi (127.0.0.1) 2.00ms
+Tue, 26 Apr 2016 21:08:02 web.py[line:1908] INFO 200 GET /trade/jinbi_guadan (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 21:08:04 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 32.00ms
+Tue, 26 Apr 2016 21:08:05 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 15.00ms
+Tue, 26 Apr 2016 21:09:43 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 13.00ms
+Tue, 26 Apr 2016 21:09:44 web.py[line:1908] INFO 200 GET /account/jihuo (127.0.0.1) 15.00ms
+Tue, 26 Apr 2016 21:09:46 web.py[line:1908] INFO 200 GET /account/jihuojl (127.0.0.1) 17.00ms
+Tue, 26 Apr 2016 21:09:47 web.py[line:1908] INFO 200 GET /account/jihuobi_log2 (127.0.0.1) 14.00ms
+Tue, 26 Apr 2016 21:09:48 web.py[line:1908] INFO 200 GET /account/jinbi_log (127.0.0.1) 24.00ms
+Tue, 26 Apr 2016 21:09:49 web.py[line:1908] INFO 200 GET /account/jinbi_log2 (127.0.0.1) 20.00ms
+Tue, 26 Apr 2016 21:09:50 web.py[line:1908] INFO 200 GET /trade/jinbi_mai (127.0.0.1) 13.00ms
+Tue, 26 Apr 2016 21:09:51 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 19.00ms
+Tue, 26 Apr 2016 21:09:52 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 13.00ms
+Tue, 26 Apr 2016 21:09:53 web.py[line:1908] INFO 200 GET /trade/zhuanjinbi (127.0.0.1) 10.00ms
+Tue, 26 Apr 2016 21:09:54 web.py[line:1908] INFO 200 GET /trade/maijb (127.0.0.1) 9.00ms
+Tue, 26 Apr 2016 21:09:56 web.py[line:1908] INFO 200 GET /trade/jbdingdan (127.0.0.1) 13.00ms
+Tue, 26 Apr 2016 21:09:57 web.py[line:1908] INFO 200 GET /shop (127.0.0.1) 59.00ms
+Tue, 26 Apr 2016 21:09:58 web.py[line:1908] INFO 200 GET /static/media/product_img/87df6966-171d-4682-8bbe-96bed151c4d7.jpg (127.0.0.1) 19.00ms
+Tue, 26 Apr 2016 21:09:58 web.py[line:1908] INFO 200 GET /static/js/product.js (127.0.0.1) 10.00ms
+Tue, 26 Apr 2016 21:09:58 web.py[line:1908] INFO 200 GET /static/media/product_img/8e4e4571-a962-46b0-9c2b-018196c9c4dd.gif (127.0.0.1) 21.00ms
+Tue, 26 Apr 2016 21:10:05 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 3.00ms
+Tue, 26 Apr 2016 21:10:07 web.py[line:1908] INFO 200 GET /account/tjjg (127.0.0.1) 36.00ms
+Tue, 26 Apr 2016 21:10:08 web.py[line:1908] WARNING 404 GET /ui/zTree_v3/css/zTreeStyle/img/diy/1_open.png (127.0.0.1) 1.00ms
+Tue, 26 Apr 2016 21:10:08 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 4.00ms
+Tue, 26 Apr 2016 21:10:09 web.py[line:1908] INFO 200 GET /account/tjjg (127.0.0.1) 9.00ms
+Tue, 26 Apr 2016 21:10:09 web.py[line:1908] WARNING 404 GET /ui/zTree_v3/css/zTreeStyle/img/diy/1_open.png (127.0.0.1) 1.00ms
+Tue, 26 Apr 2016 21:10:27 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:10:29 web.py[line:1908] INFO 200 GET /account/zhitui?p=1 (127.0.0.1) 5.00ms
+Tue, 26 Apr 2016 21:18:15 web.py[line:1908] INFO 200 GET /trade/jinbi_guadan (127.0.0.1) 14.00ms
+Tue, 26 Apr 2016 21:18:25 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 7.00ms
+Tue, 26 Apr 2016 21:18:27 web.py[line:1908] INFO 200 GET /trade/zhuanjinbi (127.0.0.1) 4.00ms
+Tue, 26 Apr 2016 21:18:28 web.py[line:1908] INFO 200 GET /trade/maijb (127.0.0.1) 3.00ms
+Tue, 26 Apr 2016 21:18:29 web.py[line:1908] INFO 200 GET /trade/jbdingdan (127.0.0.1) 6.00ms
+Tue, 26 Apr 2016 22:45:50 web.py[line:1908] INFO 302 GET /trade/zhuanjinbi (127.0.0.1) 2.00ms
+Tue, 26 Apr 2016 22:45:50 web.py[line:1908] INFO 200 GET /login (127.0.0.1) 4.00ms
+Tue, 26 Apr 2016 22:45:50 web.py[line:1908] INFO 304 GET /static/css/login_style.css (127.0.0.1) 1.00ms
+Tue, 26 Apr 2016 22:45:50 web.py[line:1908] INFO 304 GET /static/images/logo.png (127.0.0.1) 0.00ms
+Tue, 26 Apr 2016 22:45:50 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 23.00ms

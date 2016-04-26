@@ -12,7 +12,7 @@ from passlib.handlers.pbkdf2 import pbkdf2_sha512
 from pymongo import DESCENDING
 import pymongo
 from BaseHandler import BaseHandler
-from utils import random_code
+from utils import random_code, send_short_msg
 
 
 class MainHandler(BaseHandler):
@@ -153,21 +153,19 @@ class Register(BaseHandler):
             if not res:
                 print "register error"
 
-
+                now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
                 # 如果与介绍人编号一致的用户存在
                 if inviter:
-                    info = {
-                        "no": "1",
-                        "uid": rName,
-                        "type": 1,
-                        "money": inviter.get("money", 0) * 0.1,
-                        "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
-                    }
 
-                    # self.db.reward_record.insert(info)
-                    # # TODO 更新上级代理的奖金  10%
-                    # self.db.user.update({"uid": rName}, {
-                    #     "$set": {"reward": inviter.get("reward", 0) + inviter.get("money", 0) * 0.1}})
+                    # TODO 更新上级代理的金币  从系统配置中
+                    setting = self.db.setting.find_one({"type": 1})
+                    if not setting:
+                        gain = 12
+                    else:
+                        gain = setting.get("recommend_award", 12)
+                    self.db.user.update({"uid": rName}, {
+                        "$set": {"jinbi": inviter.get("reward", 0) + 12}})
+                    self.db.jinbi.insert({"type": 'tuijian', 'money': gain, "time": now_time})
 
                 return self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")
             else:
@@ -193,6 +191,10 @@ class GetPrize(BaseHandler):
         prize = [{"id": 1, "prize": "商城价值500的商品", "v": 1.0}, {"id": 2, "prize": "100金币", "v": 1.5},
                  {"id": 3, "prize": "10金币", "v": 2.0}]
         left_jinbi = self.db.user.find_one({"uid": self.user.get("uid")}).get("jinbi", 0)
+        date = str(datetime.datetime.today().date())
+        draw_count = self.db.draw.find({"uid": self.user.get("uid"), "date": date}).count()
+        if draw_count >= 3:
+            return self.write(json.dumps({"status": "error", "error": "今天抽奖机会已用完"}))
         return self.write(json.dumps({"status": "ok", "prize": prize, "jinbi": left_jinbi}))
 
     @BaseHandler.authenticated
@@ -200,6 +202,7 @@ class GetPrize(BaseHandler):
         prize = int(self.get_argument("prize", 0))
         handle_id = int(self.get_argument("handle_id", 0))
         left_jinbi = self.user.get("jinbi")
+
         if prize in [1, 2]:
             if prize == 1:
                 prize_jinbi = 100
@@ -218,6 +221,7 @@ class GetPrize(BaseHandler):
         left_jinbi = self.db.user.find_one({"uid": self.user.get("uid")}).get("jinbi", 0)
         date = str(datetime.datetime.today().date())
         draw_count = self.db.draw.find({"uid": self.user.get("uid"), "date": date}).count()
+        now_time = time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(time.time()))
         # id自增1
         last = self.db.draw.find().sort("id", pymongo.DESCENDING).limit(1)
         if last.count() > 0:
@@ -227,11 +231,22 @@ class GetPrize(BaseHandler):
             draw_id = int(lastone.get('id', 0)) + 1
         else:
             draw_id = 1
+
         if left_jinbi > 2:
-            if draw_count < 100:
+            if draw_count < 3:
                 date = str(datetime.datetime.today().date())
                 self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": left_jinbi - 2}})
                 self.db.draw.insert({"id": draw_id, "uid": self.user.get("uid"), "date": date})
+                last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+                if last_trade_log.count() > 0:
+                    lastone = dict()
+                    for item in last_trade_log:
+                        lastone = item
+                    jinbi_id = int(lastone.get('id', 0)) + 1
+                else:
+                    jinbi_id = 1
+                self.db.jinbi.insert(
+                    {"id": jinbi_id, "type": "draw", "uid": self.user.get("uid"), "money": 2, "time": now_time})
             else:
                 return self.write(json.dumps({"status": "error", "error": "今天抽奖机会已用完"}))
         return self.write(json.dumps({"status": "ok", "prize": prize, "jinbi": left_jinbi}))
@@ -311,10 +326,10 @@ class FarmShop(BaseHandler):
                 lastone = dict()
                 for item in last:
                     lastone = item
-                oid= int(lastone['id']) + 1
+                oid = int(lastone['id']) + 1
             else:
-                oid= 1
-            self.db.my_pet.insert({"id":oid,"pid": i['id'], "count": count, "uid": self.user.get('uid'),
+                oid = 1
+            self.db.my_pet.insert({"id": oid, "pid": i['id'], "count": count, "uid": self.user.get('uid'),
                                    "time": now_time})
             order_items.append({
                 "pid": i['id'],
@@ -423,6 +438,32 @@ class ProductList(BaseHandler):
         print total_cost
         return self.redirect('/shop')
 
+
+# 注册验证码
+class ForgetPwdSendCode(BaseHandler):
+    """发送验证码"""
+
+    def get(self):
+        mobile_number = self.get_argument("mobile_number")
+        msg_code = random.randint(100000, 999999)
+        self.set_cookie('msg_code', str(msg_code))
+        print self.get_cookie('msg_code')
+
+        last_request_time = datetime.datetime.now() - datetime.timedelta(minutes=1)
+        # 查找一分钟内的register 验证码请求记录
+        record = self.db.request_record.find_one(
+            {"type": "forget_pwd", "ip": self.request.remote_ip, "time": {"$gte": last_request_time}})
+        permit = False if record else True
+        if permit:
+            tpl_value = "#code#=%s" % (str(msg_code))
+            print tpl_value
+            send_short_msg('1343305', tpl_value, mobile_number)
+            # 写入请求记录表
+            self.db.request_record.insert(
+                {"time": datetime.datetime.now(), "type": "register", "ip": self.request.remote_ip})
+            self.write(json.dumps({"msg": 'ok', "error": ''}))
+        else:
+            self.write(json.dumps({"msg": '请勿频繁请求', "error": 'error'}))
 
 class UploadImageFile(BaseHandler):
     # def check_xsrf_cookie(self):
