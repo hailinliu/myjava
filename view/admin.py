@@ -813,9 +813,10 @@ class CheckoutJinBi(BaseHandler):
             b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
             live_days = 1
             end_date=(b+datetime.timedelta(life)).date()
+            print end_date
             print live_days*day_jinbi
             if p.get("check_day") != str(today):
-                if end_date >= now_time.date():
+                if end_date == now_time.date():
                     info.update({"dead": 1})
                 producted_jinbi=live_days*day_jinbi
                 info.update({"gain": gain, "check_day": today,"producted_jinbi":producted_jinbi})

@@ -385,7 +385,7 @@
                 var that = $(this);
                 data['jinbi'] = $(this).text();
                 data['uid'] = $(this).data("handle-id");
-                if (confirm("确认修改该用户级别吗？")) {
+                if (confirm("确认修改该用户的金币吗？")) {
                     $.ajax({
                         url: '/admin/update_jinbi',
                         type: 'post',
