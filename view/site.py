@@ -305,7 +305,16 @@ class FarmShop(BaseHandler):
             price = pet['price']
             item_cost = int(price) * int(count)
             total_cost += item_cost
-            self.db.my_pet.insert({"pid": i['id'], "count": count, "uid": self.user.get('uid'),
+            # id自增1
+            last = self.db.my_pet.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last.count() > 0:
+                lastone = dict()
+                for item in last:
+                    lastone = item
+                oid= int(lastone['id']) + 1
+            else:
+                oid= 1
+            self.db.my_pet.insert({"id":oid,"pid": i['id'], "count": count, "uid": self.user.get('uid'),
                                    "time": now_time})
             order_items.append({
                 "pid": i['id'],

@@ -768,5 +768,59 @@ class BuyPetRecord(BaseHandler):
     """购买宠物记录"""
     @BaseHandler.authenticated
     def get(self):
+        if self.get_argument("page", None) in ["", None]:
+            current_page = 1
+        else:
+            current_page = int(self.get_argument("page"))
         record=self.db.my_pet.find()
-        self.render("admin/buy_pet_record.html", myuser=self.user, record=record, admin_nav=2)
+        per = 20.0
+        pages = int(math.ceil(record.count() / per))
+        record = record.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
+        counts = record.count()
+        def pet_info(id):
+            pet=self.db.pet.find_one({"id":id})
+            if not pet:
+                return {}
+            return  pet
+        # 计算宠物当前存活天数
+        def cal_life_day(buy_time):
+            now_time=datetime.datetime.now()
+            b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
+            days= (now_time-b).days
+            return days
+        self.render("admin/buy_pet_record.html", myuser=self.user, record=record, cal_life_day=cal_life_day,pet_info=pet_info,pages=pages,counts=counts,current_page=current_page,
+                    admin_nav=2)
+
+class CheckoutJinBi(BaseHandler):
+    """结算当天矿机金币"""
+    @BaseHandler.authenticated
+    def get(self):
+        today = time.strftime("%Y-%m-%d")
+        now_time = str(datetime.datetime.now())
+        yesterday = datetime.date.today() - datetime.timedelta(days=1)
+        my_pets = self.db.my_pet.find({"dead": {"$ne": 0}})
+        for p in my_pets:
+            info = {}
+            uid = p.get("uid")
+            pet_id = p.get("id")
+            pid= p.get("pid")
+            pet =self.db.pet.find_one({"id":pid})
+            day_jinbi = pet.get("day_jinbi")
+            gain = day_jinbi
+            life = pet.get('life')
+            now_time = datetime.datetime.now()
+            buy_time = p.get("time")
+            b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
+            live_days = 1
+            end_date=(b+datetime.timedelta(life)).date()
+            print live_days*day_jinbi
+            if p.get("check_day") != str(today):
+                if end_date >= now_time.date():
+                    info.update({"dead": 1})
+                producted_jinbi=live_days*day_jinbi
+                info.update({"gain": gain, "check_day": today,"producted_jinbi":producted_jinbi})
+                self.db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
+                # 写入金币收入记录
+                self.db.jinbi.insert({"type": 'pet_produce', 'money': gain, "pet_id": pet_id, "time": str(now_time)})
+                self.db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
+        self.redirect("/admin/buy_pet_record")

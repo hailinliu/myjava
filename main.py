@@ -102,6 +102,7 @@ class Application(tornado.web.Application):
             (r"/admin/petlist", AdminPetList),
             (r"/admin/addpet", AdminPetEdit),
             (r"/admin/buy_pet_record", BuyPetRecord),
+            (r"/admin/checkout_day_jinbi", CheckoutJinBi),
             (r"/admin/add_product", AdminProductAdd),
             (r"/admin/products", AdminProductList),
             (r"/admin/orders", AdminOrder),

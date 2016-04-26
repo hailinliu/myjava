@@ -36,8 +36,8 @@
                         {%continue%}
                         {%end%}
                         {%set current_day=cal_life_day(p.get('time'))%}
-                        {%set product_jinbi=cal_life_day(p.get('time')) * pet.get('day_jinbi')%}
-                        {%set waiting_jinbi=(int(pet.get('life'))-cal_life_day(p.get('time')))* pet.get('day_jinbi')%}
+
+                         {%set waiting_jinbi=pet.get('life')*pet.get('day_jinbi')-p.get('producted_jinbi',0) %}
                          {%if current_day< pet.get('life')%}
                         {%set progress=check_progress(current_day,pet.get('life'))  %}
                         {%else%}
@@ -60,7 +60,7 @@
                                             {{current_day}}天
                                         </div>
                                     </div>
-                                    <p>已产金币: <strong>{{product_jinbi}} </strong>/
+                                    <p>已产金币: <strong>{{p.get('producted_jinbi',0)}} </strong>/
                                         {%if current_day< pet.get('life')%}
                                         待产金币: <strong>{{waiting_jinbi}} </strong>
                                         {%else%}

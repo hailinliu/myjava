@@ -40,27 +40,30 @@ def cal_interests():
     默认为排期金额的5%
     利息计算时间：8:00~10:00之前排期的，利息从当天算，10点之后排期，则利息从第二天开始计算。
     写入对应的利息结算记录
-
     """
     today = time.strftime("%Y-%m-%d")
     now_time = str(datetime.datetime.now())
-    yesterday = datetime.date.today() - timedelta(days=1)
+    yesterday = datetime.datetime.today() - timedelta(days=1)
     my_pets = db.my_pet.find({"dead": {"$ne": 0}})
+    yesterday_date=yesterday.date()
     for p in my_pets:
-        day_jinbi = p.get("day_jinbi")
-        gain = day_jinbi
         info = {}
         uid = p.get("uid")
         pet_id = p.get("id")
-        life = p.get('lift')
+        pid= p.get("pid")
+        pet =db.pet.find_one({"id":pid})
+        day_jinbi = pet.get("day_jinbi")
+        gain = day_jinbi
+        life = pet.get('life')
         now_time = datetime.datetime.now()
         buy_time = p.get("time")
         b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
         live_days = (yesterday - b).days
-        if p.get("check_day") != str(yesterday):
+        if p.get("check_day") != str(yesterday_date):
             if live_days > life:
                 info.update({"dead": 1})
-            info.update({"gain": gain, "check_day": yesterday})
+            producted_jinbi=live_days*day_jinbi
+            info.update({"gain": gain, "check_day": str(yesterday_date),"producted_jinbi":producted_jinbi})
             db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
             # 写入金币收入记录
             db.jinbi.insert({"type": 'pet_produce', 'money': gain, "pet_id": pet_id, "time": str(now_time)})
