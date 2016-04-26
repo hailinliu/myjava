@@ -160,7 +160,7 @@ class Register(BaseHandler):
                     # TODO 更新上级代理的金币  从系统配置中
                     setting = self.db.setting.find_one({"type": 1})
                     if not setting:
-                        gain = 12
+                        gain = 18
                     else:
                         gain = setting.get("recommend_award", 18)
                     self.db.user.update({"uid": rName}, {
