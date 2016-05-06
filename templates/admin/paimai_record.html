@@ -40,19 +40,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <div class="row">
-                                <form action="" method="post" id="search">
-                                    {% module xsrf_form_html() %}
-                                    <div class="input-group">
-                                        <input type="text" placeholder="查找用户,用户名/会员编号/手机号" value="{{search}}"
-                                               name="search" class="input form-control">
-                                        <span class="input-group-btn">
-                                                <button type="submit" class="btn btn btn-primary"><i
-                                                        class="fa fa-search"></i>
-                                                    搜索
-                                                </button>
-                                        </span>
-                                    </div>
-                                </form>
+
                             </div>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
@@ -76,6 +64,7 @@
                                     cursor: pointer;
                                 }
                             </style>
+                            {%set status_dict={"confirm":"待打款","paid":"已打款,待确认收款","complete":"已完成"}%}
                             <form action="javascript:;" method="post" name="login_form" id="login_form">
                                 {% module xsrf_form_html() %}
                                 <table class="table table-striped table-bordered table-hover dataTables-example">
@@ -101,11 +90,11 @@
                                         <td>{{r.get('uid','')}}</td>
                                         <td>{{r.get('money','')}}</td>
                                         <td>{{r.get('time','')}}</td>
-                                        <td>{{r.get('status','')}}</td>
+                                        <td>{{status_dict.get(r.get('status'),"")}}</td>
                                         <td>{{r.get('pay_uid','')}}</td>
                                         <td>
-                                            <a href="/static/media/paid_img/{{r.get('pay_image','')}}" target="_blank">
-                                            <img src="/static/media/paid_img/{{r.get('pay_image','')}}"  style="width: 100px"/>
+                                            <a href="/static/media/pay_image/{{r.get('pay_image','')}}" target="_blank">
+                                            <img src="/static/media/pay_image/{{r.get('pay_image','')}}"  style="width: 100px"/>
                                         </a></td>
                                         <td>{{r.get('pay_time','')}}</td>
                                         <td></td>

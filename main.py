@@ -106,6 +106,7 @@ class Application(tornado.web.Application):
             (r"/admin/add_product", AdminProductAdd),
             (r"/admin/products", AdminProductList),
             (r"/admin/orders", AdminOrder),
+            (r"/admin/paimai_record", AdminPaiMaiRecord),
             (r"/admin/order_shippd", AddressOrderShip),
             (r"/admin/leader_award_setting", AdminLeaderRewardSetting),
             (r"/verifycode", VerifyCode),

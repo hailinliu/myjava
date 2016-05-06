@@ -856,5 +856,20 @@ class AdminPaiMaiRecord(BaseHandler):
     """拍卖纪录"""
     @BaseHandler.admin_authed
     def get(self):
-         record = self.db.jinbi.find({"type": "guadan"})
-         self.render('admin/paimai_record.html', admin_nav=9, myuser=self.user, record=record)
+        query={"type": "guadan"}
+
+
+        search = ""
+
+        if self.get_argument("page", None) in ["", None]:
+            current_page = 1
+        else:
+            current_page = int(self.get_argument("page"))
+
+        record = self.db.jinbi.find(query)
+        per = 20.0
+        pages = int(math.ceil(record.count() / per))
+        record = record.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
+        counts = record.count()
+        self.render('admin/paimai_record.html', admin_nav=9, myuser=self.user, search="",current_page=current_page,pages=pages,counts=counts,
+                    record=record)
