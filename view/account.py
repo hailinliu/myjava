@@ -135,7 +135,7 @@ class JiHuobiLog(BaseHandler):
     @BaseHandler.authenticated
     def get(self):
         per = 10
-        records = self.db.trade_log.find({"mid": self.user.get("uid")})
+        records = self.db.trade_log.find({"mid": self.user.get("uid"),"type": "transfer"})
         total=0
         counts = records.count()
         records_result = self.db.trade_log.aggregate(
