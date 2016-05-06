@@ -757,14 +757,47 @@ class AdminRecharge(BaseHandler):
         handle = {"money": user_info.get('money', 0) + money}
         if pay_type=='jihuobi':
             handle.update(
-                    {"is_check": True, "money": user_info.get('money', 0) + money,
-                     'active_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+                    { "money": user_info.get('money', 0) + money})
 
             self.db.user.update({"uid": uid}, {"$set": handle})
-            # 充值记录 TODO
-            self.db.provide_money.insert(
-                {"money": money, 'time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+             # trade_log_id自增1
+            last_trade_log = self.db.trade_log.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last_trade_log.count() > 0:
+                lastone = dict()
+                for item in last_trade_log:
+                    lastone = item
+                trade_log_id = int(lastone.get('id', 0)) + 1
+            else:
+                trade_log_id = 1
+            # 激活币转账记录
+            self.db.trade_log.insert({
+                "id": trade_log_id,
+                "uid": self.user.get("uid"),
+                "type": "transfer",
+                "mid": uid, "money": money,
+                "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
         else:
+            # trade_log_id自增1
+            last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last_trade_log.count() > 0:
+                lastone = dict()
+                for item in last_trade_log:
+                    lastone = item
+                trade_log_id = int(lastone.get('id', 0)) + 1
+            else:
+                trade_log_id = 1
+
+            now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+
+
+            # 金币转入记录
+            self.db.jinbi.insert({
+                "id": trade_log_id + 1,
+                "type": "in",
+                "uid": uid,
+                "mid": self.user.get("uid"),
+                "money": money,
+                "time": now_time})
             self.db.user.update({"uid": uid},{"$inc":{"jinbi":money}})
         return self.redirect('/admin/userlist')
 
