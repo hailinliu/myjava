@@ -15,7 +15,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>充值激活币</h2>
+                <h2>充值</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="#">主页</a>
@@ -24,7 +24,7 @@
                         <a>用户管理</a>
                     </li>
                     <li>
-                        <strong>充值激活币</strong>
+                        <strong>充值</strong>
                     </li>
                 </ol>
             </div>
@@ -78,12 +78,22 @@
                                     </div>
                                 </div>
                                  <div class="form-group">
-                                    <label class="col-sm-2 control-label">当前激活币</label>
+                                        <label class="col-sm-3 control-label">充值类型：</label>
 
-                                    <div class="col-sm-4">
-                                        <span class="form-control">{{ user_info.get('money',0) }}</span>
+                                        <div class="col-sm-8">
+
+                                            <input type="radio" name="pay_type" value="1" checked>激活币
+                                            <input type="radio" name="pay_type" value="0">金币
+                                        </div>
                                     </div>
-                                </div>
+                                 <!--<div class="form-group">-->
+                                    <!--<label class="col-sm-2 control-label">当前激活币</label>-->
+
+                                    <!--<div class="col-sm-4">-->
+                                        <!--<span class="form-control">{{ user_info.get('money',0) }}</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">充值数量</label>
 

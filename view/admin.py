@@ -851,3 +851,10 @@ class AdminLeaderRewardSetting(BaseHandler):
             "$set": {"recommend_award": recommend_jinbi}},upsert=True)
         info=self.db.setting.find_one({"type": 1})
         self.render('admin/leader_award_setting.html', admin_nav=3, myuser=self.user, info=info)
+
+class AdminPaiMaiRecord(BaseHandler):
+    """拍卖纪录"""
+    @BaseHandler.admin_authed
+    def get(self):
+         record = self.db.jinbi.find({"type": "guadan"})
+         self.render('admin/paimai_record.html', admin_nav=9, myuser=self.user, record=record)
