@@ -44,7 +44,7 @@ def cal_interests():
     today = time.strftime("%Y-%m-%d")
     now_time = str(datetime.datetime.now())
     yesterday = datetime.datetime.today() - timedelta(days=1)
-    my_pets = db.my_pet.find({"dead": {"$ne": 0}})
+    my_pets = db.my_pet.find({"dead": {"$ne": 1}})
     yesterday_date=yesterday.date()
     for p in my_pets:
         info = {}
@@ -66,7 +66,7 @@ def cal_interests():
             info.update({"gain": gain, "check_day": str(yesterday_date),"producted_jinbi":producted_jinbi})
             db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
             # 写入金币收入记录
-            db.jinbi.insert({"type": 'pet_produce', 'money': gain, "pet_id": pet_id, "time": str(now_time)})
+            db.jinbi.insert({"type": 'pet_produce', 'money': gain, "uid":uid,"pet_id": pid, "time": str(now_time)})
             db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
 
 

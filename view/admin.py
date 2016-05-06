@@ -750,19 +750,22 @@ class AdminRecharge(BaseHandler):
     @BaseHandler.admin_authed
     def post(self):
         money = int(self.get_argument("money", 0))
-
+        pay_type = self.get_argument("pay_type", "jihuobi")
+        print pay_type
         uid = self.get_argument("uid", None)
         user_info = self.db.user.find_one({"uid": uid})
         handle = {"money": user_info.get('money', 0) + money}
-        if not user_info.get("is_check"):
+        if pay_type=='jihuobi':
             handle.update(
-                {"is_check": True, "money": user_info.get('money', 0) + money - 100,
-                 'active_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+                    {"is_check": True, "money": user_info.get('money', 0) + money,
+                     'active_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
 
-        self.db.user.update({"uid": uid}, {"$set": handle})
-        # 充值记录 TODO
-        self.db.provide_money.insert(
-            {"money": money, 'time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+            self.db.user.update({"uid": uid}, {"$set": handle})
+            # 充值记录 TODO
+            self.db.provide_money.insert(
+                {"money": money, 'time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+        else:
+            self.db.user.update({"uid": uid},{"$inc":{"jinbi":money}})
         return self.redirect('/admin/userlist')
 
 

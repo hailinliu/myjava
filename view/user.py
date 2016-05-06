@@ -93,15 +93,14 @@ class UserHomeHandler(BaseHandler):
         type_list = ["pet_produce"]
         total_consume = 0
         records_result = self.db.jinbi.aggregate(
-            [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
+            [{"$match": {"uid": self.user.get("uid"), "type": 'pet_produce'}},
              {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
         if len(records_result) > 0:
             total_consume = records_result[0]['sum']
-        news = self.db.news.find().limit(5)
-        member_count = self.db.user.find({"admin": str(self.user.get("uid"))}).count()
-        member_consume = 0
-        self.render("user/home.html", myuser=self.user, total_consume=total_consume, member_count=member_count,
-                    member_consume=member_consume, news=news, account_tab=1)
+        news=self.db.news.find().limit(5)
+        member_count=self.db.user.find({"admin": str(self.user.get("uid"))}).count()
+        member_consume=0
+        self.render("user/home.html", myuser=self.user, total_consume=total_consume,member_count=member_count,member_consume=member_consume,news=news, account_tab=1)
 
 
 class MyFarm(BaseHandler):
@@ -121,9 +120,9 @@ class MyFarm(BaseHandler):
 
         # 计算宠物当前存活天数
         def cal_life_day(buy_time):
-            now_time = datetime.datetime.now()
+            now_time=datetime.datetime.now()
             b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
-            days = (now_time - b).days
+            days= (now_time-b).days
             return days
 
         def check_progress(a, b):
@@ -348,3 +347,5 @@ class DelNoticeHandler(BaseHandler):
         for n in notice_ids:
             self.db.notice.remove({"_id": ObjectId(n), "uid": self.user['uid']})
         self.write(json.dumps({"status": "ok", "msg": u"已删除"}))
+
+
