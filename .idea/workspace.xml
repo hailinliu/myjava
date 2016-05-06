@@ -51,8 +51,8 @@
       <file leaf-file-name="paimai_record.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/admin/paimai_record.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3566553">
-              <caret line="95" column="69" selection-start-line="95" selection-start-column="68" selection-end-line="95" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.35153583">
+              <caret line="95" column="67" selection-start-line="95" selection-start-column="67" selection-end-line="95" selection-end-column="67" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#a#0;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -1122,8 +1122,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/admin/paimai_record.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3566553">
-          <caret line="95" column="69" selection-start-line="95" selection-start-column="68" selection-end-line="95" selection-end-column="69" />
+        <state vertical-scroll-proportion="0.35153583">
+          <caret line="95" column="67" selection-start-line="95" selection-start-column="67" selection-end-line="95" selection-end-column="67" />
           <folding>
             <element signature="n#style#0;n#img#0;n#a#0;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
           </folding>

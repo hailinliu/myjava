@@ -15,7 +15,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>交易管理</h2>
+                <h2>拍卖管理</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="/admin/home">主页</a>
@@ -93,7 +93,7 @@
                                         <td>{{status_dict.get(r.get('status'),"")}}</td>
                                         <td>{{r.get('pay_uid','')}}</td>
                                         <td>
-                                            {%if r.get('pay_image') %}
+                                            {%if r.get('pay_image') not in [None,''] %}
                                             <a href="/static/media/pay_image/{{r.get('pay_image','')}}" target="_blank">
                                             <img src="/static/media/pay_image/{{r.get('pay_image','')}}"  style="width: 100px"/>
                                         </a>
