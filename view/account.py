@@ -136,7 +136,13 @@ class JiHuobiLog(BaseHandler):
     def get(self):
         per = 10
         records = self.db.trade_log.find({"mid": self.user.get("uid")})
+        total=0
         counts = records.count()
+        records_result = self.db.trade_log.aggregate(
+            [{"$match": {"mid": self.user.get("uid"), "type": "transfer"}},
+             {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
+        if len(records_result) > 0:
+            total = records_result[0]['sum']
         current_page = int(self.get_argument("p", 1))
         pages = int(round(counts / 10.0))
         if pages == 0:
@@ -148,7 +154,7 @@ class JiHuobiLog(BaseHandler):
             prev_page = current_page - 1
             next_page = current_page + 1
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
-        self.render("finance/jihuobi_log.html", account_tab=8, current_page=current_page, counts=counts,
+        self.render("finance/jihuobi_log.html",total=total, account_tab=8, current_page=current_page, counts=counts,
                     records=records, pages=pages, prev_page=prev_page, next_page=next_page,
                     myuser=self.user)
 
