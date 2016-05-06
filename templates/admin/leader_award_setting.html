@@ -1,27 +1,7 @@
 {% extends "base.html" %}
 {% block title %}领导推荐奖设置{% end %}
 {% block content %}
-<script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/kindeditor-min.js') }}"></script>
-<script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/lang/zh_CN.js') }}"></script>
-<script type="text/javascript">
-    KindEditor.ready(function (K) {
-        window.editor = K.create('#desc', {
-            allowFileManager: true,
-            width: '700px',
-            height: '400px',
-            resizeType: 0,       //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。
-            afterFocus: function () {
-            },
-            afterBlur: function () {
-                if (editor.html() == '') {
-                    $('p.desc_tip').html('详情不能为空！');
-                } else {
-                    $('p.textarea').html('');
-                }
-            }
-        });
-    });
-</script>
+
 <div class="pace  pace-inactive">
     <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
         <div class="pace-progress-inner"></div>
@@ -60,9 +40,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>
-
-                            </h5>
+                            <h5></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>

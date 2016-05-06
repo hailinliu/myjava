@@ -48,6 +48,8 @@ class Zhuanjihuobi(BaseHandler):
             # 更新发放激活币的用户的余额
             admin_money = my_money - out_money
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"money": admin_money}})
+            self.db.user.update({"uid": uid}, {"$inc": {"money": out_money}})
+
             # 转账记录
             self.db.trade_log.insert({
                 "id": trade_log_id,
@@ -55,6 +57,8 @@ class Zhuanjihuobi(BaseHandler):
                 "type": "transfer",
                 "mid": uid, "money": out_money,
                 "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+            # TODO 激活币收入记录
+
             tip = "激活币转账成功"
 
             self.render("ok.html", url="/trade/zhuanjihuobi", tip=tip)
@@ -134,13 +138,14 @@ class GetCrash(BaseHandler):
         alipay_account = self.get_argument("alipay_account", "")
         alipay_name = self.get_argument("alipay_name", "")
         checked = self.get_argument("checked", 0)
+        crash_money = self.get_argument("money", 0)
         try:
-            money = int(self.user.get("jinbi", 0))
+            crash_money = int(crash_money)
         except ValueError:
-            money = 0
-        if money <= 0:
+            crash_money = 0
+        if crash_money <= 0:
             return self.render("ok.html", url="/trade/maijb", tip="请输入合法的数字金额")
-
+        print "crash_money,", crash_money
         # trade_log_id自增1
         last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
         if last_trade_log.count() > 0:
@@ -153,15 +158,15 @@ class GetCrash(BaseHandler):
 
         # 更新发放金币的用户的余额
         my_money = int(self.user.get("jinbi", 0))
-        if my_money - money < 0:
+        if my_money - crash_money < 0:
             return self.render("ok.html", url="/trade/maijb", tip="提现金额大于金币余额")
-        new_money = my_money - money
+        new_money = my_money - crash_money
         self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": new_money}})
         self.db.jinbi.insert({
             "id": trade_log_id,
             "type": "get_crash",
             "uid": self.user.get("uid"),
-            "money": money,
+            "money": crash_money,
             "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
         # trade_log_id自增1
         last_trade_log = self.db.apply_crash.find().sort("id", pymongo.DESCENDING).limit(1)
@@ -177,7 +182,7 @@ class GetCrash(BaseHandler):
             "id": apply_id,
             "uid": self.user.get("uid"),
             "status": "submit",
-            "money": money,
+            "money": crash_money,
             "alipay": {"account": alipay_account, "name": alipay_name},
             "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
 

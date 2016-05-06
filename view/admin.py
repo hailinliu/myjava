@@ -842,14 +842,12 @@ class AdminLeaderRewardSetting(BaseHandler):
     def post(self):
         datas = self.request.arguments
         print datas
-        info = self.db.setting.find_one({"type": 1})
-        if not info:
-            info = {}
 
-        if self.get_argument("recommend_award") == "":
+        if self.get_argument("recommend_jinbi") == "":
             recommend_jinbi =18
         else:
-            recommend_jinbi = int(self.get_argument("recommend_award", 18))
+            recommend_jinbi = int(self.get_argument("recommend_jinbi", 18))
         self.db.setting.update({"type": 1}, {
             "$set": {"recommend_award": recommend_jinbi}},upsert=True)
+        info=self.db.setting.find_one({"type": 1})
         self.render('admin/leader_award_setting.html', admin_nav=3, myuser=self.user, info=info)
