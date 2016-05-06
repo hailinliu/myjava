@@ -207,7 +207,7 @@ class JinBiPaiMai(BaseHandler):
 
     @BaseHandler.authenticated
     def get(self):
-        record = self.db.jinbi.find({"type": "guadan", "status": "waiting"}).sort("id", pymongo.DESCENDING).limit(50)
+        record = self.db.jinbi.find({"type": "guadan", "uid":{"$ne":self.user.get("uid")},"status": "waiting"}).sort("id", pymongo.DESCENDING).limit(50)
         self.render("trade/jinbi_guadan.html", account_tab=12, record=record, myuser=self.user)
 
 
