@@ -93,7 +93,7 @@
                                         <td>{{status_dict.get(r.get('status'),"")}}</td>
                                         <td>{{r.get('pay_uid','')}}</td>
                                         <td>
-                                            {%if r.get('pay_image') not in [None,''] %}
+                                            {%if r.get('pay_image') not in ['None',''] %}
                                             <a href="/static/media/pay_image/{{r.get('pay_image','')}}" target="_blank">
                                             <img src="/static/media/pay_image/{{r.get('pay_image','')}}"  style="width: 100px"/>
                                         </a>
