@@ -1,18 +1,41 @@
-Wed, 27 Apr 2016 03:38:03 web.py[line:1908] INFO 200 POST /admin/leader_award_setting (127.0.0.1) 256.00ms
-Wed, 27 Apr 2016 03:38:03 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=2721 (127.0.0.1) 288.00ms
-Wed, 27 Apr 2016 03:38:03 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 2.00ms
-Wed, 27 Apr 2016 03:38:03 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 2.00ms
-Wed, 27 Apr 2016 03:38:03 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
-Wed, 27 Apr 2016 03:38:03 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
-Wed, 27 Apr 2016 03:38:08 web.py[line:1908] INFO 200 GET /admin/leader_award_setting (127.0.0.1) 4.00ms
-Wed, 27 Apr 2016 03:38:08 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=4805 (127.0.0.1) 0.00ms
-Wed, 27 Apr 2016 03:38:08 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Wed, 27 Apr 2016 03:38:08 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 2.00ms
-Wed, 27 Apr 2016 03:38:08 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
-Wed, 27 Apr 2016 03:38:08 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 0.00ms
-Wed, 27 Apr 2016 03:38:10 web.py[line:1908] INFO 200 POST /admin/leader_award_setting (127.0.0.1) 4.00ms
-Wed, 27 Apr 2016 03:38:10 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=1800 (127.0.0.1) 2.00ms
-Wed, 27 Apr 2016 03:38:10 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 0.00ms
-Wed, 27 Apr 2016 03:38:10 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 2.00ms
-Wed, 27 Apr 2016 03:38:10 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
-Wed, 27 Apr 2016 03:38:10 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:29:39 web.py[line:1908] INFO 200 GET / (127.0.0.1) 58.00ms
+Fri, 06 May 2016 12:29:40 web.py[line:1908] INFO 304 GET /static/js/jquery.backstretch.min.js (127.0.0.1) 498.00ms
+Fri, 06 May 2016 12:29:40 web.py[line:1908] INFO 200 GET /static/images/a2.png (127.0.0.1) 117.00ms
+Fri, 06 May 2016 12:29:41 web.py[line:1908] INFO 304 GET /static/images/bg.jpg (127.0.0.1) 162.00ms
+Fri, 06 May 2016 12:29:41 web.py[line:1908] WARNING 404 GET /favicon.ico (127.0.0.1) 68.00ms
+Fri, 06 May 2016 12:29:54 web.py[line:1908] INFO 200 GET /login (127.0.0.1) 35.00ms
+Fri, 06 May 2016 12:29:54 web.py[line:1908] INFO 304 GET /static/css/login_style.css (127.0.0.1) 35.00ms
+Fri, 06 May 2016 12:29:54 web.py[line:1908] INFO 304 GET /static/images/logo.png (127.0.0.1) 29.00ms
+Fri, 06 May 2016 12:29:55 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 651.00ms
+Fri, 06 May 2016 12:30:03 site.py[line:47] INFO LoginHandler argument {'url': ['/user/home'], '_xsrf': ['2|f0e95ada|be264927b6ffa8344b482e53012b5727|1462508994'], 'password': ['admin'], 'cap_ch': ['ltzx'], 'name': ['18672196610']}
+Fri, 06 May 2016 12:30:03 BaseHandler.py[line:91] INFO ('start login', u'18672196610', u'admin')
+Fri, 06 May 2016 12:30:03 BaseHandler.py[line:95] INFO ('login checked', u'18672196610', u'admin')
+Fri, 06 May 2016 12:30:03 BaseHandler.py[line:102] INFO ('login', {u'username': u'admin', u'status': u'online', u'safe_pwd': u'admin', u'uid': 18672196610L, u'alipay': {u'account': u'1666727747@qq.com', u'name': u'\u5171\u559c\u8d22\u5bcc'}, u'level': 5, u'money': 550, u'regtime': u'2016-03-04 22:05:19', u'phone': u'18672196610', u'address_info': {u'username': u'1451', u'phone': u'18672196610', u'province_city': u'haha', u'address': u'haha'}, u'role': u'superadmin', u'login': {u'ip': u'\u672a\u77e5', u'time': u'2016-04-26 19:49:36'}, u'lasttime': u'2016-04-27 03:26', u'jinbi': 124})
+Fri, 06 May 2016 12:30:03 web.py[line:1908] INFO 302 POST /login (127.0.0.1) 420.00ms
+Fri, 06 May 2016 12:30:03 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
+Fri, 06 May 2016 12:30:03 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 155.00ms
+Fri, 06 May 2016 12:30:03 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 77.00ms
+Fri, 06 May 2016 12:30:03 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 28.00ms
+Fri, 06 May 2016 12:30:03 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 98.00ms
+Fri, 06 May 2016 12:30:04 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 91.00ms
+Fri, 06 May 2016 12:31:29 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 55.00ms
+Fri, 06 May 2016 12:32:23 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 7.00ms
+Fri, 06 May 2016 12:32:23 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:32:23 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:32:23 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:32:23 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:32:41 web.py[line:1908] INFO 200 GET /account/tjjg (127.0.0.1) 48.00ms
+Fri, 06 May 2016 12:32:41 web.py[line:1908] WARNING 404 GET /ui/zTree_v3/css/zTreeStyle/img/diy/1_open.png (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:33:19 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 8.00ms
+Fri, 06 May 2016 12:33:21 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 5.00ms
+Fri, 06 May 2016 12:33:21 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:33:21 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:33:21 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:33:21 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 1.00ms
+Fri, 06 May 2016 12:33:33 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 174.00ms
+Fri, 06 May 2016 12:33:34 web.py[line:1908] INFO 200 GET /static/images/1.gif (127.0.0.1) 108.00ms
+Fri, 06 May 2016 12:33:36 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 58.00ms
+Fri, 06 May 2016 12:33:36 web.py[line:1908] INFO 200 GET /static/js/cart.js?v=222 (127.0.0.1) 73.00ms
+Fri, 06 May 2016 12:33:36 web.py[line:1908] INFO 200 GET /static/images/2.gif (127.0.0.1) 73.00ms
+Fri, 06 May 2016 12:33:39 web.py[line:1908] INFO 302 POST /nongchangsd (127.0.0.1) 55.00ms
+Fri, 06 May 2016 12:33:39 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 4.00ms

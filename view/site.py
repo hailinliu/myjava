@@ -326,7 +326,7 @@ class FarmShop(BaseHandler):
                 lastone = dict()
                 for item in last:
                     lastone = item
-                oid = int(lastone['id']) + 1
+                oid = int(lastone.get('id',0)) + 1
             else:
                 oid = 1
             self.db.my_pet.insert({"id": oid, "pid": i['id'], "count": count, "uid": self.user.get('uid'),

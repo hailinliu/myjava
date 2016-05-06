@@ -97,8 +97,8 @@ class UserHomeHandler(BaseHandler):
         if len(records_result) > 0:
             total_consume = records_result[0]['sum']
         news=self.db.news.find().limit(5)
-        
-        self.render("user/home.html", myuser=self.user, total_consume=total_consume,news=news, account_tab=1)
+        member_count=self.db.user.find({"admin": str(self.user.get("uid"))}).count()
+        self.render("user/home.html", myuser=self.user, total_consume=total_consume,member_count=member_count,news=news, account_tab=1)
 
 
 class MyFarm(BaseHandler):
