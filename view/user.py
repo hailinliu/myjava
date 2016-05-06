@@ -89,6 +89,7 @@ class UserHomeHandler(BaseHandler):
 
     @BaseHandler.authenticated
     def get(self):
+        # type_list = ["in", "pet_produce", "qianggou"]
         type_list = ["pet_produce"]
         total_consume = 0
         records_result = self.db.jinbi.aggregate(
