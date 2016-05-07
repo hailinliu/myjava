@@ -151,8 +151,10 @@ class Register(BaseHandler):
             logging.info(('register user %s %s' % (user['uid'], user['pwd'])))
             res = self.application.auth.register(user)
             if not res:
-                print "register error"
 
+
+                return self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")
+            else:
                 now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
                 # 如果与介绍人编号一致的用户存在
                 if inviter:
@@ -167,8 +169,6 @@ class Register(BaseHandler):
                         "$set": {"jinbi": inviter.get("jinbi", 0) + 18}})
                     self.db.jinbi.insert({"type": 'tuijian', 'money': gain, "time": now_time})
 
-                return self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")
-            else:
                 return self.render("ok.html", myuser=self.user, r=rName, url="/user/home", tip=u"注册成功")
 
 

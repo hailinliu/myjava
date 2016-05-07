@@ -1,34 +1,16 @@
-Sat, 07 May 2016 15:57:33 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
-Sat, 07 May 2016 15:57:33 web.py[line:1908] INFO 200 GET /account/jinbi_log (127.0.0.1) 94.00ms
-Sat, 07 May 2016 15:57:40 web.py[line:1908] INFO 200 GET /account/jinbi_log2 (127.0.0.1) 18.00ms
-Sat, 07 May 2016 15:57:43 web.py[line:1908] INFO 200 GET /trade/jinbi_guadan (127.0.0.1) 12.00ms
-Sat, 07 May 2016 15:57:44 web.py[line:1908] INFO 200 GET /trade/jinbi_mai (127.0.0.1) 14.00ms
-Sat, 07 May 2016 15:57:45 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 15.00ms
-Sat, 07 May 2016 15:57:46 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 9.00ms
-Sat, 07 May 2016 15:57:46 web.py[line:1908] INFO 200 GET /trade/zhuanjinbi (127.0.0.1) 14.00ms
-Sat, 07 May 2016 15:57:47 web.py[line:1908] INFO 200 GET /trade/maijb (127.0.0.1) 53.00ms
-Sat, 07 May 2016 15:57:48 web.py[line:1908] INFO 200 GET /trade/jbdingdan (127.0.0.1) 102.00ms
-Sat, 07 May 2016 15:57:50 web.py[line:1908] INFO 200 GET /shop (127.0.0.1) 71.00ms
-Sat, 07 May 2016 15:57:51 web.py[line:1908] INFO 200 GET /static/js/product.js (127.0.0.1) 356.00ms
-Sat, 07 May 2016 15:57:51 web.py[line:1908] INFO 200 GET /static/media/product_img/87df6966-171d-4682-8bbe-96bed151c4d7.jpg (127.0.0.1) 15.00ms
-Sat, 07 May 2016 15:57:51 web.py[line:1908] INFO 200 GET /static/media/product_img/8e4e4571-a962-46b0-9c2b-018196c9c4dd.gif (127.0.0.1) 97.00ms
-Sat, 07 May 2016 15:57:51 web.py[line:1908] INFO 200 GET /account/orders (127.0.0.1) 46.00ms
-Sat, 07 May 2016 15:57:52 web.py[line:1908] INFO 200 GET /shop (127.0.0.1) 9.00ms
-Sat, 07 May 2016 15:58:48 web.py[line:1908] INFO 200 GET /account/jihuobi_log (127.0.0.1) 17.00ms
-Sat, 07 May 2016 15:58:49 web.py[line:1908] INFO 200 GET /account/jihuobi_log2 (127.0.0.1) 12.00ms
-Sat, 07 May 2016 15:58:49 web.py[line:1908] INFO 200 GET /account/jinbi_log (127.0.0.1) 9.00ms
-Sat, 07 May 2016 15:58:50 web.py[line:1908] INFO 200 GET /account/jinbi_log (127.0.0.1) 8.00ms
-Sat, 07 May 2016 15:58:52 web.py[line:1908] INFO 200 GET /trade/jinbi_guadan (127.0.0.1) 7.00ms
-Sat, 07 May 2016 15:58:52 web.py[line:1908] INFO 200 GET /trade/jinbi_mai (127.0.0.1) 9.00ms
-Sat, 07 May 2016 15:58:53 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 9.00ms
-Sat, 07 May 2016 15:58:53 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 4.00ms
-Sat, 07 May 2016 15:58:54 web.py[line:1908] INFO 200 GET /trade/zhuanjinbi (127.0.0.1) 6.00ms
-Sat, 07 May 2016 15:58:55 web.py[line:1908] INFO 200 GET /trade/maijb (127.0.0.1) 5.00ms
-Sat, 07 May 2016 15:58:56 web.py[line:1908] INFO 200 GET /trade/jbdingdan (127.0.0.1) 7.00ms
-Sat, 07 May 2016 15:58:57 web.py[line:1908] INFO 200 GET /shop (127.0.0.1) 9.00ms
-Sat, 07 May 2016 15:58:59 web.py[line:1908] INFO 200 GET /account/orders (127.0.0.1) 8.00ms
-Sat, 07 May 2016 15:59:00 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 25.00ms
-Sat, 07 May 2016 15:59:01 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 13.00ms
-Sat, 07 May 2016 15:59:02 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 12.00ms
-Sat, 07 May 2016 15:59:03 web.py[line:1908] INFO 200 GET /account/jihuo (127.0.0.1) 10.00ms
-Sat, 07 May 2016 15:59:03 web.py[line:1908] INFO 200 GET /account/jihuojl (127.0.0.1) 13.00ms
+Sat, 07 May 2016 19:19:17 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
+Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 200 GET /account/orders (127.0.0.1) 55.00ms
+Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 495.00ms
+Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 4.00ms
+Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 1.00ms
+Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 2.00ms
+Sat, 07 May 2016 19:19:19 web.py[line:1908] INFO 302 GET /logout (127.0.0.1) 5.00ms
+Sat, 07 May 2016 19:19:19 web.py[line:1908] INFO 200 GET /login (127.0.0.1) 7.00ms
+Sat, 07 May 2016 19:19:19 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 31.00ms
+Sat, 07 May 2016 19:19:36 site.py[line:47] INFO LoginHandler argument {'url': ['/account/orders'], '_xsrf': ['2|e1955d57|af5a4eaaa783afb95a3429de105750aa|1462508994'], 'password': ['hahaha'], 'cap_ch': ['f584'], 'name': ['18672196620']}
+Sat, 07 May 2016 19:19:36 BaseHandler.py[line:91] INFO ('start login', u'18672196620', u'hahaha')
+Sat, 07 May 2016 19:19:36 BaseHandler.py[line:95] INFO ('login checked', u'18672196620', u'hahaha')
+Sat, 07 May 2016 19:19:36 BaseHandler.py[line:102] INFO ('login', {u'username': u'admin', u'status': u'online', u'safe_pwd': u'admin', u'uid': u'18672196620', u'money': 99450, u'regtime': u'2016-05-07 15:21:23', u'phone': u'18672196620', u'role': u'superadmin', u'login': {u'ip': u'\u672a\u77e5', u'time': u'2016-05-07 19:16:18'}, u'lasttime': u'2016-05-07 19:15', u'jinbi': 9400})
+Sat, 07 May 2016 19:19:36 web.py[line:1908] INFO 302 POST /login (127.0.0.1) 275.00ms
+Sat, 07 May 2016 19:19:36 web.py[line:1908] INFO 200 GET /account/orders (127.0.0.1) 5.00ms
+Sat, 07 May 2016 19:19:38 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 18.00ms

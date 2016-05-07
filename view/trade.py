@@ -100,11 +100,14 @@ class Zhuanjinbi(BaseHandler):
                 trade_log_id = 1
 
             # 更新发放金币的用户的金币余额
-            admin_money = my_money - out_money
+            admin_jinbi = my_money - out_money
             now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-            self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": admin_money}})
+            self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": admin_jinbi}})
+
             #更新收到金币的用户的金币余额
-            self.db.user.update({"uid": uid}, {"$inc": {"jinbi": out_money}})
+            new_jinbi=member.get("jinbi",0)
+            self.db.user.update({"uid": uid}, {"$set": {"jinbi": new_jinbi}})
+
             # 转账记录
             self.db.jinbi.insert({
                 "id": trade_log_id,
@@ -391,9 +394,9 @@ class JinBiConfirmPaid(BaseHandler):
         buyer_jinbi = self.db.user.find_one({"uid": buyer_uid}).get("jinbi")
         money = record.get("money")
 
-        # 更新用户的金币余额
+        # 更新买金币的人的金币余额
         new_jinbi = buyer_jinbi + money
-        self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": new_jinbi}})
+        self.db.user.update({"uid": buyer_uid}, {"$set": {"jinbi": new_jinbi}})
 
         # 生成金币记录
         self.db.jinbi.insert({
@@ -404,4 +407,5 @@ class JinBiConfirmPaid(BaseHandler):
             "seller": self.user.get("uid"),
             "money": money,
             "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+
         self.redirect('/trade/jinbi_mai2')
