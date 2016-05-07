@@ -306,10 +306,16 @@ class AddUser(BaseHandler):
     def get(self):
         if not self.user:
             self.redirect('/admin/login')
-        # users = self.db.user.find({"role": {"$ne": 'superadmin'}}, {"blacklist": {"$ne": True}})
+
         users = self.db.user.find({"role": {"$ne": 'superadmin'}})
         type = self.get_argument("type", None)
-        self.render("admin/add_user.html", myuser=self.user, admin_nav=2, type=type, users=users)
+        id=self.get_argument("id","")
+        user={}
+        if id:
+            user=self.db.user.find_one({"uid":id})
+            if not user:
+                user={}
+        self.render("admin/add_user.html", myuser=self.user, admin_nav=2, user=user,type=type)
 
     @BaseHandler.admin_authed
     def post(self):
