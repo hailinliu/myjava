@@ -38,20 +38,21 @@
                             [VIP{%if m.get('level')!=0%}{{m.get('level')}}{%else%}{%end%}]
                         </span></a>
                             {%if member_count(m.get('uid'))>0%}
-
+                            {%set mid=m.get('uid')%}
                             <ul  class="ztree">
-                                {%set sub_members=sub_members(m.get('uid'))%}
-                                {%if sub_mermbers%}
-                                {%for mm in sub_members(m.get('uid'))%}
+                                {%set sub_member=sub_members(m.get('uid'))%}
+                                {%if sub_member%}
+                                {%for mm in sub_member%}
+
                                 <li  class="level0" tabindex="0" hidefocus="true" treenode=""><span
                                         title="" class="button level0 switch root_docu"
                                         treenode_switch=""></span><a  class="level0" treenode_a=""
                                                                      onclick=""
-                                                                     target="_blank" style=""
-                                                                     title="[0] 18645586611 [已激活] [VIP]"><span
+                                                                     style=""
+                                                                     ><span
                                         title="" treenode_ico="" class="button ico_docu"
                                         style="background:url(/static/images/1_open.png) 0 0 no-repeat;"></span><span
-                                        id="wenjianshu_1_span" class="node_name">[{{member_count(m.get('uid'))}}] {{mm.get('uid')}}
+                                        id="wenjianshu_1_span" class="node_name">[{{member_count(mm.get('uid'))}}] {{mm.get('uid')}}
                                         [{%if mm.get('is_active')%}已激活{%else%}未激活{%end%}]
                                         [VIP{%if mm.get('level')!=0%}{{mm.get('level')}}{%else%}{%end%}]
                                 </span></a>

@@ -35,8 +35,11 @@ class TuijianJg(BaseHandler):
             return self.db.user.find({"admin": str(uid)}).count()
 
         def sub_members(uid):
-            self.db.user.find({"admin": str(uid)})
-
+            users=  self.db.user.find({"admin": str(uid)},{"_id":0})
+            if users.count()==0:
+                return  {}
+            else:
+                return  users
         self.render("account/tjjg.html", member_count=member_count, members=members,sub_members=sub_members,myuser=self.user,
                     account_tab=4)
 

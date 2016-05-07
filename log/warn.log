@@ -1,2 +1,8 @@
-Sat, 07 May 2016 19:55:00 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
-Sat, 07 May 2016 19:55:00 web.py[line:1908] INFO 200 GET /account/jinbi_log (127.0.0.1) 39.00ms
+Sat, 07 May 2016 20:39:16 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
+Sat, 07 May 2016 20:39:16 web.py[line:1908] INFO 200 GET /account/tjjg (127.0.0.1) 43.00ms
+Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 377.00ms
+Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 1.00ms
+Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 1.00ms
+Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 4.00ms
+Sat, 07 May 2016 20:39:17 web.py[line:1908] WARNING 404 GET /ui/zTree_v3/css/zTreeStyle/img/diy/1_open.png (127.0.0.1) 0.00ms
+Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/images/1_open.png (127.0.0.1) 2.00ms
