@@ -117,15 +117,15 @@
                                         未激活
                                         {%end%}
                                         </td>
-                                        <td contenteditable="true" class="level_td" data-handle-id="{{u['uid']}}">
+                                        <td contenteditable="true" class="level_td" data-handle-id="{{u.get('uid')}}">
                                             {{u.get('level',0)}}
                                         </td>
-                                        <td contenteditable="true" class="money_td" data-handle-id="{{u['uid']}}">
+                                        <td contenteditable="true" class="money_td" data-handle-id="{{u.get('uid')}}">
                                             {{u.get('money',0)}}
                                         </td>
                                         <td><a href="/admin/trade_record?uid={{u.get('uid')}}">转账笔数({{trade_count(u.get('uid'))}})</a>
                                         </td>
-                                        <td contenteditable="true" class="jinbi_td" data-handle-id="{{u['uid']}}">
+                                        <td contenteditable="true" class="jinbi_td" data-handle-id="{{u.get('uid')}}">
                                             {{u.get('jinbi',0)}}
                                         </td>
                                         <td><a href="/admin/userlist?uid={{u.get('uid')}}">{{member_count(u.get('uid'))}}</a>

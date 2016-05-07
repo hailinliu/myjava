@@ -165,8 +165,15 @@ class JiHuobiLog2(BaseHandler):
     @BaseHandler.authenticated
     def get(self):
         type_dict = {"jihuo": "账户激活", "transfer": "激活币转账"}
+        type_list=['jihuo','transfer']
+        total_consume=0
         per = 10
-        records = self.db.trade_log.find({"uid": self.user.get("uid")})
+        records = self.db.trade_log.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
+        records_result = self.db.trade_log.aggregate(
+            [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
+             {"$group": {'_id': "", 'sum': {'$sum': '$money'}}}])['result']
+        if len(records_result) > 0:
+            total_consume = records_result[0]['sum']
         counts = records.count()
         current_page = int(self.get_argument("p", 1))
         pages = int(round(counts / 10.0))
@@ -179,7 +186,7 @@ class JiHuobiLog2(BaseHandler):
             prev_page = current_page - 1
             next_page = current_page + 1
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
-        self.render("finance/jihuobi_log2.html", account_tab=9, records=records, counts=counts, pages=pages,
+        self.render("finance/jihuobi_log2.html", account_tab=9, records=records,total_consume=total_consume, counts=counts, pages=pages,
                     current_page=current_page, prev_page=prev_page, next_page=next_page, type_dict=type_dict,
                     myuser=self.user)
 
@@ -192,7 +199,7 @@ class JinBiLog(BaseHandler):
         # 宠物生产,pet_id
         per = 10
         total_consume = 0
-        type_list = ["in", "pet_produce", "qianggou"]
+        type_list = ["in", "pet_produce", "qianggou","tuijian"]
         tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币","tuijian":"推荐奖"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(

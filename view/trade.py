@@ -99,10 +99,12 @@ class Zhuanjinbi(BaseHandler):
             else:
                 trade_log_id = 1
 
-            # 更新发放金币的用户的余额
+            # 更新发放金币的用户的金币余额
             admin_money = my_money - out_money
             now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": admin_money}})
+            #更新收到金币的用户的金币余额
+            self.db.user.update({"uid": uid}, {"$inc": {"jinbi": out_money}})
             # 转账记录
             self.db.jinbi.insert({
                 "id": trade_log_id,

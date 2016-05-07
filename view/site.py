@@ -356,8 +356,7 @@ class FarmShop(BaseHandler):
         self.db.jinbi.insert(
             {"uid": self.user.get("uid"), "type": "buy_pet", "id": consume_id, "time": now_time, "money": total_cost})
 
-        print total_cost
-        return self.redirect('/nongchangsd')
+        return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"购买成功")
 
 
 class error_403(BaseHandler):

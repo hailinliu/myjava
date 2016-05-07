@@ -101,10 +101,10 @@ def create_admin():
             correct = True
             logging.warn(("a admin user registered,name is %s") % (username))
             user = {
-                "uid": random_code(),
+                "uid":"18672196620",
                 "username": username,
                 "pwd": pwd,
-                "phone":"18672196610",
+                "phone":"18672196620",
                 "safe_pwd": pwd,
                 'jinbi':10000,
                 'money':100000,
