@@ -1,16 +1,17 @@
-Sat, 07 May 2016 19:19:17 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
-Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 200 GET /account/orders (127.0.0.1) 55.00ms
-Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 495.00ms
-Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 4.00ms
-Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 1.00ms
-Sat, 07 May 2016 19:19:17 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 2.00ms
-Sat, 07 May 2016 19:19:19 web.py[line:1908] INFO 302 GET /logout (127.0.0.1) 5.00ms
-Sat, 07 May 2016 19:19:19 web.py[line:1908] INFO 200 GET /login (127.0.0.1) 7.00ms
-Sat, 07 May 2016 19:19:19 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 31.00ms
-Sat, 07 May 2016 19:19:36 site.py[line:47] INFO LoginHandler argument {'url': ['/account/orders'], '_xsrf': ['2|e1955d57|af5a4eaaa783afb95a3429de105750aa|1462508994'], 'password': ['hahaha'], 'cap_ch': ['f584'], 'name': ['18672196620']}
-Sat, 07 May 2016 19:19:36 BaseHandler.py[line:91] INFO ('start login', u'18672196620', u'hahaha')
-Sat, 07 May 2016 19:19:36 BaseHandler.py[line:95] INFO ('login checked', u'18672196620', u'hahaha')
-Sat, 07 May 2016 19:19:36 BaseHandler.py[line:102] INFO ('login', {u'username': u'admin', u'status': u'online', u'safe_pwd': u'admin', u'uid': u'18672196620', u'money': 99450, u'regtime': u'2016-05-07 15:21:23', u'phone': u'18672196620', u'role': u'superadmin', u'login': {u'ip': u'\u672a\u77e5', u'time': u'2016-05-07 19:16:18'}, u'lasttime': u'2016-05-07 19:15', u'jinbi': 9400})
-Sat, 07 May 2016 19:19:36 web.py[line:1908] INFO 302 POST /login (127.0.0.1) 275.00ms
-Sat, 07 May 2016 19:19:36 web.py[line:1908] INFO 200 GET /account/orders (127.0.0.1) 5.00ms
-Sat, 07 May 2016 19:19:38 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 18.00ms
+Sat, 07 May 2016 19:29:36 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
+Sat, 07 May 2016 19:29:36 web.py[line:1908] INFO 200 GET /trade/jinbi_guadan (127.0.0.1) 88.00ms
+Sat, 07 May 2016 19:29:38 web.py[line:1908] INFO 200 GET /trade/jinbi_mai (127.0.0.1) 15.00ms
+Sat, 07 May 2016 19:29:39 web.py[line:1908] INFO 200 GET /trade/jinbi_mai2 (127.0.0.1) 16.00ms
+Sat, 07 May 2016 19:29:40 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 13.00ms
+Sat, 07 May 2016 19:29:42 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 11.00ms
+Sat, 07 May 2016 19:29:46 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 26.00ms
+Sat, 07 May 2016 19:29:50 web.py[line:1908] INFO 200 POST /nongchangsd (127.0.0.1) 17.00ms
+Sat, 07 May 2016 19:29:51 web.py[line:1908] INFO 200 GET /nongchangsd (127.0.0.1) 12.00ms
+Sat, 07 May 2016 19:29:54 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 25.00ms
+Sat, 07 May 2016 19:30:26 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 35.00ms
+Sat, 07 May 2016 19:30:30 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 6.00ms
+Sat, 07 May 2016 19:30:34 web.py[line:1908] INFO 200 GET /account/tjjg (127.0.0.1) 14.00ms
+Sat, 07 May 2016 19:30:36 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 11.00ms
+Sat, 07 May 2016 19:30:37 web.py[line:1908] INFO 200 GET /account/tjjg (127.0.0.1) 5.00ms
+Sat, 07 May 2016 19:30:42 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 9.00ms
+Sat, 07 May 2016 19:30:44 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 25.00ms

@@ -58,7 +58,7 @@ def cal_interests():
         now_time = datetime.datetime.now()
         buy_time = p.get("time")
         b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
-        live_days = (yesterday - b).days
+        live_days = (now_time - b).days
         if live_days>0:
             if p.get("check_day") != str(yesterday_date):
                 if live_days > life:

@@ -317,6 +317,7 @@ class FarmShop(BaseHandler):
         for i in items:
             pet = self.db.pet.find_one({"id": i['id']})
             count = i['count']
+
             price = pet['price']
             item_cost = int(price) * int(count)
             total_cost += item_cost
@@ -329,8 +330,11 @@ class FarmShop(BaseHandler):
                 oid = int(lastone.get('id',0)) + 1
             else:
                 oid = 1
-            self.db.my_pet.insert({"id": oid, "pid": i['id'], "count": count, "uid": self.user.get('uid'),
+            for a in range(0,count):
+
+                self.db.my_pet.insert({"id": oid, "pid": i['id'], "count": count, "uid": self.user.get('uid'),
                                    "time": now_time})
+                oid+=1
             order_items.append({
                 "pid": i['id'],
                 "count": count,
