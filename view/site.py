@@ -126,7 +126,7 @@ class Register(BaseHandler):
             if not rName:
                 return self.render("error.html", myuser=self.user, r=rName, error=u"请输入介绍人编号")
             else:
-                exist_reco_user = self.db.user.find_one({"phone": rName})
+                exist_reco_user = self.db.user.find_one({"uid": rName})
                 if exist_reco_user:
                     inviter = exist_reco_user
                 else:
@@ -151,8 +151,6 @@ class Register(BaseHandler):
             logging.info(('register user %s %s' % (user['uid'], user['pwd'])))
             res = self.application.auth.register(user)
             if not res:
-
-
                 return self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")
             else:
                 now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
@@ -165,9 +163,18 @@ class Register(BaseHandler):
                         gain = 18
                     else:
                         gain = setting.get("recommend_award", 18)
+                    # trade_log_id自增1
+                    last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+                    if last_trade_log.count() > 0:
+                        lastone = dict()
+                        for item in last_trade_log:
+                            lastone = item
+                        trade_log_id = int(lastone.get('id', 0)) + 1
+                    else:
+                        trade_log_id = 1
                     self.db.user.update({"uid": rName}, {
                         "$set": {"jinbi": inviter.get("jinbi", 0) + 18}})
-                    self.db.jinbi.insert({"type": 'tuijian', 'money': gain, "time": now_time})
+                    self.db.jinbi.insert({"id":trade_log_id,"type": 'tuijian',"uid":rName, "rid":user.get("uid"),'money': gain, "time": now_time})
 
                 return self.render("ok.html", myuser=self.user, r=rName, url="/user/home", tip=u"注册成功")
 
