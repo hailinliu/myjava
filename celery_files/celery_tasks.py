@@ -59,15 +59,16 @@ def cal_interests():
         buy_time = p.get("time")
         b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
         live_days = (yesterday - b).days
-        if p.get("check_day") != str(yesterday_date):
-            if live_days > life:
-                info.update({"dead": 1})
-            producted_jinbi=live_days*day_jinbi
-            info.update({"gain": gain, "check_day": str(yesterday_date),"producted_jinbi":producted_jinbi})
-            db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
-            # 写入金币收入记录
-            db.jinbi.insert({"type": 'pet_produce', 'money': gain, "uid":uid,"pet_id": pid, "time": str(now_time)})
-            db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
+        if live_days>0:
+            if p.get("check_day") != str(yesterday_date):
+                if live_days > life:
+                    info.update({"dead": 1})
+                producted_jinbi=live_days*day_jinbi
+                info.update({"gain": gain, "check_day": str(yesterday_date),"producted_jinbi":producted_jinbi})
+                db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
+                # 写入金币收入记录
+                db.jinbi.insert({"type": 'pet_produce', 'money': gain, "uid":uid,"pet_id": pid, "time": str(now_time)})
+                db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
 
 
 @app.task
