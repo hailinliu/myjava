@@ -46,7 +46,7 @@
                     {%else%}
                     {%for r in records%}
                     <tr>
-                        <td>{{r.get('id')}}</td>
+                        <td>{{r.get('id','')}}</td>
                         <td>{{tip_dict.get(r.get('type'))}}</td>
                         <td>{{r.get('money')}}</td>
                         <td>{{tip_dict.get(r.get('type'))}} {%if  r.get('type')=='pet_produce'%}ID:{{r.get('pet_id','未知')}}{%end%}</td>

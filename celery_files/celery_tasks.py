@@ -7,6 +7,7 @@ import time
 
 # 将project目录加入sys.path
 from bson import ObjectId
+import pymongo
 
 project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_path)
@@ -66,8 +67,17 @@ def cal_interests():
                 producted_jinbi=live_days*day_jinbi
                 info.update({"gain": gain, "check_day": str(yesterday_date),"producted_jinbi":producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
+                last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+                if last_trade_log.count() > 0:
+                    lastone = dict()
+                    for item in last_trade_log:
+                        lastone = item
+                    trade_log_id = int(lastone.get('id', 0)) + 1
+                else:
+                    trade_log_id =1
                 # 写入金币收入记录
-                db.jinbi.insert({"type": 'pet_produce', 'money': gain, "uid":uid,"pet_id": pid, "time": str(now_time)})
+                create_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+                db.jinbi.insert({"id":trade_log_id,"type": 'pet_produce', 'money': gain, "uid":uid,"pet_id": pid, "time": str(create_time)})
                 db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
 
 

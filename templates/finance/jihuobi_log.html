@@ -44,7 +44,7 @@
                     {%else%}
                      {%for r in records%}
                     <tr>
-                        <td>{{r.get('id')}}</td>
+                        <td>{{r.get('id','')}}</td>
                         <td>激活币转账</td>
                         <td>{{r.get('money')}}</td>
                         <td>激活币转账 </td>
