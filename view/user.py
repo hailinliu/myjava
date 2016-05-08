@@ -56,6 +56,7 @@ class ResetPwdHandler(BaseHandler):
         pass
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         opwd = self.get_argument('opwd', None)
         npwd = self.get_argument('npwd', None)
@@ -107,6 +108,7 @@ class MyFarm(BaseHandler):
     """我的农场"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         self._template_loaders.clear()
         my_pets = self.db.my_pet.find({"uid": self.user.get('uid')})
@@ -140,6 +142,7 @@ class MyLoginInfoHandler(BaseHandler):
     """我的登录信息"""
 
     @BaseHandler.authenticated
+
     def get(self):
         page_arg = self.get_argument("page", 1)
         current_page = int(page_arg)
@@ -161,6 +164,7 @@ class SafeSettingHandler(BaseHandler):
     """安全设置"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         myuser = self.db.user.find_one({"uid": self.user['uid']})
         LPhone = str(myuser['phone'])[0:3]
@@ -178,6 +182,7 @@ class SafeSettingHandler(BaseHandler):
         self.render("user/user-safe-setting.html", myuser=self.user, id_verify=id_verify, type=type, account_tab=9,
                     phone=phone, email=email)
 
+    @BaseHandler.is_active
     def post(self):
 
         type = self.get_argument("type", "")
@@ -287,6 +292,7 @@ class MessageCenter(BaseHandler):
     """消息中心"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
 
         page_arg = self.get_argument("page", 1)

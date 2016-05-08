@@ -16,10 +16,12 @@ class Zhuanjihuobi(BaseHandler):
     """转激活币"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         self.render("trade/zhuanjihuobi.html", account_tab=15, myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         uid = self.get_argument("uid", None)
         out_money = int(self.get_argument("money", 0))
@@ -70,10 +72,12 @@ class Zhuanjinbi(BaseHandler):
     """转金币"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         self.render("trade/zhuanjinbi.html", account_tab=16, myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         uid = self.get_argument("uid", None)
         out_money = int(self.get_argument("jinbi", 0))
@@ -135,10 +139,12 @@ class GetCrash(BaseHandler):
     """提现"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         self.render("trade/maijb.html", account_tab=17, myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         alipay_account = self.get_argument("alipay_account", "")
         alipay_name = self.get_argument("alipay_name", "")
@@ -202,6 +208,7 @@ class GetCrashLog(BaseHandler):
     """提现记录"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         record = self.db.apply_crash.find({"uid": self.user.get("uid")})
         self.render("trade/jbdingdan.html", account_tab=18, record=record, myuser=self.user)
@@ -211,6 +218,7 @@ class JinBiPaiMai(BaseHandler):
     """金币拍卖"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         record = self.db.jinbi.find({"type": "guadan", "uid":{"$ne":self.user.get("uid")},"status": "waiting"}).sort("id", pymongo.DESCENDING).limit(50)
         self.render("trade/jinbi_guadan.html", account_tab=12, record=record, myuser=self.user)
@@ -220,6 +228,7 @@ class JinBiGoumai(BaseHandler):
     """金币购买记录"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         record = self.db.jinbi.find({"pay_uid": self.user.get('uid')}).sort("id", pymongo.DESCENDING)
 
@@ -237,6 +246,7 @@ class JinBiMai(BaseHandler):
     """金币卖出记录"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         mai_status = {"confirm": "已抢购，等待确认付款", "paid": "已付款", "complete": "已完成"}
         record = self.db.jinbi.find(
@@ -251,6 +261,7 @@ class JinBiGuadan(BaseHandler):
     """金币挂单"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         if not self.user.get("alipay"):
             self.render("ok.html", url="/account/alipay_setting", tip="请先完善支付宝信息")
@@ -259,6 +270,7 @@ class JinBiGuadan(BaseHandler):
         self.render("trade/woyao_guadan.html", account_tab=16, myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         out_jinbi = int(self.get_argument("jinbi", 0))
         try:
@@ -301,6 +313,7 @@ class JinBiQianggou(BaseHandler):
     """金币抢购"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         id = int(self.get_argument("id", 0))
         print id
@@ -319,6 +332,7 @@ class JinBiQuerenPay(BaseHandler):
     """金币抢购确认付款"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         if not self.user.get("alipay"):
             self.render("ok.html", url="/account/alipay_setting", tip="请先完善支付宝信息")
@@ -336,6 +350,7 @@ class JinBiQuerenPay(BaseHandler):
                     myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         id = int(self.get_argument("id", 0))
         pay_image = self.get_argument("pay_image", "")
@@ -355,6 +370,7 @@ class JinbiQianggouCancel(BaseHandler):
     """取消金币抢购"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         id = int(self.get_argument("id", 0))
         self.db.jinbi.update({"id": id}, {"$set": {"status": "waiting"},
@@ -368,6 +384,7 @@ class JinBiConfirmPaid(BaseHandler):
     """金币抢购，确认收款"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         id = int(self.get_argument("id", 0))
         record = self.db.jinbi.find_one({"id": id})

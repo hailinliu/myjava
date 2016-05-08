@@ -1,8 +1,83 @@
-Sat, 07 May 2016 20:39:16 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
-Sat, 07 May 2016 20:39:16 web.py[line:1908] INFO 200 GET /account/tjjg (127.0.0.1) 43.00ms
-Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/css/css.css (127.0.0.1) 377.00ms
-Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/js/layer.js (127.0.0.1) 1.00ms
-Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/js/long.js (127.0.0.1) 1.00ms
-Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/css/layer.css (127.0.0.1) 4.00ms
-Sat, 07 May 2016 20:39:17 web.py[line:1908] WARNING 404 GET /ui/zTree_v3/css/zTreeStyle/img/diy/1_open.png (127.0.0.1) 0.00ms
-Sat, 07 May 2016 20:39:17 web.py[line:1908] INFO 304 GET /static/images/1_open.png (127.0.0.1) 2.00ms
+Sun, 08 May 2016 17:18:54 web.py[line:1908] INFO 200 GET /account/jihuobi_log2 (127.0.0.1) 10.00ms
+Sun, 08 May 2016 17:18:54 web.py[line:1496] ERROR Uncaught exception GET /account/jihuobi_log2 (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/account/jihuobi_log2', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8000/account/jihuobi_log2', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; _xsrf=2|f0e95ada|be264927b6ffa8344b482e53012b5727|1462508994; sessionid=xi959esnnzafk0hkvh5008yeopkikik2; csrftoken=xJo5cTUSL7u2gLp7oTEJsBr2kjYoRlTB; verify_code="2|1:0|10:1462698754|11:verify_code|8:YnA3bQ==|e2fd302289a34ec2a1064cc0b4b7575d1b47f804658566f658958b2f54ec2274"; checked="2|1:0|10:1462698765|7:checked|12:Y2hlY2tlZA==|1b14347cfa57f06edb422a6d4561633a275a7c1a18cba1ca279b5d2789820630"; verification="2|1:0|10:1462698765|12:verification|88:YzEzYTc1OTRhNDRhMGM2MjViYmJmYzdjOGNjYjdmZGQ5OTczMDQwNzM2YTU4MzViNmJjYzJkYWM4NTM4YmJmZA==|7a3d271f9af700dc4d92342037b273a8fb7537b658cc5d86c4e2a5a3f486b028"; session_id="2|1:0|10:1462698765|10:session_id|88:MTUwOGM0OTgxMDQ4YzJjN2E3ZGQwZTExYjdiMmNlMTM1Yjk3MDJkYzdiNjk4ZGE1OTFlOWE3NGNiZGRjNGVjZA==|ab07dfdbd595706f398db0be15ceae0a3afb05d97871f83d2c34cdc61ac924a9"', 'If-None-Match': '"839d3bf69c8984e0eb608053d81065087692bbf4"', 'Upgrade-Insecure-Requests': '1'})
+Traceback (most recent call last):
+  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 190, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 257, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\view\account.py", line 284, in get
+    myuser=self.user)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
+    html = self.render_string(template_name, **kwargs)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
+    namespace = self.get_template_namespace()
+  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
+    namespace.update(self.ui)
+TypeError: 'NoneType' object is not iterable
+Sun, 08 May 2016 17:18:55 web.py[line:2584] ERROR Could not open static file 'F:\\TornadoProject\\weikefarm\\static\\js\\jquery-1.7.2.min.js'
+Sun, 08 May 2016 17:18:55 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 101.00ms
+Sun, 08 May 2016 17:18:57 web.py[line:1908] INFO 200 GET /mynongchang (127.0.0.1) 5.00ms
+Sun, 08 May 2016 17:18:57 web.py[line:1496] ERROR Uncaught exception GET /mynongchang (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/mynongchang', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8000/user/home', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; _xsrf=2|f0e95ada|be264927b6ffa8344b482e53012b5727|1462508994; sessionid=xi959esnnzafk0hkvh5008yeopkikik2; csrftoken=xJo5cTUSL7u2gLp7oTEJsBr2kjYoRlTB; verify_code="2|1:0|10:1462698754|11:verify_code|8:YnA3bQ==|e2fd302289a34ec2a1064cc0b4b7575d1b47f804658566f658958b2f54ec2274"; checked="2|1:0|10:1462698765|7:checked|12:Y2hlY2tlZA==|1b14347cfa57f06edb422a6d4561633a275a7c1a18cba1ca279b5d2789820630"; verification="2|1:0|10:1462698765|12:verification|88:YzEzYTc1OTRhNDRhMGM2MjViYmJmYzdjOGNjYjdmZGQ5OTczMDQwNzM2YTU4MzViNmJjYzJkYWM4NTM4YmJmZA==|7a3d271f9af700dc4d92342037b273a8fb7537b658cc5d86c4e2a5a3f486b028"; session_id="2|1:0|10:1462698765|10:session_id|88:MTUwOGM0OTgxMDQ4YzJjN2E3ZGQwZTExYjdiMmNlMTM1Yjk3MDJkYzdiNjk4ZGE1OTFlOWE3NGNiZGRjNGVjZA==|ab07dfdbd595706f398db0be15ceae0a3afb05d97871f83d2c34cdc61ac924a9"', 'If-None-Match': '"36312bb88a01f056b8573026ebcc55504c37e6c8"', 'Upgrade-Insecure-Requests': '1'})
+Traceback (most recent call last):
+  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 190, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 257, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\view\user.py", line 134, in get
+    check_progress=check_progress, pet_info=pet_info, account_tab=2)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
+    html = self.render_string(template_name, **kwargs)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
+    namespace = self.get_template_namespace()
+  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
+    namespace.update(self.ui)
+TypeError: 'NoneType' object is not iterable
+Sun, 08 May 2016 17:18:59 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 31.00ms
+Sun, 08 May 2016 17:19:02 web.py[line:1908] INFO 200 GET /account/zhitui (127.0.0.1) 8.00ms
+Sun, 08 May 2016 17:19:02 web.py[line:1496] ERROR Uncaught exception GET /account/zhitui (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/account/zhitui', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8000/user/home', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; _xsrf=2|f0e95ada|be264927b6ffa8344b482e53012b5727|1462508994; sessionid=xi959esnnzafk0hkvh5008yeopkikik2; csrftoken=xJo5cTUSL7u2gLp7oTEJsBr2kjYoRlTB; verify_code="2|1:0|10:1462698754|11:verify_code|8:YnA3bQ==|e2fd302289a34ec2a1064cc0b4b7575d1b47f804658566f658958b2f54ec2274"; checked="2|1:0|10:1462698765|7:checked|12:Y2hlY2tlZA==|1b14347cfa57f06edb422a6d4561633a275a7c1a18cba1ca279b5d2789820630"; verification="2|1:0|10:1462698765|12:verification|88:YzEzYTc1OTRhNDRhMGM2MjViYmJmYzdjOGNjYjdmZGQ5OTczMDQwNzM2YTU4MzViNmJjYzJkYWM4NTM4YmJmZA==|7a3d271f9af700dc4d92342037b273a8fb7537b658cc5d86c4e2a5a3f486b028"; session_id="2|1:0|10:1462698765|10:session_id|88:MTUwOGM0OTgxMDQ4YzJjN2E3ZGQwZTExYjdiMmNlMTM1Yjk3MDJkYzdiNjk4ZGE1OTFlOWE3NGNiZGRjNGVjZA==|ab07dfdbd595706f398db0be15ceae0a3afb05d97871f83d2c34cdc61ac924a9"', 'Upgrade-Insecure-Requests': '1'})
+Traceback (most recent call last):
+  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 190, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 257, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\view\account.py", line 127, in get
+    myuser=self.user)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
+    html = self.render_string(template_name, **kwargs)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
+    namespace = self.get_template_namespace()
+  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
+    namespace.update(self.ui)
+TypeError: 'NoneType' object is not iterable
+Sun, 08 May 2016 17:19:03 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 13.00ms
+Sun, 08 May 2016 17:19:07 web.py[line:1908] INFO 304 GET /mynongchang (127.0.0.1) 3.00ms
+Sun, 08 May 2016 17:19:07 web.py[line:1496] ERROR Uncaught exception GET /mynongchang (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/mynongchang', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8000/user/home', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; _xsrf=2|f0e95ada|be264927b6ffa8344b482e53012b5727|1462508994; sessionid=xi959esnnzafk0hkvh5008yeopkikik2; csrftoken=xJo5cTUSL7u2gLp7oTEJsBr2kjYoRlTB; verify_code="2|1:0|10:1462698754|11:verify_code|8:YnA3bQ==|e2fd302289a34ec2a1064cc0b4b7575d1b47f804658566f658958b2f54ec2274"; checked="2|1:0|10:1462698765|7:checked|12:Y2hlY2tlZA==|1b14347cfa57f06edb422a6d4561633a275a7c1a18cba1ca279b5d2789820630"; verification="2|1:0|10:1462698765|12:verification|88:YzEzYTc1OTRhNDRhMGM2MjViYmJmYzdjOGNjYjdmZGQ5OTczMDQwNzM2YTU4MzViNmJjYzJkYWM4NTM4YmJmZA==|7a3d271f9af700dc4d92342037b273a8fb7537b658cc5d86c4e2a5a3f486b028"; session_id="2|1:0|10:1462698765|10:session_id|88:MTUwOGM0OTgxMDQ4YzJjN2E3ZGQwZTExYjdiMmNlMTM1Yjk3MDJkYzdiNjk4ZGE1OTFlOWE3NGNiZGRjNGVjZA==|ab07dfdbd595706f398db0be15ceae0a3afb05d97871f83d2c34cdc61ac924a9"', 'If-None-Match': '"8e74dba977518468c995893ed7c1baa141e97bdc"', 'Upgrade-Insecure-Requests': '1'})
+Traceback (most recent call last):
+  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 190, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 257, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\view\user.py", line 134, in get
+    check_progress=check_progress, pet_info=pet_info, account_tab=2)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
+    html = self.render_string(template_name, **kwargs)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
+    namespace = self.get_template_namespace()
+  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
+    namespace.update(self.ui)
+TypeError: 'NoneType' object is not iterable
+Sun, 08 May 2016 17:19:08 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 19.00ms
+Sun, 08 May 2016 17:19:35 web.py[line:1908] INFO 200 GET /register?r=18672196620 (127.0.0.1) 39.00ms
+Sun, 08 May 2016 17:19:36 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 292.00ms

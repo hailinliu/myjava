@@ -155,26 +155,7 @@ class Register(BaseHandler):
             else:
                 now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
                 # 如果与介绍人编号一致的用户存在
-                if inviter:
 
-                    # TODO 更新上级代理的金币  从系统配置中
-                    setting = self.db.setting.find_one({"type": 1})
-                    if not setting:
-                        gain = 18
-                    else:
-                        gain = setting.get("recommend_award", 18)
-                    # trade_log_id自增1
-                    last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
-                    if last_trade_log.count() > 0:
-                        lastone = dict()
-                        for item in last_trade_log:
-                            lastone = item
-                        trade_log_id = int(lastone.get('id', 0)) + 1
-                    else:
-                        trade_log_id = 1
-                    self.db.user.update({"uid": rName}, {
-                        "$set": {"jinbi": inviter.get("jinbi", 0) + 18}})
-                    self.db.jinbi.insert({"id":trade_log_id,"type": 'tuijian',"uid":rName, "rid":user.get("uid"),'money': gain, "time": now_time})
 
                 return self.render("ok.html", myuser=self.user, r=rName, url="/user/home", tip=u"注册成功")
 

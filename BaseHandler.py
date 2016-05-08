@@ -97,7 +97,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.db.user.update({'username': name}, {'$set': {'lasttime': now, 'status': 'online'}})
         # user = self.db.user.find_one({'uid': username}, {'pwd': 0, '_id': 0})
         # user = self.db.user.find_one({'uid': name}, {'pwd': 0, '_id': 0})
-        user = self.db.user.find_one({'phone': name},{'pwd': 0, '_id': 0})
+        user = self.db.user.find_one({'phone': name}, {'pwd': 0, '_id': 0})
         data = user
         self.logging.info(('login', data))
 
@@ -233,9 +233,26 @@ class BaseHandler(tornado.web.RequestHandler):
         def wrapper(self, *args, **kwargs):
             if not self.user:
                 url = self.get_login_url()
-                return self.redirect(url)
-            if not self.user.get("is_check"):
-                self.render("redirect_index.html", url="/", tip="玩家请于上家联系购买激活币 激活成功后才可使用")
+                if urlparse.urlsplit(url).scheme:
+                    # if login url is absolute, make next absolute too
+                    next_url = self.request.full_url()
+                else:
+                    next_url = self.request.uri
+                url += "?" + urlencode(dict(next=next_url))
+            if not self.user.get("is_active"):
+                self.render("redirect_index.html", url=url, tip="玩家请于上家联系激活 激活成功后才可进行操作")
+
+            return method(self, *args, **kwargs)
+
+        return wrapper
+
+    @classmethod
+    def is_active(self, method):
+        @functools.wraps(method)
+        def wrapper(self, *args, **kwargs):
+
+            if not self.user.get("is_active"):
+                self.render("ok.html", url="/user/home", tip="玩家请于上家联系激活 激活成功后才可进行操作")
 
             return method(self, *args, **kwargs)
 
@@ -265,12 +282,12 @@ class BaseHandler(tornado.web.RequestHandler):
             current_hour = int(time.strftime('%H', time.localtime(time.time())))
             current_minute = int(time.strftime('%M', time.localtime(time.time())))
             if current_hour >= 0 and current_hour <= 1:
-
                 self.render("rest.html")
                 return
             return method(self, *args, **kwargs)
 
         return wrapper
+
     @classmethod
     def matching(self, method):
         @functools.wraps(method)
@@ -281,12 +298,12 @@ class BaseHandler(tornado.web.RequestHandler):
             current_hour = int(time.strftime('%H', time.localtime(time.time())))
             current_minute = int(time.strftime('%M', time.localtime(time.time())))
             if current_hour >= 12 and current_hour <= 13:
-
                 self.render("matching.html")
                 return
             return method(self, *args, **kwargs)
 
         return wrapper
+
     def get_admin_login_url(self):
 
         self.require_setting("admin_login_url", "@admin_authed")

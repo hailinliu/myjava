@@ -28,19 +28,77 @@ class TuijianJg(BaseHandler):
     """推荐结构"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
 
-        members=self.db.user.find({"admin": str(self.user.get("uid"))})
+        members = self.db.user.find({"admin": str(self.user.get("uid"))})
+
         def member_count(uid):
             return self.db.user.find({"admin": str(uid)}).count()
 
         def sub_members(uid):
-            users=  self.db.user.find({"admin": str(uid)},{"_id":0})
-            if users.count()==0:
-                return  {}
+            users = self.db.user.find({"admin": str(uid)}, {"_id": 0})
+            if users.count() == 0:
+                return {}
             else:
-                return  users
-        self.render("account/tjjg.html", member_count=member_count, members=members,sub_members=sub_members,myuser=self.user,
+                return users
+
+        def test_tree(uid):
+            base_template = """
+
+             <ul id="wenjianshu" class="ztree">
+                                {%for m in members %}
+                                <li class="level0" tabindex="0" hidefocus="true" treenode=""><span
+                                         title="" class="button level0 switch root_docu"
+                                        treenode_switch=""></span>
+                                    <a  class="level0" treenode_a="" onclick="" target="_blank" style=""
+                                                                     title="">
+                                        <span title="" treenode_ico="" class="button ico_docu"
+                                        style="background:url(/ui/zTree_v3/css/zTreeStyle/img/diy/1_open.png) 0 0 no-repeat;"></span>
+                                        <span class="node_name">[{{member_count(m.get('uid'))}}] {{m.get('uid')}}
+                                    [{%if m.get('is_active')%}已激活{%else%}未激活{%end%}]
+                                    [VIP{%if m.get('level')!=0%}{{m.get('level')}}{%else%}{%end%}]
+                                </span></a>
+
+                                    {%end%}
+                                </li>
+                                {%end%}
+                            </ul>
+            """
+
+            ul = """ <ul  class="ztree">"""
+            for m in members:
+                mid = m.get('uid')
+                li = """
+                <li class="level0" tabindex="0" hidefocus="true" treenode=""><span
+                                         title="" class="button level0 switch root_docu"
+                                        treenode_switch=""></span>
+                                    <a  class="level0" treenode_a="" onclick="" target="_blank" style=""
+                                                                     title="">
+                                        <span title="" treenode_ico="" class="button ico_docu"
+                                        style="background:url(/ui/z]Tree_v3/css/zTreeStyle/img/diy/1_open.png) 0 0 no-repeat;"></span>
+                                        <span class="node_name">[{0} {1}
+
+                """.format(member_count(m.get('uid')), m.get('uid'))
+                if m.get('is_active'):
+                    li += """[已激活]"""
+                else:
+                    li += """[未激活]"""
+                li += """ [VIP{0}] """.format(str(m.get('level', "")))
+
+                li += "</span></a>"
+                while member_count(mid) > 0:
+                    sub_ul = """"""
+                    if member_count(m.get('uid')):
+                        sub_member = sub_members(m.get('uid'))
+                        for mm in sub_member:
+                            li += """"""
+                li += "</li>"
+                ul += li
+            ul += " </ul>"
+
+        self.render("account/tjjg.html", member_count=member_count, members=members, sub_members=sub_members,
+                    myuser=self.user,
                     account_tab=4)
 
 
@@ -48,6 +106,7 @@ class Zhitui(BaseHandler):
     """直推"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         per = 10
         records = self.db.user.find({"admin": str(self.user.get("uid"))})
@@ -67,14 +126,17 @@ class Zhitui(BaseHandler):
                     records=records, pages=pages, prev_page=prev_page, next_page=next_page,
                     myuser=self.user)
 
+
 class Jihuo(BaseHandler):
     """激活账号"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         self.render("account/jihuo.html", account_tab=6, myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         uid = self.get_argument("uid", None)
         info = {}
@@ -116,6 +178,30 @@ class Jihuo(BaseHandler):
                     "uid": self.user.get("uid"),
                     "mid": uid, "money": 50,
                     "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+                now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+
+                # TODO 更新上级代理的金币  从系统配置中
+                setting = self.db.setting.find_one({"type": 1})
+                if not setting:
+                    gain = 18
+                else:
+                    gain = setting.get("recommend_award", 18)
+                    # trade_log_id自增1
+                last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+
+                if last_trade_log.count() > 0:
+                    lastone = dict()
+                    for item in last_trade_log:
+                        lastone = item
+                    trade_log_id = int(lastone.get('id', 0)) + 1
+                else:
+                    trade_log_id = 1
+                self.db.user.update({"uid": self.user.get("uid")}, {
+                    "$set": {"jinbi": self.user.get("jinbi", 0) + 18}})
+
+                self.db.jinbi.insert(
+                    {"id": trade_log_id, "type": 'tuijian', "uid": self.user.get("uid"), "rid": uid, 'money': gain,
+                     "time": now_time})
             else:
                 tip = "该会员已激活，无需再激活"
             self.render("ok.html", url="/account/jihuo", tip=tip)
@@ -127,6 +213,7 @@ class JihuoRecord(BaseHandler):
     """激活记录"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         record = self.db.trade_log.find({"uid": self.user.get("uid"), "type": "jihuo"})
         self.render("account/jihuojl.html", account_tab=7, record=record, myuser=self.user)
@@ -136,10 +223,11 @@ class JiHuobiLog(BaseHandler):
     """激活币收入"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         per = 10
-        records = self.db.trade_log.find({"mid": self.user.get("uid"),"type": "transfer"})
-        total=0
+        records = self.db.trade_log.find({"mid": self.user.get("uid"), "type": "transfer"})
+        total = 0
         counts = records.count()
         records_result = self.db.trade_log.aggregate(
             [{"$match": {"mid": self.user.get("uid"), "type": "transfer"}},
@@ -157,7 +245,7 @@ class JiHuobiLog(BaseHandler):
             prev_page = current_page - 1
             next_page = current_page + 1
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
-        self.render("finance/jihuobi_log.html",total=total, account_tab=8, current_page=current_page, counts=counts,
+        self.render("finance/jihuobi_log.html", total=total, account_tab=8, current_page=current_page, counts=counts,
                     records=records, pages=pages, prev_page=prev_page, next_page=next_page,
                     myuser=self.user)
 
@@ -166,10 +254,11 @@ class JiHuobiLog2(BaseHandler):
     """激活币支出"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         type_dict = {"jihuo": "账户激活", "transfer": "激活币转账"}
-        type_list=['jihuo','transfer']
-        total_consume=0
+        type_list = ['jihuo', 'transfer']
+        total_consume = 0
         per = 10
         records = self.db.trade_log.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.trade_log.aggregate(
@@ -189,7 +278,8 @@ class JiHuobiLog2(BaseHandler):
             prev_page = current_page - 1
             next_page = current_page + 1
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
-        self.render("finance/jihuobi_log2.html", account_tab=9, records=records,total_consume=total_consume, counts=counts, pages=pages,
+        self.render("finance/jihuobi_log2.html", account_tab=9, records=records, total_consume=total_consume,
+                    counts=counts, pages=pages,
                     current_page=current_page, prev_page=prev_page, next_page=next_page, type_dict=type_dict,
                     myuser=self.user)
 
@@ -198,12 +288,13 @@ class JinBiLog(BaseHandler):
     """金币收入"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         # 宠物生产,pet_id
         per = 10
         total_consume = 0
-        type_list = ["in", "pet_produce", "qianggou","tuijian"]
-        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币","tuijian":"推荐奖"}
+        type_list = ["in", "pet_produce", "qianggou", "tuijian"]
+        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币", "tuijian": "推荐奖"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
@@ -236,6 +327,7 @@ class JinBiLog2(BaseHandler):
     # shipped:已发货
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         per = 10
         total_consume = 0
@@ -270,10 +362,12 @@ class UserAddressSetting(BaseHandler):
     """收货地址设置"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         self.render("account/address_info.html", account_tab=20, myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         city = self.get_argument("city", "")
         address = self.get_argument("address", "")
@@ -291,10 +385,12 @@ class UserAlipaySetting(BaseHandler):
     """支付宝信息设置"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
         self.render("account/alipay_setting.html", account_tab=1, myuser=self.user)
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def post(self):
         alipay_account = self.get_argument("alipay_account", "")
         alipay_name = self.get_argument("alipay_name", "")
@@ -310,6 +406,7 @@ class MyOrder(BaseHandler):
     """我的订单"""
 
     @BaseHandler.authenticated
+    @BaseHandler.is_active
     def get(self):
 
         per = 10
@@ -347,11 +444,12 @@ class AccountInfoSetting(BaseHandler):
     """更新资料"""
 
     @BaseHandler.check_pwd_protect
+    @BaseHandler.is_active
     @BaseHandler.is_check
     def get(self):
         error = ""
         self.render("account/info_setting.html", current_tab=1, error=error, myuser=self.user)
-
+    @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
         datas = self.request.arguments
@@ -393,12 +491,13 @@ class AccountInfoSetting(BaseHandler):
 
 class AccountPwdUpdate(BaseHandler):
     """密码更新"""
-
+    @BaseHandler.is_active
     @BaseHandler.is_check
     def get(self):
         error = ""
         self.render("account/pwd_update.html", current_tab=1, error=error, myuser=self.user)
 
+    @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
         datas = self.request.arguments
@@ -436,11 +535,11 @@ class AccountPwdUpdate(BaseHandler):
 
 class AccountPwdProtect(BaseHandler):
     """密保设置"""
-
+    @BaseHandler.is_active
     def get(self):
         error = ""
         self.render("account/pwd_protect.html", current_tab=1, error=error, myuser=self.user)
-
+    @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
         datas = self.request.arguments
@@ -475,12 +574,12 @@ class AccountPwdProtect(BaseHandler):
 
 class SafePwdCheck(BaseHandler):
     """安全密码校验"""
-
+    @BaseHandler.is_active
     @BaseHandler.authenticated
     def get(self):
         error = ""
         self.render("account/verify_safe_pwd.html", current_tab=1, next_url="", error=error, myuser=self.user)
-
+    @BaseHandler.is_active
     @BaseHandler.authenticated
     def post(self):
         data = self.request.arguments
@@ -497,7 +596,7 @@ class SafePwdCheck(BaseHandler):
 
 class AccountAwardDetail(BaseHandler):
     """奖金记录"""
-
+    @BaseHandler.is_active
     @BaseHandler.authenticated
     def get(self):
         reward_type = self.settings['reward_type']
@@ -508,7 +607,7 @@ class AccountAwardDetail(BaseHandler):
 
 class AccountMembers(BaseHandler):
     """直属会员"""
-
+    @BaseHandler.is_active
     @BaseHandler.authenticated
     def get(self):
         if self.get_argument("page", None) in ["", None]:
