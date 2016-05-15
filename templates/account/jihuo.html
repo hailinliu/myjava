@@ -32,11 +32,11 @@
                     <form class="form-horizontal" method="post">
                         {% module xsrf_form_html() %}
                         <div class="form-group">
-                            <label for="x1" class="col-sm-2 control-label">您的玩家编号</label>
+                            <label for="x1" class="col-sm-2 control-label">您的会员编号</label>
 
                             <div class="col-sm-10">
                                 <input disabled="disabled" class="form-control form-long-w1" id="x1"
-                                       placeholder="您的玩家编号" value="{{myuser.get('uid')}}">
+                                       placeholder="您的会员编号" value="{{myuser.get('uid')}}">
                             </div>
                         </div>
 
@@ -60,10 +60,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="x4" class="col-sm-2 control-label">激活玩家编号</label>
+                            <label for="x4" class="col-sm-2 control-label">激活会员编号</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" name="uid" id="x4" placeholder="请输入需要激活的玩家编号" value=""
+                                <input class="form-control form-long-w1" name="uid" id="x4" placeholder="请输入需要激活的会员编号" value=""
                                        maxlength="11">
                             </div>
                         </div>
