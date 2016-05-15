@@ -448,7 +448,7 @@ class AccountInfoSetting(BaseHandler):
     @BaseHandler.is_check
     def get(self):
         error = ""
-        self.render("account/info_setting.html", current_tab=1, error=error, myuser=self.user)
+        self.render("account/info_setting.html", current_tab=1, account_tab=21,error=error, myuser=self.user)
     @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
@@ -460,6 +460,8 @@ class AccountInfoSetting(BaseHandler):
         passanswer1 = self.get_argument("passanswer1")
         wechat = self.get_argument("wechat", "")
         alipay = self.get_argument("alipay", "")
+        qq = self.get_argument("qq", "")
+        real_name = self.get_argument("real_name", "")  # 银行卡类型 哪家银行
         bankname = self.get_argument("bankname", "")  # 银行卡类型 哪家银行
         BankCard = self.get_argument("BankCard", "")  # 银行卡卡号
         BankUserName = self.get_argument("BankUserName", "")  # 银行卡用户名
@@ -482,11 +484,13 @@ class AccountInfoSetting(BaseHandler):
             self.render("ok.html", url="/account/info_setting", tip="请完善银行卡信息")
         else:
             info.update(
-                {"bank": {"name": bankname, "card": BankCard, "user_name": BankUserName, "address": BankAddress}})
+                {"qq":qq,"bank": {"name": bankname, "card": BankCard, "user_name": BankUserName, "address": BankAddress}})
+            if real_name:
+                info.update({"real_name":real_name})
             print info
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
             self.render("ok.html", url="/account/info_setting", tip="资料修改成功")
-        self.render("account/info_setting.html", current_tab=1, myuser=self.user)
+        self.render("account/info_setting.html", current_tab=1,account_tab=21, myuser=self.user)
 
 
 class AccountPwdUpdate(BaseHandler):

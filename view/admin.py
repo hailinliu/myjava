@@ -519,6 +519,17 @@ class AdminUserFrozen(BaseHandler):
                 self.render("ok.html", url="/admin/userlist", tip="用户已被冻结")
 
 
+class AdminContactRecord(BaseHandler):
+    """反馈记录"""
+
+    def get(self):
+        record = self.db.contact.find()
+        self.render("admin/contact_record.html", admin_nav=2,record=record, myuser=self.user)
+
+    def post(self):
+        record = self.db.contact.find()
+        self.render("admin/contact_record.html", admin_nav=2,record=record,myuser=self.user)
+
 class AdminPaidCrash(BaseHandler):
     """确认提现"""
 

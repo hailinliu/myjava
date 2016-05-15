@@ -27,7 +27,8 @@
                     <span class="glyphicon glyphicon-user llong0" aria-hidden="true"></span>
                     <span class="llong2">账户管理</span><span class="glyphicon glyphicon-menu-left llong1"></span></a>
 
-                <ul class="sub-menu" {%if account_tab in [4,5,6,7]%}style="display: block;"{%end%}>
+                <ul class="sub-menu" {%if account_tab in [4,5,6,7,21]%}style="display: block;"{%end%}>
+                    <li><a class="btn btn-long8 {%if account_tab==21%}btn-long32{%end%}" href="/account/info" id="m24">个人信息</a></li>
                     <li><a class="btn btn-long8 {%if account_tab==4%}btn-long32{%end%}" href="/account/tjjg" id="m21">推荐结构</a></li>
                     <li><a class="btn btn-long8 {%if account_tab==5%}btn-long32{%end%}" href="/account/zhitui" id="m22">直推列表</a></li>
                     <li><a class="btn btn-long8 {%if account_tab==6%}btn-long32{%end%}" href="/account/jihuo" id="m23">激活账号</a></li>

@@ -240,6 +240,34 @@ class GetPrize(BaseHandler):
         return self.write(json.dumps({"status": "ok", "prize": prize, "jinbi": left_jinbi}))
 
 
+
+class ContactUs(BaseHandler):
+    """站内留言"""
+
+    def get(self):
+        record = self.db.contact.find({"uid": self.user.get("uid")})
+        self.render("site/contactus.html", record=record,account_tab=1, myuser=self.user)
+
+    def post(self):
+        record = self.db.contact.find({"uid": self.user.get("uid")})
+        question = self.get_argument("question", "")
+        title = self.get_argument("title", "")
+        content = self.get_argument("content", "")
+        # id自增1
+        last = self.db.contact.find().sort("id", pymongo.DESCENDING).limit(1)
+        if last.count() > 0:
+            lastone = dict()
+            for item in last:
+                lastone = item
+            id = int(lastone.get('id', 0)) + 1
+        else:
+            id = 1
+        now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        self.db.contact.insert(
+            {"uid": self.user.get("uid"), "question": question, "title": title, "content": content, "id": id,
+             "time": now_time})
+        return self.redirect('/user')
+
 class ForgetPwd(BaseHandler):
     """忘记密码"""
 
