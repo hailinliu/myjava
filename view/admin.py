@@ -578,6 +578,7 @@ class AdminPetEdit(BaseHandler):
             life = int(self.get_argument("life", 0))
             image = self.get_argument("image", "")
             desc = self.get_argument("desc", "")
+
         except:
             return self.render("ok.html", myuser=self.user, url="/admin/pet_edit", tip=u"请输入合法的信息")
         info = {

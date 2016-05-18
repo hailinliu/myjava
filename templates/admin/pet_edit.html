@@ -203,6 +203,7 @@
     $("#pet_image").change(function(){
         var base_url='/static/images/';
         var val=$(this).val();
+        console.log(val);
         $(".imageview").attr("src",base_url+val);
     })
 
