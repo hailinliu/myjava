@@ -88,6 +88,10 @@
                                         <th>用户名</th>
                                         <th>手机号</th>
                                         <th>上级UID</th>
+                                        <th>姓名</th>
+                                        <th>身份证号</th>
+                                        <th>开户银行</th>
+                                        <th>银行卡号</th>
                                         <th>状态</th>
                                         <th>级别</th>
                                         <th style="text-align: center" colspan="2">激活币</th>
@@ -109,6 +113,10 @@
                                         </td>
                                         <td>{{ u.get('username','无') }}</td>
                                         <th>{{u.get('phone','无')}}</th>
+                                        <th>{{u.get('admin','无')}}</th>
+                                        <th>{{u.get('real_name','无')}}</th>
+                                        <th>{{u.get('bank',{}).get('name','')}}}}</th>
+                                        <th>{{u.get('bank',{}).get('card','')}}}}</th>
                                         <th>{{u.get('admin','无')}}</th>
                                         <td>
                                         {%if u.get('is_active')%}
