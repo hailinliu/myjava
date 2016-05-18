@@ -574,6 +574,7 @@ class AdminPetEdit(BaseHandler):
             level = int(self.get_argument("level", 0))
             price = int(self.get_argument("price", 0))
             day_jinbi = int(self.get_argument("day_jinbi", 0))
+            limit = int(self.get_argument("limit", 0))
             life = int(self.get_argument("life", 0))
             image = self.get_argument("image", "")
             desc = self.get_argument("desc", "")
@@ -586,6 +587,7 @@ class AdminPetEdit(BaseHandler):
             "level": level,
             "price": price,
             "day_jinbi": day_jinbi,
+            "limit": limit,
             "life": life,
             "desc":desc
         }
