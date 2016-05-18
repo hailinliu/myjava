@@ -1,0 +1,6 @@
+Thu, 19 May 2016 02:03:30 web.py[line:1908] INFO 302 GET /user/home (127.0.0.1) 3.00ms
+Thu, 19 May 2016 02:03:30 web.py[line:1908] INFO 200 GET /login (127.0.0.1) 45.00ms
+Thu, 19 May 2016 02:03:31 web.py[line:1908] INFO 304 GET /static/css/login_style.css (127.0.0.1) 404.00ms
+Thu, 19 May 2016 02:03:31 web.py[line:1908] INFO 304 GET /static/images/logo.png (127.0.0.1) 1.00ms
+Thu, 19 May 2016 02:03:31 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 298.00ms
+Thu, 19 May 2016 02:03:31 web.py[line:1908] INFO 304 GET /static/images/bg.jpg (127.0.0.1) 98.00ms
