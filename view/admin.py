@@ -580,7 +580,7 @@ class AdminPetEdit(BaseHandler):
             desc = self.get_argument("desc", "")
 
         except:
-            return self.render("ok.html", myuser=self.user, url="/admin/pet_edit", tip=u"请输入合法的信息")
+            return self.render("ok.html", myuser=self.user, url="/admin/pet_edit?id="+str(pet_id), tip=u"请输入合法的信息")
         info = {
             "id": pet_id,
             "name": name,

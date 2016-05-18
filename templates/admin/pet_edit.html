@@ -128,7 +128,7 @@
                                         </select>
                                         <img src="{{ image_url }}" width="50"
                                          style="margin-top: 10px;"
-                                         class=" {% if not pet.get('image','') %}hide{% end %} imageview">
+                                         class="{% if  pet.get('image','') =='' %}hide{% end %} imageview">
                                     </div>
 
                                     <!--<input type="text" name="image" id="image_url" style="display: none">-->
