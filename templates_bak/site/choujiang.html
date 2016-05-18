@@ -1,0 +1,269 @@
+<html lang="zh"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>抽奖大转盘</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="http://58.221.44.174:96/ui_yun/css/css.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            min-width: 320px;
+        }
+
+        .image {
+            text-align: center;
+        }
+
+        .an {
+            margin: 0px auto 0 auto;
+            text-align: center;
+        }
+
+        .btn-danger {
+            background: #FF4400;
+        }
+
+        .btn-danger:hover {
+            background: #F22D00;
+        }
+
+        .btn-danger:focus {
+            background: #F22D00;
+        }
+
+        @media (max-width: 500px) {
+            .image img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .rotate-con-pan {
+            background: url(/static/images/disk.jpg) no-repeat 0 0;
+            background-size: 100% 100%;
+            position: relative;
+            width: 480px;
+            height: 480px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            margin: 0 auto
+        }
+
+        .rotate-con-zhen {
+            width: 112px;
+            height: 224px;
+            background: url(/static/images/start.png) no-repeat 0 0;
+            background-size: 100% 100%;
+            cursor: pointer;
+            position: absolute;
+            left: 180px;
+            top: 140px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="an">
+    <h1>抽奖活动</h1>
+    <h4>玩家:{{myuser.get('uid')}} 金币:<span id="jinbi">{{myuser.get('jinbi')}}</span></h4>
+</div>
+<div class="rotate-con-pan">
+    <div class="rotate-con-zhen"></div>
+</div>
+<div class="desc" style="background: #fff;width: 400px;margin: 0px auto;padding:20px">
+    <h2> 活动说明：</h2>
+
+    <p>（1）每次抽奖消耗2金币,每人每天限抽3次</p>
+
+    <p>（2）抽中金币的,系统会自动把金币汇入您的账户</p>
+
+    <p>（3）一等奖商城商品;二等奖：100金币;三等奖10金币</p>
+
+    <p>（3）抽中实物的,系统会自动下单,请在抽奖前在个人资料里完善您的物流信息!</p>
+
+    <p>（4）本活动解释权归公司所有</p>
+</div>
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.backstretch.min.js"></script>
+<script type="text/javascript" src="/static/js/jQueryRotate.2.2.js"></script>
+<script src="http://58.221.44.174:96/ui_yun/layer/layer.js"></script>
+<script type="text/javascript">
+    var left_jinbi = parseInt($("#jinbi").text());
+    var prize_data = get_prize('get');
+    var handle_id = 0;
+    var end = false;
+
+    $(function () {
+        $(".rotate-con-zhen").click(function () {
+            var return_=get_prize('post');
+            if (!return_) {
+                var a = runzp();
+                $(this).rotate({
+                    duration: 3000,               //转动时间
+                    angle: 0,                    //起始角度
+                    animateTo: 1440 + a.angle,      //结束的角度
+                    easing: $.easing.easeOutSine,//动画效果，需加载jquery.easing.min.js
+                    callback: function () {
+                        //    alert(a.prize + a.message);//简单的弹出获奖信息
+                        layer.msg(a.message + "抽中" + a.prize);
+                    }
+                });
+            }
+        });
+
+
+    });
+    function get_prize(type) {
+        $.ajax({
+            url: '/get_prize',
+            type: type,
+            data: {},
+            success: function (data) {
+                console.log(data);
+                var j = jQuery.parseJSON(data);
+                if (j['status'] == 'ok') {
+                    prize_data = j['prize'];
+                    left_jinbi = j['jinbi'];
+                    handle_id = j['handle_id'];
+                    $("#jinbi").text(left_jinbi)
+
+                }
+                else {
+                    end = true;
+                     layer.msg(j.error);
+                }
+            }
+
+        });
+        if (left_jinbi < 2) {
+            end = true;
+            alert('金币余额不足');
+            return false;
+        }
+        return end;
+    }
+    function runzp() {
+
+        var obj = prize_data;
+        var result = randomnum(1, 100);
+        var line = 0;
+        var temp = 0;
+        var returnobj = "0";
+        var index = 0;
+
+        //alert("随机数"+result);
+        for (var i = 0; i < obj.length; i++) {
+            var obj2 = obj[i];
+            var c = parseFloat(obj2.v);
+            temp = temp + c;
+            line = 100 - temp;
+            if (c != 0) {
+                if (result > line && result <= (line + c)) {
+                    index = i;
+                    // alert(i+"中奖"+line+"<result"+"<="+(line + c));
+                    returnobj = obj2;
+                    break;
+                }
+            }
+        }
+        var angle = 330;
+        var message = "";
+        var myreturn = new Object;
+        if (returnobj != "0") {// 有奖
+            message = "恭喜中奖了";
+            var angle0 = [344, 373];
+            var angle1 = [226, 256];
+            var angle2 = [109, 136];
+            switch (index) {
+                case 0:// 一等奖
+                    var r0 = randomnum(angle0[0], angle0[1]);
+                    angle = r0;
+                    break;
+                case 1:// 二等奖
+                    var r1 = randomnum(angle1[0], angle1[1]);
+                    angle = r1;
+                    break;
+                case 2:// 三等奖
+                    var r2 = randomnum(angle2[0], angle2[1]);
+                    angle = r2;
+                    break;
+            }
+            //抽中后像服务器发请求
+            $.ajax({
+                url: '/get_prize',
+                type: 'put',
+                data: {"prize": index, "hanle_id": handle_id},
+                success: function (data) {
+                    console.log(data);
+                    var j = jQuery.parseJSON(data);
+                    if (j['status'] == 'ok') {
+                        left_jinbi = j['jinbi'];
+                        $("#jinbi").text(j['jinbi'])
+                    }
+                    else {
+                        end = true;
+                        alert(j.error)
+                    }
+
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+            myreturn.prize = returnobj.prize;
+        } else {// 没有
+            message = "再接再厉";
+            var angle3 = [17, 103];
+            var angle4 = [197, 220];
+            var angle5 = [259, 340];
+            var r = randomnum(3, 5);
+            var angle;
+            switch (r) {
+                case 3:
+                    var r3 = randomnum(angle3[0], angle3[1]);
+                    angle = r3;
+                    break;
+                case 4:
+                    var r4 = randomnum(angle4[0], angle4[1]);
+                    angle = r4;
+                    break;
+                case 5:
+                    var r5 = randomnum(angle5[0], angle5[1]);
+                    angle = r5;
+                    break;
+            }
+            myreturn.prize = "继续努力!";
+
+        }
+        myreturn.angle = angle;
+        myreturn.message = message;
+        return myreturn;
+    }
+    ;
+    function randomnum(smin, smax) {// 获取2个值之间的随机数
+        var Range = smax - smin;
+        var Rand = Math.random();
+        return (smin + Math.round(Rand * Range));
+    }
+
+</script>
+<script>
+    $.backstretch(["/static/images/bg.jpg"], {
+        fade: 100,
+        duration: 100
+    });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% extends "../base.html" %}
+{% block page_title %}推荐结构{% end %}
+
+
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>账户管理
+                    <small> 推荐结构</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">推荐结构</li>
+                </ol>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">推荐结构树形图</div>
+                <div class="panel-body">
+                    <ul id="wenjianshu" class="ztree">
+                        {%for m in members %}
+                        <li class="level0" tabindex="0" hidefocus="true" treenode=""><span
+                                 title="" class="button level0 switch root_docu"
+                                treenode_switch=""></span>
+                            <a  class="level0" treenode_a="" onclick="" target="_blank" style=""
+                                                             title="">
+                                <span title="" treenode_ico="" class="button ico_docu"
+                                style="background:url(/ui/zTree_v3/css/zTreeStyle/img/diy/1_open.png) 0 0 no-repeat;"></span>
+                                <span class="node_name">[{{member_count(m.get('uid'))}}] {{m.get('uid')}}
+                            [{%if m.get('is_active')%}已激活{%else%}未激活{%end%}]
+                            [VIP{%if m.get('level')!=0%}{{m.get('level')}}{%else%}{%end%}]
+                        </span></a>
+                            {%if member_count(m.get('uid'))>0%}
+                            {%set sub_member=sub_members(m.get('uid'))%}
+                            <ul  class="ztree">
+                                {%for mm in sub_member%}
+
+                                <li  class="level0" tabindex="0" hidefocus="true" treenode="">
+                                    <span title="" class="button level0 switch root_docu" treenode_switch=""></span>
+                                    <a  class="level0" treenode_a="" onclick="" style="">
+                                        <span title="" treenode_ico="" class="button ico_docu" style="background:url(/static/images/1_open.png) 0 0 no-repeat;"></span>
+                                        <span id="wenjianshu_1_span" class="node_name">[{{member_count(mm.get('uid'))}}] {{mm.get('uid')}}
+                                        [{%if mm.get('is_active')%}已激活{%else%}未激活{%end%}]
+                                        [VIP{%if mm.get('level')!=0%}{{mm.get('level')}}{%else%}{%end%}]</span>
+                                    </a>
+
+                                </li>
+
+                                {%end%}
+                            </ul>
+                            {%end%}
+                        </li>
+                        {%end%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+{%end%}

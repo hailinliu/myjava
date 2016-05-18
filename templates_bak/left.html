@@ -1,0 +1,88 @@
+<div class="left pull-left">
+
+    <div class="btn-group-vertical choujiang">
+        <a href="/draw" target="_blank"><img src="http://58.221.44.174:96/ui_yun/images/cj.gif"></a>
+    </div>
+
+    <div class="btn-group-vertical">
+        <ul>
+            <li>
+                <a class="btn btn-long {%if account_tab==1%}btn-long16{%end%}" href="/user/home" id="mlindex">
+                    <span class="glyphicon glyphicon-home llong0" aria-hidden="true"></span><span
+                        class="llong2">玩家首页</span></a>
+            </li>
+            <li>
+                <a class="btn btn-long " href="#" role="button"><span
+                        class="glyphicon glyphicon-piggy-bank llong0" aria-hidden="true"></span><span class="llong2">礼包管理</span><span
+                        class="glyphicon llong1 glyphicon-menu-down"></span></a>
+
+                <ul class="sub-menu" {%if account_tab in [2,3]%}style="display: block;"{%end%}>
+                    <li><a class="btn btn-long8 {%if account_tab==2%}btn-long32{%end%}" href="/mynongchang" id="m11">分红礼包查询</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==3%}btn-long32{%end%}" href="/nongchangsd" id="m12">购买分红礼包</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="btn btn-long" href="#" role="button">
+                    <span class="glyphicon glyphicon-user llong0" aria-hidden="true"></span>
+                    <span class="llong2">账户管理</span><span class="glyphicon glyphicon-menu-left llong1"></span></a>
+
+                <ul class="sub-menu" {%if account_tab in [4,5,6,7,21]%}style="display: block;"{%end%}>
+                    <li><a class="btn btn-long8 {%if account_tab==21%}btn-long32{%end%}" href="/account/info" id="m24">个人信息</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==4%}btn-long32{%end%}" href="/account/tjjg" id="m21">推荐结构</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==5%}btn-long32{%end%}" href="/account/zhitui" id="m22">直推列表</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==6%}btn-long32{%end%}" href="/account/jihuo" id="m23">激活账号</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==7%}btn-long32{%end%}" href="/account/jihuojl" id="m26">激活记录</a></li>
+                </ul>
+
+            </li>
+
+            <li>
+                <a class="btn btn-long" href="#" role="button">
+                    <span class="glyphicon glyphicon-usd llong0" aria-hidden="true"></span><span
+                        class="llong2">财务管理</span><span class="glyphicon glyphicon-menu-left llong1"></span></a>
+                <ul class="sub-menu" {%if account_tab in [8,9,10,11]%}style="display: block;"{%end%}>
+                    <li><a class="btn btn-long8 {%if account_tab==8%}btn-long32{%end%}" href="/account/jihuobi_log" id="m33">激活币收入</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==9%}btn-long32{%end%}" href="/account/jihuobi_log2" id="m34">激活币支出</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==10%}btn-long32{%end%}" href="/account/jinbi_log" id="m31">金币收入</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==11%}btn-long32{%end%}" href="/account/jinbi_log2" id="m32">金币支出</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="btn btn-long " href="#" role="button"><span class="glyphicon glyphicon-retweet llong0"
+                                                                     aria-hidden="true"></span><span
+                        class="llong2">交易系统</span><span class="glyphicon glyphicon-menu-left llong1"></span></a>
+                <ul class="sub-menu" {%if account_tab in [12,13,14,15,16,17,18]%}style="display: block;"{%end%}>
+
+                    <li><a class="btn btn-long8 {%if account_tab==12%}btn-long32{%end%}" href="/trade/jinbi_guadan" id="m45">金币拍卖</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==13%}btn-long32{%end%}" href="/trade/jinbi_mai" id="m46">金币购买记录</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==14%}btn-long32{%end%}" href="/trade/jinbi_mai2" id="m47">金币卖出记录</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==15%}btn-long32{%end%}" href="/trade/zhuanjihuobi" id="m41">激活币转账</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==16%}btn-long32{%end%}" href="/trade/zhuanjinbi" id="m42">金币转账</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==17%}btn-long32{%end%}" href="/trade/maijb" id="m43">申请提现</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==18%}btn-long32{%end%}" href="/trade/jbdingdan" id="m44">提现记录</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a class="btn btn-long" href="#" role="button"><span class="glyphicon glyphicon-shopping-cart llong0"
+                                                                     aria-hidden="true"></span><span
+                        class="llong2">购买商品</span><span class="glyphicon glyphicon-menu-left llong1"></span></a>
+                <ul class="sub-menu" {%if account_tab in [19,20]%}style="display: block;"{%end%}>
+                    <li><a class="btn btn-long8 {%if account_tab==19%}btn-long32{%end%}" href="/shop" id="m51">商城购物</a></li>
+                    <li><a class="btn btn-long8 {%if account_tab==20%}btn-long32{%end%}" href="/account/orders" id="m52">我的订单</a></li>
+                </ul>
+            </li>
+             <li>
+                <a class="btn btn-long" href="/logout" role="button"><span class="glyphicon glyphicon-log-out llong0"
+                                                                     aria-hidden="true"></span><span
+                        class="llong2">退出登录</span></a>
+
+            </li>
+
+        </ul>
+
+
+    </div>
+</div>

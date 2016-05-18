@@ -1,12 +1,21 @@
-<html lang="zh"><!--<![endif]-->
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
     <title>主程序</title>
+    <meta name="author" content="DeathGhost"/>
 
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link href="/static/css/css.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/css/css.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5.js"></script>
+    <![endif]-->
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!--<link href="/static/css/css.css" rel="stylesheet">-->
     <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -17,8 +26,6 @@
         }
     </style>
     <link rel="stylesheet" href="/static/css/layer.css" id="layui_layer_skinlayercss">
-    <!--&version={% module random() %}-->
-    <!--<script type="text/javascript" src="{{ static_url('js/jquery-1.7.2.min.js') }}"></script>-->
 
 </head>
 <body>
@@ -28,15 +35,22 @@
 <script src="/static/js/layer.js"></script>
 <script src="/static/js/long.js"></script>
 {%end%}
+<header>
+ <h1><img src="/static/images/logo-white.png"></h1>
+ <ul class="rt_nav">
+  <li><a href="/" target="_blank" class="website_icon">站点首页</a></li>
+  <li><a href="#" class="admin_icon">我的资料</a></li>
+  <li><a href="/account/info_setting" class="set_icon">资料修改</a></li>
+  <li><a href="/contact" class="glyphicon glyphicon-envelope">站内信</a></li>
+  <li><a href="/logout" class="quit_icon">安全退出</a></li>
+ </ul>
+</header>
 <div class="main clearfix">
     <!--LEFT -->
     {%block left%}
-    {%include 'left.html' %}
+    {%include 'new_left.html' %}
     {%end%}
-    <script>
-        //$(selector).toggle(speed,callback);
 
-    </script>
 
 
     <!--LEFT End-->
@@ -46,7 +60,6 @@
     {%end%}
 
 </div>
-
 
 
 </body>
