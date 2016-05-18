@@ -1,0 +1,56 @@
+Thu, 19 May 2016 04:22:30 web.py[line:1908] INFO 200 POST /account/info_setting (127.0.0.1) 14.00ms
+Thu, 19 May 2016 04:22:30 web.py[line:1496] ERROR Uncaught exception POST /account/info_setting (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='POST', uri='/account/info_setting', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Origin': 'http://127.0.0.1:8000', 'Content-Length': '328', 'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'Upgrade-Insecure-Requests': '1', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8000/account/info_setting', 'Cache-Control': 'max-age=0', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; csrftoken=787EADNy0TOHietbROPPIUxXqONjcqim; _xsrf=2|b31cc7f1|f2478b1157ee232e10b7b29fa533b493|1463574404; verify_code="2|1:0|10:1463601710|11:verify_code|8:bW94bA==|600445010b84e329db2bfd557eeca3db84ba6450a677f28f35a05fe4dc64e1c5"; checked="2|1:0|10:1463601714|7:checked|12:Y2hlY2tlZA==|1c9346ed0edd43c5b51c54f5c4fc3763abe525db06e4084a36a70c19a1e9da80"; verification="2|1:0|10:1463601715|12:verification|88:ODk2NmFhZGFiMzhiYjFjODllYzY5YTVkNWI3MzllZjM0ZDlmNTg0NTk1OTBmNWY0ZjE2YWExODQ0Yjg0M2JmYg==|79755cba7893315cfdef2077185210fad431ebc702564622f899ea234dcfa853"; session_id="2|1:0|10:1463601715|10:session_id|88:ZWU4NTNiNjIwMGQyMTlmZjhkNjlkYjExYjM2MThmZTM2YmYzNjI0MTRmZGI0NDJlNTExNzA1ZDNjMDUwOWZkZQ==|7773f7a21d3a6c57741c8fc99c7a2d89b2286d132d3e3adcb692662b3e6813b8"', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Content-Type': 'application/x-www-form-urlencoded'})
+Traceback (most recent call last):
+  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 257, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 245, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\view\account.py", line 495, in post
+    self.render("account/info_setting.html", current_tab=1,account_tab=21, myuser=self.user)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
+    html = self.render_string(template_name, **kwargs)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
+    namespace = self.get_template_namespace()
+  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
+    namespace.update(self.ui)
+TypeError: 'NoneType' object is not iterable
+Thu, 19 May 2016 04:22:32 web.py[line:1908] INFO 200 GET /account/info_setting (127.0.0.1) 16.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 200 GET /admin/userlist (127.0.0.1) 45.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery-2.1.1.min.js (127.0.0.1) 340.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/style.css-v=2.2.0.css (127.0.0.1) 3.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=1596 (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/font-awesome/css/font-awesome.css-v=4.3.0.css (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/animate.css (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/bootstrap.min.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.metisMenu.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/bootstrap.min.css-v=3.4.0.css (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/WdatePicker/WdatePicker.js?v=50bef4384720df3b2d70a2509a9c2b7b (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.flot.tooltip.min.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.flot.spline.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.flot.pie.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.slimscroll.min.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.flot.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.flot.symbol.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.flot.resize.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/curvedLines.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.peity.min.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/peity-demo.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/pace.min.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/hplus.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery-ui.min.js (127.0.0.1) 2.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery-jvectormap-1.2.2.min.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery-jvectormap-world-mill-en.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 3.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/sparkline-demo.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.easypiechart.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] INFO 304 GET /static/admin/jquery.sparkline.min.js (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:37 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
+Thu, 19 May 2016 04:22:38 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 0.00ms
+Thu, 19 May 2016 04:23:53 web.py[line:1908] INFO 200 GET /account/info_setting (127.0.0.1) 5.00ms
+Thu, 19 May 2016 04:23:54 web.py[line:1908] INFO 200 GET /contact (127.0.0.1) 8.00ms
+Thu, 19 May 2016 04:23:55 web.py[line:1908] INFO 200 GET /news_list (127.0.0.1) 8.00ms
+Thu, 19 May 2016 04:23:57 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 20.00ms

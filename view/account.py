@@ -245,7 +245,7 @@ class JiHuobiLog(BaseHandler):
             prev_page = current_page - 1
             next_page = current_page + 1
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
-        self.render("finance/jihuobi_log.html", total=total, account_tab=8, current_page=current_page, counts=counts,
+        self.render("account/jihuobi_log.html", total=total, account_tab=8, current_page=current_page, counts=counts,
                     records=records, pages=pages, prev_page=prev_page, next_page=next_page,
                     myuser=self.user)
 
@@ -278,7 +278,7 @@ class JiHuobiLog2(BaseHandler):
             prev_page = current_page - 1
             next_page = current_page + 1
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
-        self.render("finance/jihuobi_log2.html", account_tab=9, records=records, total_consume=total_consume,
+        self.render("account/jihuobi_log2.html", account_tab=9, records=records, total_consume=total_consume,
                     counts=counts, pages=pages,
                     current_page=current_page, prev_page=prev_page, next_page=next_page, type_dict=type_dict,
                     myuser=self.user)
@@ -293,8 +293,9 @@ class JinBiLog(BaseHandler):
         # 宠物生产,pet_id
         per = 10
         total_consume = 0
-        type_list = ["in", "pet_produce", "qianggou", "tuijian"]
-        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币", "tuijian": "推荐奖"}
+        print self.user.get("uid")
+        type_list = ["in", "pet_produce", "qianggou", "tuijian","admin_award"]
+        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币", "tuijian": "推荐奖","admin_award":"管理奖"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
@@ -315,7 +316,7 @@ class JinBiLog(BaseHandler):
 
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
 
-        self.render("finance/jinbi_log.html", account_tab=10, records=records, counts=counts, tip_dict=tip_dict,
+        self.render("account/jinbi_log.html", account_tab=10, records=records, counts=counts, tip_dict=tip_dict,
                     current_page=current_page, pages=pages, total_consume=total_consume, prev_page=prev_page,
                     next_page=next_page, myuser=self.user)
 
@@ -353,7 +354,7 @@ class JinBiLog2(BaseHandler):
 
         records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
 
-        self.render("finance/jinbi_log2.html", account_tab=11, records=records, counts=counts, tip_dict=tip_dict,
+        self.render("account/jinbi_log2.html", account_tab=11, records=records, counts=counts, tip_dict=tip_dict,
                     current_page=current_page, pages=pages, total_consume=total_consume, prev_page=prev_page,
                     next_page=next_page, myuser=self.user)
 
@@ -462,6 +463,7 @@ class AccountInfoSetting(BaseHandler):
         alipay = self.get_argument("alipay", "")
         qq = self.get_argument("qq", "")
         real_name = self.get_argument("real_name", "")  # 银行卡类型 哪家银行
+        id_code = self.get_argument("id_code", "")  # 银行卡类型 哪家银行
         bankname = self.get_argument("bankname", "")  # 银行卡类型 哪家银行
         BankCard = self.get_argument("BankCard", "")  # 银行卡卡号
         BankUserName = self.get_argument("BankUserName", "")  # 银行卡用户名
@@ -480,13 +482,13 @@ class AccountInfoSetting(BaseHandler):
             info.update({"wechat": wechat, "alipay": alipay})
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
 
-        if "" in [BankCard, bankname, BankUserName, BankAddress]:
+        if "" in [BankCard, bankname, BankUserName]:
             self.render("ok.html", url="/account/info_setting", tip="请完善银行卡信息")
         else:
             info.update(
                 {"qq":qq,"bank": {"name": bankname, "card": BankCard, "user_name": BankUserName, "address": BankAddress}})
-            if real_name:
-                info.update({"real_name":real_name})
+
+            info.update({"real_name":real_name,"id_code":id_code})
             print info
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
             self.render("ok.html", url="/account/info_setting", tip="资料修改成功")
@@ -542,7 +544,7 @@ class AccountPwdProtect(BaseHandler):
     @BaseHandler.is_active
     def get(self):
         error = ""
-        self.render("account/pwd_protect.html", current_tab=1, error=error, myuser=self.user)
+        self.render("account/pwd_protect.html", current_tab=1, account_tab=1,error=error, myuser=self.user)
     @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
@@ -566,11 +568,11 @@ class AccountPwdProtect(BaseHandler):
         # 当用户没有设置密保的时候
         if None in [user_pwd_question, user_pwd_answer]:
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"question": question2, "answer": answer2}})
-            self.render("ok.html", url="/account/pwd_protect", tip="密保修改成功")
+            self.render("ok.html", url="/user/home", tip="密保修改成功")
         else:
             if question1 == user_pwd_question and answer1 == user_pwd_answer:
                 self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"question": question2, "answer": answer2}})
-                self.render("ok.html", url="/account/pwd_protect", tip="密保修改成功")
+                self.render("ok.html", url="/user/home", tip="密保修改成功")
             else:
                 self.render("ok.html", url="/account/pwd_protect", tip="旧密保不正确")
         self.render("account/pwd_protect.html", current_tab=1, myuser=self.user)

@@ -1,128 +1,188 @@
-<html>
-<head></head>
-<body>﻿
+{% extends "../base.html" %}
+{% block page_title %}修改密保{% end %}
 
-<meta charset="UTF-8">
-<title>修改密保</title>
-<link rel="stylesheet" href="/static/img/uc.css?t=201303211742">
+
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>修改密保
+                    <small> 个人信息</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">个人信息</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">修改密保</div>
+
+
+                <div class="panel-body">
+                    <!--主-->
+
+
+                    <form name="form1" method="post" class="form-horizontal" action="?pass=1"
+                          onsubmit="return CheckForm();">
+                        {% module xsrf_form_html() %}
+                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"
+                               style="font-size:14px;">
+
+                            <tbody>
+                            <tr>
+                                <td height="18" colspan="2" style="font-size:15px; font-weight:bold; color:#5B6572;">
+                                    &nbsp;</td>
+                            </tr>
+
+                            {%if myuser.get('question') and myuser.get('answer')%}
+
+                            <tr>
+                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"><img
+                                        src="/static/images/roww2.gif" width="9" height="11"> 原密保
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%" height="30" align="right">原密保问题1：</td>
+                                <td class="td_l">
+                                    <select name="question1" class="txt">
+                                        <option value="5">你的生日是？</option>
+                                        <option value="6">你的家乡是？</option>
+                                        <option value="7">你的学校是？</option>
+                                        <option value="8">你母亲的名字是？</option>
+                                        <option value="9">你父亲的名字是？</option>
+                                        <option value="10">你的学校是？</option>
+                                        <option value="11">你喜欢的食物是？</option>
+                                        <option value="12">你喜欢的颜色是？</option>
+                                        <option value="13">你喜欢的动物是？</option>
+                                        <option value="14">你最想去的地方是？</option>
+                                        <option value="15">你印象最深刻的地方是？</option>
+                                    </select><span class="col">*<label id="question"></label></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="30" align="right">原密保答案1：</td>
+                                <td class="td_l">
+                                    <input name="answer1" type="text" id="answer1" class="txt">
+                                    <span class="col">*<label id="answer"></label></span>
+                                </td>
+                            </tr>
+
+                            {%end%}
+
+                            <tr>
+                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"><img
+                                        src="/static/images/roww2.gif" width="9" height="11"> 设置密保
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="30" align="right">新密保问题1：</td>
+                                <td class="td_l">
+                                    <select name="question2" class="txt">
+                                        <option value="5">你的生日是？</option>
+                                        <option value="6">你的家乡是？</option>
+                                        <option value="7">你的学校是？</option>
+                                        <option value="8">你母亲的名字是？</option>
+                                        <option value="9">你父亲的名字是？</option>
+                                        <option value="10">你的学校是？</option>
+                                        <option value="11">你喜欢的食物是？</option>
+                                        <option value="12">你喜欢的颜色是？</option>
+                                        <option value="13">你喜欢的动物是？</option>
+                                        <option value="14">你最想去的地方是？</option>
+                                        <option value="15">你印象最深刻的地方是？</option>
+                                    </select><span class="col">*<label id="question"></label></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="30" align="right">新密保答案1：</td>
+                                <td class="td_l">
+                                    <input name="answer2" type="text" id="answer2" class="txt">
+                                    <span class="col">*<label id="answer2"></label></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <button type="submit" name="submit" id="submit">提&nbsp;交</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </form>
+                    <!--End-->
+                </div>
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
 <script language="javascript">
     function CheckForm() {
-        answer = document.form1.answer.value;
+        UserCard = document.form1.UserCard.value;
+        UserName = document.form1.UserName.value;
+        RealName = document.form1.real_name.value;
+        UserTel = document.form1.UserTel.value;
+        UserAddress = document.form1.UserAddress.value;
+        BankCard = document.form1.BankCard.value;
+        BankUserName = document.form1.BankUserName.value;
+        BankAddress = document.form1.BankAddress.value;
 
-        if (answer.length == 0) {
-            alert("温馨提示:\n请输入密保答案.");
-            document.form1.password1.focus();
+        if (UserCard.length == 0) {
+            alert("温馨提示:\n请输入身份证号码.");
+            document.form1.UserCard.focus();
             return false;
         }
+        if (UserName.length == 0) {
+            alert("温馨提示:\n请输入会员姓名.");
+            document.form1.UserName.focus();
+            return false;
+        }
+        if (UserTel.length == 0) {
+            alert("温馨提示:\n请输入联系电话.");
+            document.form1.UserTel.focus();
+            return false;
+        }
+        if (BankCard.length == 0) {
+            alert("温馨提示:\n请输入开户帐号.");
+            document.form1.BankCard.focus();
+            return false;
+        }
+        if (BankUserName.length == 0) {
+            alert("温馨提示:\n请输入开户人.");
+            document.form1.BankUserName.focus();
+            return false;
+        }
+        else {
+            if ($("#BankUserName").val() != $("#real_name").val()) {
+                alert("温馨提示:\n开户人必须与姓名一致.");
+                return false
+            }
+        }
+        if (BankAddress.length == 0) {
+            alert("温馨提示:\n请输入开户地址.");
+            document.form1.BankAddress.focus();
+            return false;
+        }
+//	if(UserAddress.length == 0){
+//		alert("温馨提示:\n请输入联系地址.");
+//		document.form1.UserAddress.focus();
+//		return false;
+//	}
         return true;
     }
 </script>
-
-
-<div class="main_part"><h5 class="tit">
-    <span class="tit_nm">
-         {%if myuser.get('question') and myuser.get('answer') %}
-            修改密保
-        {%else%}
-        您当前没有密保，请设置密保
-        {%end%}
-    </span>
-    <span class="tit_sp"></span>
-</h5>
-
-    <div class="info" id="info_contain">
-        <form name="form1" method="post" action="?pass=1" onsubmit="return CheckForm();">
-            {% module xsrf_form_html() %}
-            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="font-size:14px;">
-
-                <tbody>
-                <tr>
-                    <td height="18" colspan="2" style="font-size:15px; font-weight:bold; color:#5B6572;">&nbsp;</td>
-                </tr>
-
-                {%if myuser.get('question') and myuser.get('answer')%}
-
-                <tr>
-                    <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"><img
-                            src="/static/images/roww2.gif" width="9" height="11"> 原密保
-                    </td>
-                </tr>
-                <tr>
-                    <td width="45%" height="30" align="right">原密保问题1：</td>
-                    <td class="td_l">
-                        <select name="question1" class="txt">
-                            <option value="5">你的生日是？</option>
-                            <option value="6">你的家乡是？</option>
-                            <option value="7">你的学校是？</option>
-                            <option value="8">你母亲的名字是？</option>
-                            <option value="9">你父亲的名字是？</option>
-                            <option value="10">你的学校是？</option>
-                            <option value="11">你喜欢的食物是？</option>
-                            <option value="12">你喜欢的颜色是？</option>
-                            <option value="13">你喜欢的动物是？</option>
-                            <option value="14">你最想去的地方是？</option>
-                            <option value="15">你印象最深刻的地方是？</option>
-                        </select><span class="col">*<label id="question"></label></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td height="30" align="right">原密保答案1：</td>
-                    <td class="td_l">
-                        <input name="answer1" type="text" id="answer1" class="txt">
-                        <span class="col">*<label id="answer"></label></span>
-                    </td>
-                </tr>
-
-                {%end%}
-
-                <tr>
-                    <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"><img
-                            src="/static/images/roww2.gif" width="9" height="11"> 设置密保
-                    </td>
-                </tr>
-                <tr>
-                    <td height="30" align="right">新密保问题1：</td>
-                    <td class="td_l">
-                        <select name="question2" class="txt">
-                            <option value="5">你的生日是？</option>
-                            <option value="6">你的家乡是？</option>
-                            <option value="7">你的学校是？</option>
-                            <option value="8">你母亲的名字是？</option>
-                            <option value="9">你父亲的名字是？</option>
-                            <option value="10">你的学校是？</option>
-                            <option value="11">你喜欢的食物是？</option>
-                            <option value="12">你喜欢的颜色是？</option>
-                            <option value="13">你喜欢的动物是？</option>
-                            <option value="14">你最想去的地方是？</option>
-                            <option value="15">你印象最深刻的地方是？</option>
-                        </select><span class="col">*<label id="question"></label></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td height="30" align="right">新密保答案1：</td>
-                    <td class="td_l">
-                        <input name="answer2" type="text" id="answer2" class="txt">
-                        <span class="col">*<label id="answer2"></label></span>
-                    </td>
-                </tr>
-        </tbody>
-        </table>
-
-        <br>
-        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-            <tbody>
-            <tr>
-                <td align="center">
-                    <button type="submit" name="submit" id="submit">提&nbsp;交</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        </form>
-    </div>
-</div>
-<script type="text/javascript" src="/static/img/jquery.min.js"></script>
-<script type="text/javascript" src="/static/img/minfo.js?t=20150519"></script>
-
-</body>
-</html>
+{%end%}

@@ -64,7 +64,7 @@
 
                             <div class="col-sm-10">
                                 <input class="form-control form-long-w1" id="real_name" placeholder="真实姓名"
-                                      name="real_name" value="{{myuser.get('real_name','')}}">
+                                       name="real_name" value="{{myuser.get('real_name','')}}">
                             </div>
                         </div>
 
@@ -73,7 +73,7 @@
 
                             <div class="col-sm-10">
                                 <input class="form-control form-long-w1" id="id_code" placeholder="证件号码"
-                                     name="id_code"  value="{{myuser.get('id_code','')}}">
+                                       name="id_code" value="{{myuser.get('id_code','')}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -81,9 +81,26 @@
 
                             <div class="col-sm-10">
                                 <input class="form-control form-long-w1" id="phone" placeholder="phone"
-                                     name="phone"  value="{{myuser.get('phone',0)}}">
+                                       name="phone" value="{{myuser.get('phone','')}}">
                             </div>
                         </div>
+                         <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label">微信号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="wechat" placeholder="微信号"
+                                       name="wechat" value="{{myuser.get('wechat','')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label">支付宝</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="alipay" placeholder="支付宝"
+                                       name="alipay" value="{{myuser.get('alipay','')}}">
+                            </div>
+                        </div>
+
                         {%set banks={u"中国工商银行":"中国工商银行",u"中国农业银行":"中国农业银行",u"中国建设银行":"中国建设银行",u"中国银行":"中国银行"}%}
                         <div class="form-group">
                             <label for="x3" class="col-sm-2 control-label">开户银行</label>
@@ -96,35 +113,35 @@
                                 </select>
                             </div>
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             <label for="BankAddress" class="col-sm-2 control-label">开户行省市</label>
 
                             <div class="col-sm-10">
                                 <input class="form-control form-long-w1" id="BankAddress" placeholder="开户行省市"
-                                       value="{{myuser.get('bank',{}).get('address','')}}">
+                                      name="BankAddress" value="{{myuser.get('bank',{}).get('address','')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="BankAddress" class="col-sm-2 control-label">开户人户名</label>
 
                             <div class="col-sm-10">
-                                <input  class="form-control form-long-w1" id="BankUserName" placeholder="开户人户名需与真实姓名一致"
-                                       value="{{myuser.get('bank',{}).get('user_name','')}}">
+                                <input class="form-control form-long-w1" id="BankUserName" placeholder="开户人户名需与真实姓名一致"
+                                      name="BankUserName" value="{{myuser.get('bank',{}).get('user_name','')}}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="BankCard" class="col-sm-2 control-label">开户账号</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" id="BankCard" placeholder="开户账号"
+                                <input class="form-control form-long-w1" name="BankCard" id="BankCard" placeholder="开户账号"
                                        value="{{myuser.get('bank',{}).get('card','')}}">
                             </div>
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             <label for="BankCard" class="col-sm-2 control-label">密保问题:</label>
 
                             <div class="col-sm-3">
-                              <select class="form-control" name="passquestion1" height="30" readonly="readonly">
+                                <select class="form-control" name="passquestion1" height="30" readonly="readonly">
                                     <option value="5">你的生日是？</option>
                                     <option value="6">你的家乡是？</option>
                                     <option value="7">你的学校是？</option>
@@ -143,8 +160,9 @@
                             <label for="BankCard" class="col-sm-2 control-label">密保答案</label>
 
                             <div class="col-sm-3">
-                                <input class="form-control form-long-w1" id="passanswer1" name="passanswer1" placeholder="密保答案"
-                                       value="{{myuser.get('bank',{}).get('card','')}}">
+                                <input class="form-control form-long-w1" id="passanswer1" name="passanswer1"
+                                       placeholder="密保答案"
+                                       value="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -200,8 +218,8 @@
             document.form1.BankUserName.focus();
             return false;
         }
-        else{
-            if ($("#BankUserName").val() !=$("#real_name").val()){
+        else {
+            if ($("#BankUserName").val() != $("#real_name").val()) {
                 alert("温馨提示:\n开户人必须与姓名一致.");
                 return false
             }

@@ -343,7 +343,7 @@ class FarmShop(BaseHandler):
                     {"pid": pet['id'], "uid": self.user.get("uid"), "dead": {"$ne": 1}}).count()
                 if bought_count + count > pet['limit']:
                     return self.render("ok.html", myuser=self.user, url="/nongchangsd",
-                                       tip=u"%s分红进行中%d个,限购%d个" % (pet['name'], bought_count,pet['limit']))
+                                       tip=u"%s分红进行中%d个,限购%d个" % (pet['name'], bought_count, pet['limit']))
             price = pet['price']
             item_cost = int(price) * int(count)
             total_cost += item_cost
@@ -364,6 +364,7 @@ class FarmShop(BaseHandler):
                 "pid": i['id'],
                 "count": count,
                 "cost": item_cost})
+
         if total_cost <= self.user.get("jinbi"):
             self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
         else:
@@ -371,6 +372,7 @@ class FarmShop(BaseHandler):
 
         self.db.order.insert(
             {"item": order_items, "uid": self.user.get('uid'), "cost": total_cost, "time": now_time})
+
 
         # id自增1
         last = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
@@ -384,6 +386,29 @@ class FarmShop(BaseHandler):
 
         self.db.jinbi.insert(
             {"uid": self.user.get("uid"), "type": "buy_pet", "id": consume_id, "time": now_time, "money": total_cost})
+
+        # TODO 计算投资推荐分红-管理奖
+        award_percent = [10, 7, 5, 3, 1]
+        user = self.user
+        for per in award_percent:
+            # 查询一代
+            admin_id = user.get("admin")
+            admin_user = self.db.user.find_one({"uid": admin_id})
+            if admin_user:
+                # id自增1
+                last = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+                if last.count() > 0:
+                    lastone = dict()
+                    for item in last:
+                        lastone = item
+                    consume_id = int(lastone.get('id', 0)) + 1
+                print admin_id,total_cost * per / 100
+                reward=total_cost * per / 100
+                self.db.jinbi.insert(
+                    {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
+                     "money":reward})
+                self.db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
+                user = admin_user
 
         return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"购买成功")
 

@@ -14,7 +14,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/weikefarm$weikefarm.coverage" NAME="weikefarm Coverage Results" MODIFIED="1463596292449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/weikefarm$weikefarm.coverage" NAME="weikefarm Coverage Results" MODIFIED="1463602946691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -31,31 +31,21 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5333333">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state vertical-scroll-proportion="4.8">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pet_edit.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/admin/pet_edit.html">
+      <file leaf-file-name="account.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/view/account.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.1034484">
-              <caret line="130" column="82" selection-start-line="130" selection-start-column="82" selection-end-line="130" selection-end-column="82" />
+            <state vertical-scroll-proportion="-13.566667">
+              <caret line="462" column="12" selection-start-line="462" selection-start-column="12" selection-end-line="462" selection-end-column="12" />
               <folding>
-                <element signature="n#style#0;n#img#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="e#18#29#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pets.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/admin/pets.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.428572">
-              <caret line="81" column="96" selection-start-line="81" selection-start-column="91" selection-end-line="81" selection-end-column="96" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -63,8 +53,28 @@
       <file leaf-file-name="users.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin/users.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.9827585">
-              <caret line="174" column="73" selection-start-line="174" selection-start-column="73" selection-end-line="174" selection-end-column="73" />
+            <state vertical-scroll-proportion="-10.857142">
+              <caret line="117" column="60" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="info_setting.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/account/info_setting.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5335689">
+              <caret line="164" column="46" selection-start-line="164" selection-start-column="46" selection-end-line="164" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="info_setting_bak.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/account/info_setting_bak.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.142858">
+              <caret line="112" column="45" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -73,7 +83,7 @@
       <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.866667">
+            <state vertical-scroll-proportion="-9.066667">
               <caret line="580" column="48" selection-start-line="580" selection-start-column="48" selection-end-line="580" selection-end-column="48" />
               <folding />
             </state>
@@ -90,44 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/user/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.137931">
-              <caret line="12" column="76" selection-start-line="12" selection-start-column="76" selection-end-line="12" selection-end-column="76" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#h3#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="trade.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/trade.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="393" column="86" selection-start-line="393" selection-start-column="23" selection-end-line="393" selection-end-column="86" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="site.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="site.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/site.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.116809115">
-              <caret line="334" column="21" selection-start-line="334" selection-start-column="21" selection-end-line="334" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="celery_tasks.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/celery_files/celery_tasks.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="47" column="49" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="49" />
+            <state vertical-scroll-proportion="-14.766666">
+              <caret line="409" column="44" selection-start-line="409" selection-start-column="44" selection-end-line="409" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -138,7 +115,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/account/forget_pwd.html" />
         <option value="$PROJECT_DIR$/utils/__init__.py" />
         <option value="$PROJECT_DIR$/templates/admin/orders.html" />
         <option value="$PROJECT_DIR$/templates/admin/leader_award_setting.html" />
@@ -152,7 +128,6 @@
         <option value="$PROJECT_DIR$/static/js/product.js" />
         <option value="$PROJECT_DIR$/celery_files/celery_config.py" />
         <option value="$PROJECT_DIR$/templates/admin/add_user.html" />
-        <option value="$PROJECT_DIR$/templates/account/tjjg.html" />
         <option value="$PROJECT_DIR$/view/trade.py" />
         <option value="$PROJECT_DIR$/view/user.py" />
         <option value="$PROJECT_DIR$/BaseHandler.py" />
@@ -163,12 +138,10 @@
         <option value="$PROJECT_DIR$/templates/account/jihuo.html" />
         <option value="$PROJECT_DIR$/templates/site/register.html" />
         <option value="$PROJECT_DIR$/templates/farm/mynongchang.html" />
-        <option value="$PROJECT_DIR$/templates/account/info_setting_bak.html" />
         <option value="$PROJECT_DIR$/templates/left.html" />
         <option value="$PROJECT_DIR$/templates/user/message.html" />
         <option value="$PROJECT_DIR$/templates/site/contactus.html" />
         <option value="$PROJECT_DIR$/templates/admin/contact_record.html" />
-        <option value="$PROJECT_DIR$/view/account.py" />
         <option value="$PROJECT_DIR$/templates/admin/admin_nav.html" />
         <option value="$PROJECT_DIR$/templates_bak/farm/mynongchang.html" />
         <option value="$PROJECT_DIR$/static/css/css.css" />
@@ -178,17 +151,21 @@
         <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/templates_bak/admin/users.html" />
-        <option value="$PROJECT_DIR$/templates/header.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
-        <option value="$PROJECT_DIR$/templates/account/info_setting.html" />
         <option value="$PROJECT_DIR$/templates/new_left.html" />
-        <option value="$PROJECT_DIR$/templates/admin/users.html" />
         <option value="$PROJECT_DIR$/templates/admin/pets.html" />
         <option value="$PROJECT_DIR$/templates/admin/pet_edit.html" />
         <option value="$PROJECT_DIR$/templates/user/home.html" />
         <option value="$PROJECT_DIR$/view/admin.py" />
         <option value="$PROJECT_DIR$/log/warn.log" />
+        <option value="$PROJECT_DIR$/templates/account/tjjg.html" />
         <option value="$PROJECT_DIR$/view/site.py" />
+        <option value="$PROJECT_DIR$/templates/account/pwd_protect.html" />
+        <option value="$PROJECT_DIR$/templates/header.html" />
+        <option value="$PROJECT_DIR$/templates/account/info_setting_bak.html" />
+        <option value="$PROJECT_DIR$/view/account.py" />
+        <option value="$PROJECT_DIR$/templates/admin/users.html" />
+        <option value="$PROJECT_DIR$/templates/account/info_setting.html" />
       </list>
     </option>
   </component>
@@ -284,7 +261,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="log" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -298,7 +279,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="celery_files" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="account" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weikefarm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weikefarm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="log" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -319,15 +318,15 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\TornadoProject\weikefarm\templates\account" />
       <recent name="F:\TornadoProject\weikefarm\static\images" />
       <recent name="F:\TornadoProject\weikefarm\static\css" />
       <recent name="F:\TornadoProject\weikefarm\static\js" />
       <recent name="F:\TornadoProject\weikefarm" />
-      <recent name="F:\TornadoProject\weikefarm\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\TornadoProject\weikefarm\templates\site" />
       <recent name="F:\TornadoProject\weikefarm\templates\account" />
+      <recent name="F:\TornadoProject\weikefarm\templates\site" />
       <recent name="F:\TornadoProject\weikefarm\templates\user" />
       <recent name="F:\TornadoProject\weikefarm\templates" />
     </key>
@@ -562,16 +561,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29287305" sideWeight="0.52665246" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27282852" sideWeight="0.5314499" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.48933902" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850778" sideWeight="0.48720682" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15256125" sideWeight="0.4760128" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29287305" sideWeight="0.47334754" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27282852" sideWeight="0.46855012" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29287305" sideWeight="0.46908316" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19402985" sideWeight="0.8357425" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.49573562" order="1" side_tool="false" content_ui="tabs" />
@@ -625,20 +624,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/finance/jihuobi_log2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="35" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/long.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.06317689">
@@ -695,20 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account/tjjg.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="47" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/finance/jinbi_log.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5779468">
-          <caret line="48" column="43" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/farm/mynongchang.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.5">
@@ -716,7 +687,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/finance/jihuobi_log.html">
+    <entry file="file://$PROJECT_DIR$/templates/account/jihuobi_log.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.85153586">
           <caret line="69" column="27" selection-start-line="69" selection-start-column="27" selection-end-line="69" selection-end-column="27" />
@@ -773,14 +744,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42857143">
           <caret line="91" column="21" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account/info_setting_bak.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="191" column="77" selection-start-line="191" selection-start-column="66" selection-end-line="191" selection-end-column="77" />
           <folding />
         </state>
       </provider>
@@ -859,16 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.428571">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#header#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/left.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.3103448">
@@ -885,14 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/account.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.166666">
-          <caret line="446" column="26" selection-start-line="446" selection-start-column="26" selection-end-line="446" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2159091">
@@ -905,14 +850,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24917492">
           <caret line="163" column="58" selection-start-line="163" selection-start-column="58" selection-end-line="163" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account/info_setting.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34256056">
-          <caret line="145" column="107" selection-start-line="145" selection-start-column="96" selection-end-line="145" selection-end-column="107" />
           <folding />
         </state>
       </provider>
@@ -952,46 +889,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/user.py">
+    <entry file="file://$PROJECT_DIR$/view/trade.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.866667">
-          <caret line="580" column="48" selection-start-line="580" selection-start-column="48" selection-end-line="580" selection-end-column="48" />
+          <caret line="393" column="86" selection-start-line="393" selection-start-column="23" selection-end-line="393" selection-end-column="86" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/admin/pets.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.428572">
+        <state vertical-scroll-proportion="0.39663866">
           <caret line="81" column="96" selection-start-line="81" selection-start-column="91" selection-end-line="81" selection-end-column="96" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log/warn.log">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/templates/admin/pet_edit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5333333">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin/users.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9827585">
-          <caret line="174" column="73" selection-start-line="174" selection-start-column="73" selection-end-line="174" selection-end-column="73" />
-          <folding />
+        <state vertical-scroll-proportion="0.52389383">
+          <caret line="130" column="82" selection-start-line="130" selection-start-column="82" selection-end-line="130" selection-end-column="82" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1003,28 +923,118 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin/pet_edit.html">
+    <entry file="file://$PROJECT_DIR$/templates/account/tjjg.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.1034484">
-          <caret line="130" column="82" selection-start-line="130" selection-start-column="82" selection-end-line="130" selection-end-column="82" />
+        <state vertical-scroll-proportion="-19.0">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#a#0;n#li#0;n#ul#0;n#li#0;n#ul#0;n#div#1;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/trade.py">
+    <entry file="file://$PROJECT_DIR$/templates/account/jinbi_log.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.357143">
+          <caret line="48" column="43" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.066667">
+          <caret line="580" column="48" selection-start-line="580" selection-start-column="48" selection-end-line="580" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/user.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="393" column="86" selection-start-line="393" selection-start-column="23" selection-end-line="393" selection-end-column="86" />
+          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/site.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.116809115">
-          <caret line="334" column="21" selection-start-line="334" selection-start-column="21" selection-end-line="334" selection-end-column="21" />
+        <state vertical-scroll-proportion="-14.766666">
+          <caret line="409" column="44" selection-start-line="409" selection-start-column="44" selection-end-line="409" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account/pwd_protect_bak.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.714286">
+          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log/warn.log">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.8">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.392857">
+          <caret line="5" column="72" selection-start-line="5" selection-start-column="72" selection-end-line="5" selection-end-column="72" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#header#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account/pwd_protect.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.275862">
+          <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account/info_setting_bak.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.142858">
+          <caret line="112" column="45" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/account.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.566667">
+          <caret line="462" column="12" selection-start-line="462" selection-start-column="12" selection-end-line="462" selection-end-column="12" />
+          <folding>
+            <element signature="e#18#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin/users.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.857142">
+          <caret line="117" column="60" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account/info_setting.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5335689">
+          <caret line="164" column="46" selection-start-line="164" selection-start-column="46" selection-end-line="164" selection-end-column="46" />
           <folding />
         </state>
       </provider>
