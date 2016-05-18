@@ -68,6 +68,7 @@
                                         <th>所需等级</th>
                                         <th>日产金币</th>
                                         <th>存活时间</th>
+                                        <th>限购</th>
                                         <th>描述</th>
                                         <th>操作</th>
                                     </tr>
@@ -83,6 +84,7 @@
                                         <td>{{ n.get('level','无') }}</td>
                                         <td>{{ n.get('day_jinbi','无') }}</td>
                                         <td>{{ n.get('life','无') }}</td>
+                                        <td>{{ n.get('limit','') }}</td>
                                         <td>{{ n.get('desc','无') }}</td>
                                         <td><a href="/admin/addpet?id={{n.get('id','')}}">修改</a></td>
                                     </tr>
