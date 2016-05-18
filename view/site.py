@@ -240,13 +240,12 @@ class GetPrize(BaseHandler):
         return self.write(json.dumps({"status": "ok", "prize": prize, "jinbi": left_jinbi}))
 
 
-
 class ContactUs(BaseHandler):
     """站内留言"""
 
     def get(self):
         record = self.db.contact.find({"uid": self.user.get("uid")})
-        self.render("site/contactus.html", record=record,account_tab=1, myuser=self.user)
+        self.render("site/contactus.html", record=record, account_tab=1, myuser=self.user)
 
     def post(self):
         record = self.db.contact.find({"uid": self.user.get("uid")})
@@ -267,6 +266,7 @@ class ContactUs(BaseHandler):
             {"uid": self.user.get("uid"), "question": question, "title": title, "content": content, "id": id,
              "time": now_time})
         return self.redirect('/user')
+
 
 class ForgetPwd(BaseHandler):
     """忘记密码"""
@@ -332,8 +332,18 @@ class FarmShop(BaseHandler):
         now_time = time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(time.time()))
         for i in items:
             pet = self.db.pet.find_one({"id": i['id']})
-            count = i['count']
-
+            # TODO 校验
+            count = int(i['count'])
+            if count > pet['limit']:
+                return self.render("ok.html", myuser=self.user, url="/nongchangsd",
+                                   tip=u"%s限购%d个" % (pet['name'], pet['limit']))
+            else:
+                # 查找已购买的未过期的红包数是否超过限制
+                bought_count = self.db.my_pet.find(
+                    {"pid": pet['id'], "uid": self.user.get("uid"), "dead": {"$ne": 1}}).count()
+                if bought_count + count > pet['limit']:
+                    return self.render("ok.html", myuser=self.user, url="/nongchangsd",
+                                       tip=u"%s分红进行中%d个,限购%d个" % (pet['name'], bought_count,pet['limit']))
             price = pet['price']
             item_cost = int(price) * int(count)
             total_cost += item_cost
@@ -343,14 +353,13 @@ class FarmShop(BaseHandler):
                 lastone = dict()
                 for item in last:
                     lastone = item
-                oid = int(lastone.get('id',0)) + 1
+                oid = int(lastone.get('id', 0)) + 1
             else:
                 oid = 1
-            for a in range(0,count):
-
+            for a in range(0, count):
                 self.db.my_pet.insert({"id": oid, "pid": i['id'], "count": count, "uid": self.user.get('uid'),
-                                   "time": now_time})
-                oid+=1
+                                       "time": now_time})
+                oid += 1
             order_items.append({
                 "pid": i['id'],
                 "count": count,
@@ -483,6 +492,7 @@ class ForgetPwdSendCode(BaseHandler):
             self.write(json.dumps({"msg": 'ok', "error": ''}))
         else:
             self.write(json.dumps({"msg": '请勿频繁请求', "error": 'error'}))
+
 
 class UploadImageFile(BaseHandler):
     # def check_xsrf_cookie(self):

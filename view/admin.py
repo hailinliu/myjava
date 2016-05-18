@@ -568,6 +568,7 @@ class AdminPetEdit(BaseHandler):
 
     @BaseHandler.admin_authed
     def post(self):
+        pet_id=0
         try:
             pet_id = int(self.get_argument("id", 0))
             name = self.get_argument("name", "")
@@ -578,7 +579,6 @@ class AdminPetEdit(BaseHandler):
             life = int(self.get_argument("life", 0))
             image = self.get_argument("pet_image", "")
             desc = self.get_argument("desc", "")
-
         except:
             return self.render("ok.html", myuser=self.user, url="/admin/pet_edit?id="+str(pet_id), tip=u"请输入合法的信息")
         info = {
