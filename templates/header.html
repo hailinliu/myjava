@@ -21,6 +21,9 @@
             str += d.getFullYear() + '-'; //获取当前年份
             str += d.getMonth() + 1 + '-'; //获取当前月份（0——11）
             str += d.getDate() + ' ';
+            var today = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');
+             var week = today[d.getDay()];
+            str+=week+ " ";
             if (d.getHours() < 10) {
                 str += "0" + d.getHours() + ':';
             }
@@ -42,12 +45,10 @@
 
             return str;
         }
-        $(document).ready(function(){
-             setInterval(function () {
+       // $("#nowTime").html(current);
+        setInterval(function () {
             $("#nowTime").html(current)
         }, 1000);
-        })
-
     </script>
 
 </header>

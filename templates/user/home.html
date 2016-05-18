@@ -14,7 +14,11 @@
                 <h3>微客新资源
                     <small> 主页</small>
                     <!--<span class="pull-right"><a href="/contact" class=" glyphicon glyphicon-envelope">站内留言</a></span>-->
+                     <a href="/draw" target="_blank" class="pull-right" ><img style="width: 130px" src="http://58.221.44.174:96/ui_yun/images/cj.gif"></a>
                 </h3>
+
+
+
             </div>
 
             <div>
@@ -64,7 +68,8 @@
                     <tr>
                         <td colspan="3">
 
-                            推广链接: <a href="{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}" target="_blank">{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}</a>
+                            推广链接: <a href="{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}"
+                                     target="_blank">{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}</a>
                         </td>
                     </tr>
 
@@ -88,7 +93,7 @@
                         <td>{{n.get('time')}}</td>
                     </tr>
 
-                   {%end%}
+                    {%end%}
                     </tbody>
                 </table>
             </div>
