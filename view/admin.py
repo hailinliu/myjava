@@ -576,7 +576,7 @@ class AdminPetEdit(BaseHandler):
             day_jinbi = int(self.get_argument("day_jinbi", 0))
             limit = int(self.get_argument("limit", 0))
             life = int(self.get_argument("life", 0))
-            image = self.get_argument("image", "")
+            image = self.get_argument("pet_image", "")
             desc = self.get_argument("desc", "")
 
         except:
