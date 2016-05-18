@@ -111,11 +111,11 @@
                                             <br>
                                             <span class="label label-danger">已冻结</span>{%end%}
                                         </td>
-                                        <td>{{ u.get('username','无') }}</td>
-                                        <th>{{u.get('phone','无')}}</th>
-                                        <th>{{u.get('admin','无')}}</th>
-                                        <th>{{u.get('real_name','无')}}</th>
-                                        <th>{{u.get('id_card','无')}}</th>
+                                        <td>{{ u.get('username','') }}</td>
+                                        <th>{{u.get('phone','')}}</th>
+                                        <th>{{u.get('admin','')}}</th>
+                                        <th>{{u.get('real_name','')}}</th>
+                                        <th>{{u.get('id_card','')}}</th>
                                         <th>{{u.get('bank',{}).get('name','')}}</th>
                                         <th>{{u.get('bank',{}).get('card','')}}</th>
 
