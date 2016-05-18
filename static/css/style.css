@@ -79,13 +79,16 @@ small,weak{color:#666}
 header{background:#19a97b;overflow:hidden;}
 header h1{margin:0;float:left;margin-left:1%;}
 header h1 img{width:auto;max-width:300px;height:70px;}
-header .rt_nav{float:right;overflow:hidden;margin-right:3%;margin-top:12px;}
+header .rt_nav{float:left;overflow:hidden;margin-right:3%;margin-top:12px;}
 header .rt_nav li{float:left;padding:0 25px 5px 25px;text-align:center;border-right:1px #139667 solid;}
 header .rt_nav li:last-child{border:none;}
-header .rt_nav li a{color:white;font-size:12px;text-shadow:0 0 1px #20af83;display:block;font-family: "Microsoft YaHei";}
+header .rt_nav li a{color:white;font-size:12px;text-shadow:0 0 1px #20af83;display:block;}
+header .rt_nav li span{font-family: "Microsoft YaHei";}
+
 header .rt_nav li a:hover{color:#f4f4f4;}
 header .rt_nav li a:hover:before{color:#f4f4f4;}
-header .rt_nav li a:before{font-family:'adminthemesregular';color:white;font-size:30px;display:block;}
+header .rt_nav li a:before{color:white;font-size:30px;display:block;margin-bottom: 10px}
+/*header .rt_nav li a:before{font-family:'adminthemesregular';color:white;font-size:30px;display:block;}*/
 header .rt_nav li .website_icon:before{content:"I";}
 header .rt_nav li .admin_icon:before{content:"U";}
 header .rt_nav li .set_icon:before{content:"S";}

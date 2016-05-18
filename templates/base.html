@@ -5,9 +5,10 @@
     <title>主程序</title>
     <meta name="author" content="DeathGhost"/>
 
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
         <link rel="stylesheet" type="text/css" href="/static/css/css.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
     <!--[if lt IE 9]>
     <script src="/static/js/html5.js"></script>
@@ -35,16 +36,7 @@
 <script src="/static/js/layer.js"></script>
 <script src="/static/js/long.js"></script>
 {%end%}
-<header>
- <h1><img src="/static/images/logo-white.png"></h1>
- <ul class="rt_nav">
-  <li><a href="/" target="_blank" class="website_icon">站点首页</a></li>
-  <li><a href="#" class="admin_icon">我的资料</a></li>
-  <li><a href="/account/info_setting" class="set_icon">资料修改</a></li>
-  <li><a href="/contact" class="glyphicon glyphicon-envelope">站内信</a></li>
-  <li><a href="/logout" class="quit_icon">安全退出</a></li>
- </ul>
-</header>
+{%include 'header.html'%}
 <div class="main clearfix">
     <!--LEFT -->
     {%block left%}

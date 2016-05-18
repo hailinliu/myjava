@@ -1,48 +1,53 @@
-<div class="top container-fluid clearfix">
-    <div class="row clearfix">
+<header>
+    <h1><img src="/static/images/logo-white.png"></h1>
+    <ul class="rt_nav">
+        <li><a href="/user/home" class="glyphicon glyphicon-home">会员首页</a></li>
+        <li><a href="/account/info_setting" class="glyphicon glyphicon-user ">我的资料</a></li>
+        <li><a href="/contact" class="glyphicon glyphicon-envelope">通知</a></li>
+        <li><a href="/news_list" class="glyphicon glyphicon-bullhorn">公告</a></li>
+        <li><a href="/logout" class="glyphicon glyphicon-log-out">安全退出</a></li>
+    </ul>
+    <div class="nav pull-right" style="color:#fff;margin-top: 45px">
 
-        <div class="logo"><img src="http://58.221.44.174:96/ui_yun/images/logo2.png"></div>
-
-        <div class="an">
-
-
-            <div class="btn-group" role="group">
-
-                <div class="btn-group clearfix">
-                    <a href="/users/index.asp?go=gg_list"
-                       class="btn btn-default btn-long btn-long2 dropdown-toggle btn-lg"><span
-                            class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> 玩家公告</a>
-                </div>
-
-                <div class="btn-group clearfix">
-                    <a href="/users/index.asp?go=xx_list"
-                       class="btn btn-default btn-long btn-long2 dropdown-toggle btn-lg"><span
-                            class="glyphicon glyphicon-envelope" aria-hidden="true"></span> 站内信
-                        <!-- <span class="badge biaoqian1"></span> --></a>
-                </div>
-
-                <div class="btn-group clearfix">
-
-                    <button type="button" class="btn btn-default btn-long dropdown-toggle btn-lg" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"
-                                                                             aria-hidden="true"></span> 18645586611
-                        <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right clearfix user-menu">
-                        <!--<li><a href="admin_up.asp?id=151813"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 修改密码</a></li>-->
-                        <li><a href="/users/index.asp?go=upxinxi"><span class="glyphicon glyphicon-file"
-                                                                        aria-hidden="true"></span> 修改资料</a></li>
-                        <li><a href="/users/index.asp?go=dl_log"><span class="glyphicon glyphicon-file"
-                                                                       aria-hidden="true"></span> 登录日志</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="exit.asp"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> 注销登录</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-
+        <!--<div>站内消息,{{myuser.get('username','')}}</div>-->
+        <div>
+            <span class="glyphicon glyphicon-user">您好,{{myuser.get('username','')}} |</span>
+            <span class=" glyphicon glyphicon-calendar" id="nowTime"></span>
         </div>
-
-
     </div>
-</div>
+    <script type="text/javascript">
+        function current() {
+            var d = new Date(), str = '';
+            str += d.getFullYear() + '-'; //获取当前年份
+            str += d.getMonth() + 1 + '-'; //获取当前月份（0——11）
+            str += d.getDate() + ' ';
+            if (d.getHours() < 10) {
+                str += "0" + d.getHours() + ':';
+            }
+            else {
+                str += d.getHours() + ':';
+            }
+            if (d.getMinutes() < 10) {
+                str += "0" + d.getMinutes() + ':';
+            }
+            else {
+                str += d.getMinutes() + ':';
+            }
+            if (d.getSeconds() < 10) {
+                str += "0" + d.getSeconds() + '';
+            }
+            else {
+                str += d.getSeconds() + '';
+            }
+
+            return str;
+        }
+        $(document).ready(function(){
+             setInterval(function () {
+            $("#nowTime").html(current)
+        }, 1000);
+        })
+
+    </script>
+
+</header>

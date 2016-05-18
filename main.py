@@ -161,6 +161,7 @@ class Application(tornado.web.Application):
                 'redis_port': 6379,
                 'redis_pass': '',
             },
+            now_time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         )
 
         self.settings = settings
