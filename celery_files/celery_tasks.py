@@ -46,13 +46,13 @@ def cal_interests():
     now_time = str(datetime.datetime.now())
     yesterday = datetime.datetime.today() - timedelta(days=1)
     my_pets = db.my_pet.find({"dead": {"$ne": 1}})
-    yesterday_date=yesterday.date()
+    yesterday_date = yesterday.date()
     for p in my_pets:
         info = {}
         uid = p.get("uid")
         pet_id = p.get("id")
-        pid= p.get("pid")
-        pet =db.pet.find_one({"id":pid})
+        pid = p.get("pid")
+        pet = db.pet.find_one({"id": pid})
         day_jinbi = pet.get("day_jinbi")
         gain = day_jinbi
         life = pet.get('life')
@@ -60,12 +60,12 @@ def cal_interests():
         buy_time = p.get("time")
         b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
         live_days = (now_time - b).days
-        if live_days>0:
+        if live_days > 0:
             if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
-                producted_jinbi=live_days*day_jinbi
-                info.update({"gain": gain, "check_day": str(yesterday_date),"producted_jinbi":producted_jinbi})
+                producted_jinbi = live_days * day_jinbi
+                info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
                 last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
                 if last_trade_log.count() > 0:
@@ -74,10 +74,11 @@ def cal_interests():
                         lastone = item
                     trade_log_id = int(lastone.get('id', 0)) + 1
                 else:
-                    trade_log_id =1
+                    trade_log_id = 1
                 # 写入金币收入记录
-                create_time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-                db.jinbi.insert({"id":trade_log_id,"type": 'pet_produce', 'money': gain, "uid":uid,"pet_id": pid, "time": str(create_time)})
+                create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+                db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
+                                 "time": str(create_time)})
                 db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
 
 
@@ -119,3 +120,26 @@ def cal_award():
                  "jine": award_money, "match_money": h.get("jine"),
                  "time": now_time})
             admin_id = admin.get("admin")
+
+
+def aaa(user):
+    award_percent = [10, 7, 5, 3, 1]
+    for per in award_percent:
+        # 查询一代
+        admin_id = user.get("admin")
+        admin_user = db.user.find_one({"uid": admin_id})
+        if admin_user:
+            # id自增1
+            last = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last.count() > 0:
+                lastone = dict()
+                for item in last:
+                    lastone = item
+                consume_id = int(lastone.get('id', 0)) + 1
+            print admin_id, total_cost * per / 100
+            reward = total_cost * per / 100
+            db.jinbi.insert(
+                {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
+                 "money": reward})
+            db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
+            user = admin_user

@@ -396,11 +396,10 @@ class FarmShop(BaseHandler):
         self.db.jinbi.insert(
             {"uid": self.user.get("uid"), "type": "buy_pet", "id": consume_id, "time": now_time, "money": total_cost})
 
-        # TODO 计算投资推荐分红-管理奖
-        award_percent = [10, 7, 5, 3, 1]
+        # TODO 计算投资直推奖
+        award_percent = [10]
         user = self.user
         for per in award_percent:
-            # 查询一代
             admin_id = user.get("admin")
             admin_user = self.db.user.find_one({"uid": admin_id})
             if admin_user:
@@ -411,13 +410,12 @@ class FarmShop(BaseHandler):
                     for item in last:
                         lastone = item
                     consume_id = int(lastone.get('id', 0)) + 1
-                print admin_id, total_cost * per / 100
+                # print admin_id, total_cost * per / 100
                 reward = total_cost * per / 100
                 self.db.jinbi.insert(
-                    {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
+                    {"uid": admin_id, "type": "recommend", "id": consume_id, "time": now_time,
                      "money": reward})
                 self.db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
-                user = admin_user
 
         return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"购买成功")
 

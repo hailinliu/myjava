@@ -181,27 +181,27 @@ class Jihuo(BaseHandler):
                 now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
 
                 # TODO 更新上级代理的金币  从系统配置中
-                setting = self.db.setting.find_one({"type": 1})
-                if not setting:
-                    gain = 18
-                else:
-                    gain = setting.get("recommend_award", 18)
-                    # trade_log_id自增1
-                last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
-
-                if last_trade_log.count() > 0:
-                    lastone = dict()
-                    for item in last_trade_log:
-                        lastone = item
-                    trade_log_id = int(lastone.get('id', 0)) + 1
-                else:
-                    trade_log_id = 1
-                self.db.user.update({"uid": self.user.get("uid")}, {
-                    "$set": {"jinbi": self.user.get("jinbi", 0) + 18}})
-
-                self.db.jinbi.insert(
-                    {"id": trade_log_id, "type": 'tuijian', "uid": self.user.get("uid"), "rid": uid, 'money': gain,
-                     "time": now_time})
+                # setting = self.db.setting.find_one({"type": 1})
+                # if not setting:
+                #     gain = 18
+                # else:
+                #     gain = setting.get("recommend_award", 18)
+                #     # trade_log_id自增1
+                # last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+                #
+                # if last_trade_log.count() > 0:
+                #     lastone = dict()
+                #     for item in last_trade_log:
+                #         lastone = item
+                #     trade_log_id = int(lastone.get('id', 0)) + 1
+                # else:
+                #     trade_log_id = 1
+                # self.db.user.update({"uid": self.user.get("uid")}, {
+                #     "$set": {"jinbi": self.user.get("jinbi", 0) + 18}})
+                #
+                # self.db.jinbi.insert(
+                #     {"id": trade_log_id, "type": 'tuijian', "uid": self.user.get("uid"), "rid": uid, 'money': gain,
+                #      "time": now_time})
             else:
                 tip = "该会员已激活，无需再激活"
             self.render("ok.html", url="/account/jihuo", tip=tip)
