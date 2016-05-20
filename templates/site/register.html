@@ -28,7 +28,6 @@
             <div class="xlogin2 form-horizontal">
                 <div class="lo1">注册新用户</div>
 
-
                 <div class="form-group">
                     <label for="x1" class="col-sm-4 control-label">直推会员:</label>
 
@@ -38,12 +37,40 @@
                 </div>
 
                 <div class="lo4"></div>
-
                 <div class="form-group">
-                    <label for="x2" class="col-sm-4 control-label">会员编号:</label>
+                    <label  class="col-sm-4 control-label">用户名:</label>
 
                     <div class="col-sm-8">
-                        <input class="form-control" id="x2" name="phone" placeholder="只能使用您的手机号码">
+                        <input class="form-control"  name="username" placeholder="您的用户名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="x2" class="col-sm-4 control-label">手机号码:</label>
+
+                    <div class="col-sm-8">
+                        <input class="form-control" id="x2" name="phone" placeholder="您的手机号码">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="x12" class="col-sm-4 control-label">QQ号码:</label>
+
+                    <div class="col-sm-8">
+                        <input class="form-control" id="x12" name="qq" placeholder="您的qq号码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="x5" class="col-sm-4 control-label">真实姓名:</label>
+
+                    <div class="col-sm-8">
+                        <input class="form-control" id="x5" name="real_name" placeholder="请填写有效的真实姓名">
+                    </div>
+                </div>
+                                <div class="form-group">
+                    <label for="x7" class="col-sm-4 control-label">身份证号:</label>
+
+                    <div class="col-sm-8">
+                        <input class="form-control" id="x7" name="id_code" placeholder="请填写您的身份证号">
                     </div>
                 </div>
                 <div class="form-group">
@@ -62,36 +89,6 @@
                     </div>
                 </div>
 
-                <!--  <div class="lo4"></div>
-
-                  <div class="form-group">
-                    <label for="x5" class="col-sm-4 control-label">会员姓名:</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" id="x5" placeholder="请输入您的姓名">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="x6" class="col-sm-4 control-label">安全问题:</label>
-                     <div class="col-sm-8">
-                        <select class="form-control" id="x6">
-                             <option value="" selected >请选择安全问题...</option>
-                             <option value="您的生日是什么时间？" >您的生日是什么时间？</option>
-                             <option value="您的爱人叫什么名字？" >您的爱人叫什么名字？</option>
-                             <option value="您最喜欢的是什么？" >您最喜欢的是什么？</option>
-                             <option value="您的父亲的姓名是什么？" >您的父亲的姓名是什么？</option>
-                             <option value="您的母亲的姓名是什么？" >您的母亲的姓名是什么？</option>
-                             <option value="您的小学名称叫什么名字？" >您的小学名称叫什么名字？</option>
-                        </select>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="x7" class="col-sm-4 control-label">安全答案:</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" id="x7" placeholder="请输入您的身份证号码">
-                    </div>
-                  </div>-->
 
                 <div class="lo4"></div>
 
@@ -167,6 +164,7 @@
         var x8 = $("#x8").val();
         var x9 = $("#x9").val();
         var x10 = $("#x10").val();
+        var username=$("#username").val();
         if (x1 == "") {
             tishi4('请输入直推人编号', '#x1')
             return false;
@@ -175,8 +173,8 @@
             tishi4('直推人编号不正确,应该是手机号码形式的11位数字', '#x1')
             return false;
         }
-        if (x2 == "") {
-            tishi4('请填写您自己的编号', '#x2')
+        if (username == "") {
+            tishi4('请填写您的用户名', '#username');
             return false;
         }
         if (!checkMobile(x2)) {

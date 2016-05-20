@@ -7,6 +7,7 @@ from datetime import date
 from bson import DBRef, ObjectId
 import datetime
 import math
+from passlib.handlers.pbkdf2 import pbkdf2_sha512
 import tornado
 
 from tornado.web import RequestHandler, StaticFileHandler
@@ -309,38 +310,57 @@ class AddUser(BaseHandler):
 
         users = self.db.user.find({"role": {"$ne": 'superadmin'}})
         type = self.get_argument("type", None)
-        id=self.get_argument("id","")
-        user={}
+        id = self.get_argument("uid", "")
+        user = {}
         if id:
-            user=self.db.user.find_one({"uid":id})
+            user = self.db.user.find_one({"uid": id})
             if not user:
-                user={}
-        self.render("admin/add_user.html", myuser=self.user, admin_nav=2, user=user,type=type)
+                user = {}
+        self.render("admin/add_user.html", myuser=self.user, admin_nav=2, user=user, type=type)
 
     @BaseHandler.admin_authed
     def post(self):
-        UserID = self.get_argument('UserID', None)
+        uid = self.get_argument("uid", "")
         level = int(self.get_argument('level', 0))
         jinbi = int(self.get_argument('jinbi', 0))
         money = int(self.get_argument('money', 0))
-        phone = self.get_argument('phone', None)
-        username = self.get_argument("username", None)
-        pwd = self.get_argument("pwd", None)
-        user = self.db.user.find_one({"$or": [{'uid': UserID}, {"phone": phone}, {'username': username}]})
+        phone = self.get_argument('phone', "")
+        id_code = self.get_argument('id_code', "")
+        username = self.get_argument("username", "")
+        real_name = self.get_argument("real_name", "")
+        pwd = self.get_argument("pwd", "")
+        alipay = self.get_argument("alipay", "")
+        # user = self.db.user.find_one({"$or": [{'uid': uid}, {"phone": phone}, {'username': username}]})
+        user = self.db.user.find_one({'uid': uid})
         if user:
-            # self.logging.info(u'该用户名或用户编号已经注册')
-            self.render("ok.html", myuser=self.user, url="/admin/adduser", tip=u"该用户名或用户编号或手机号已经注册")
-            # return self.write(json.dumps({"msg": u'该用户名或用户编号已经注册', "error": 'error'}))
+            user = {
+                'phone': phone,
+                'username': username,
+                'real_name': real_name,
+                'level': level,
+                'jinbi': jinbi,
+                'money': money,
+                'id_code': id_code,
+                'alipay': alipay,
+
+            }
+            if pwd:
+                password_hash = pbkdf2_sha512.encrypt(pwd)
+                user['pwd'] = password_hash
+            self.db.user.update({"uid": uid}, {"$set": user})
+            return self.render("ok.html", myuser=self.user, url="/admin/userlist", tip=u"资料修改成功")
         else:
             # baseurl = "http://cdn.zi-han.net/im/temp/"
             user = {
-                'uid': UserID,
+                'uid': phone,
                 'pwd': pwd,
                 'phone': phone,
                 'username': username,
                 'level': level,
                 'jinbi': jinbi,
                 'money': money,
+                'id_code': id_code,
+                'alipay':alipay,
                 'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                 'safe_pwd': pwd,
                 'is_check': False,
@@ -524,11 +544,12 @@ class AdminContactRecord(BaseHandler):
 
     def get(self):
         record = self.db.contact.find()
-        self.render("admin/contact_record.html", admin_nav=2,record=record, myuser=self.user)
+        self.render("admin/contact_record.html", admin_nav=2, record=record, myuser=self.user)
 
     def post(self):
         record = self.db.contact.find()
-        self.render("admin/contact_record.html", admin_nav=2,record=record,myuser=self.user)
+        self.render("admin/contact_record.html", admin_nav=2, record=record, myuser=self.user)
+
 
 class AdminPaidCrash(BaseHandler):
     """确认提现"""
@@ -568,7 +589,7 @@ class AdminPetEdit(BaseHandler):
 
     @BaseHandler.admin_authed
     def post(self):
-        pet_id=0
+        pet_id = 0
         try:
             pet_id = int(self.get_argument("id", 0))
             name = self.get_argument("name", "")
@@ -580,7 +601,7 @@ class AdminPetEdit(BaseHandler):
             image = self.get_argument("pet_image", "")
             desc = self.get_argument("desc", "")
         except:
-            return self.render("ok.html", myuser=self.user, url="/admin/pet_edit?id="+str(pet_id), tip=u"请输入合法的信息")
+            return self.render("ok.html", myuser=self.user, url="/admin/pet_edit?id=" + str(pet_id), tip=u"请输入合法的信息")
         info = {
             "id": pet_id,
             "name": name,
@@ -590,7 +611,7 @@ class AdminPetEdit(BaseHandler):
             "day_jinbi": day_jinbi,
             "limit": limit,
             "life": life,
-            "desc":desc
+            "desc": desc
         }
 
         if pet_id:
@@ -706,10 +727,11 @@ class AdminOrder(BaseHandler):
         orders = self.db.product_order.find().sort("_id", pymongo.DESCENDING)
 
         def address_info(uid):
-            info=self.db.user.find_one({"uid": uid})
+            info = self.db.user.find_one({"uid": uid})
             if not info:
                 return {}
             return info.get("address_info", {})
+
         def product_info(pid):
             return self.db.product.find_one({"id": pid})
 
@@ -775,12 +797,12 @@ class AdminRecharge(BaseHandler):
         uid = self.get_argument("uid", None)
         user_info = self.db.user.find_one({"uid": uid})
         handle = {"money": user_info.get('money', 0) + money}
-        if pay_type=='jihuobi':
+        if pay_type == 'jihuobi':
             handle.update(
-                    { "money": user_info.get('money', 0) + money})
+                {"money": user_info.get('money', 0) + money})
 
             self.db.user.update({"uid": uid}, {"$set": handle})
-             # trade_log_id自增1
+            # trade_log_id自增1
             last_trade_log = self.db.trade_log.find().sort("id", pymongo.DESCENDING).limit(1)
             if last_trade_log.count() > 0:
                 lastone = dict()
@@ -818,39 +840,46 @@ class AdminRecharge(BaseHandler):
                 "mid": self.user.get("uid"),
                 "money": money,
                 "time": now_time})
-            self.db.user.update({"uid": uid},{"$inc":{"jinbi":money}})
+            self.db.user.update({"uid": uid}, {"$inc": {"jinbi": money}})
         return self.redirect('/admin/userlist')
 
 
 class BuyPetRecord(BaseHandler):
     """购买宠物记录"""
+
     @BaseHandler.authenticated
     def get(self):
         if self.get_argument("page", None) in ["", None]:
             current_page = 1
         else:
             current_page = int(self.get_argument("page"))
-        record=self.db.my_pet.find()
+        record = self.db.my_pet.find()
         per = 20.0
         pages = int(math.ceil(record.count() / per))
         record = record.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
         counts = record.count()
+
         def pet_info(id):
-            pet=self.db.pet.find_one({"id":id})
+            pet = self.db.pet.find_one({"id": id})
             if not pet:
                 return {}
-            return  pet
+            return pet
+
         # 计算宠物当前存活天数
         def cal_life_day(buy_time):
-            now_time=datetime.datetime.now()
+            now_time = datetime.datetime.now()
             b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
-            days= (now_time-b).days
+            days = (now_time - b).days
             return days
-        self.render("admin/buy_pet_record.html", myuser=self.user, record=record, cal_life_day=cal_life_day,pet_info=pet_info,pages=pages,counts=counts,current_page=current_page,
+
+        self.render("admin/buy_pet_record.html", myuser=self.user, record=record, cal_life_day=cal_life_day,
+                    pet_info=pet_info, pages=pages, counts=counts, current_page=current_page,
                     admin_nav=2)
+
 
 class CheckoutJinBi(BaseHandler):
     """结算当天矿机金币"""
+
     @BaseHandler.authenticated
     def get(self):
         today = time.strftime("%Y-%m-%d")
@@ -861,8 +890,8 @@ class CheckoutJinBi(BaseHandler):
             info = {}
             uid = p.get("uid")
             pet_id = p.get("id")
-            pid= p.get("pid")
-            pet =self.db.pet.find_one({"id":pid})
+            pid = p.get("pid")
+            pet = self.db.pet.find_one({"id": pid})
             day_jinbi = pet.get("day_jinbi")
             gain = day_jinbi
             life = pet.get('life')
@@ -870,19 +899,20 @@ class CheckoutJinBi(BaseHandler):
             buy_time = p.get("time")
             b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
             live_days = 1
-            end_date=(b+datetime.timedelta(life)).date()
+            end_date = (b + datetime.timedelta(life)).date()
             print end_date
-            print live_days*day_jinbi
+            print live_days * day_jinbi
             if p.get("check_day") != str(today):
                 if end_date == now_time.date():
                     info.update({"dead": 1})
-                producted_jinbi=live_days*day_jinbi
-                info.update({"gain": gain, "check_day": today,"producted_jinbi":producted_jinbi})
+                producted_jinbi = live_days * day_jinbi
+                info.update({"gain": gain, "check_day": today, "producted_jinbi": producted_jinbi})
                 self.db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
                 # 写入金币收入记录
                 self.db.jinbi.insert({"type": 'pet_produce', 'money': gain, "pet_id": pet_id, "time": str(now_time)})
                 self.db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
         self.redirect("/admin/buy_pet_record")
+
 
 class AdminLeaderRewardSetting(BaseHandler):
     """领导奖设置"""
@@ -900,20 +930,21 @@ class AdminLeaderRewardSetting(BaseHandler):
         print datas
 
         if self.get_argument("recommend_jinbi") == "":
-            recommend_jinbi =18
+            recommend_jinbi = 18
         else:
             recommend_jinbi = int(self.get_argument("recommend_jinbi", 18))
         self.db.setting.update({"type": 1}, {
-            "$set": {"recommend_award": recommend_jinbi}},upsert=True)
-        info=self.db.setting.find_one({"type": 1})
+            "$set": {"recommend_award": recommend_jinbi}}, upsert=True)
+        info = self.db.setting.find_one({"type": 1})
         self.render('admin/leader_award_setting.html', admin_nav=3, myuser=self.user, info=info)
+
 
 class AdminPaiMaiRecord(BaseHandler):
     """拍卖纪录"""
+
     @BaseHandler.admin_authed
     def get(self):
-        query={"type": "guadan"}
-
+        query = {"type": "guadan"}
 
         search = ""
 
@@ -927,5 +958,6 @@ class AdminPaiMaiRecord(BaseHandler):
         pages = int(math.ceil(record.count() / per))
         record = record.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
         counts = record.count()
-        self.render('admin/paimai_record.html', admin_nav=9, myuser=self.user, search="",current_page=current_page,pages=pages,counts=counts,
+        self.render('admin/paimai_record.html', admin_nav=9, myuser=self.user, search="", current_page=current_page,
+                    pages=pages, counts=counts,
                     record=record)

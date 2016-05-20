@@ -482,7 +482,7 @@ class AccountInfoSetting(BaseHandler):
             info.update({"wechat": wechat, "alipay": alipay})
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
 
-        if "" in [BankCard, bankname, BankUserName]:
+        if "" in [BankCard, bankname]:
             self.render("ok.html", url="/account/info_setting", tip="请完善银行卡信息")
         else:
             info.update(

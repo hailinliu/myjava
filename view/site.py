@@ -109,9 +109,13 @@ class Register(BaseHandler):
     def post(self):
         print self.request.arguments
         rName = self.get_argument('rName', None)
+        username = self.get_argument('username', None)
         phone = self.get_argument('phone', None)
         pwd = self.get_argument('password', None)
         safe_pwd = self.get_argument('safe_pwd', None)
+        real_name = self.get_argument('safe_pwd', "")
+        id_code = self.get_argument('id_code', "")
+        qq = self.get_argument('qq', "")
         exist_user = self.db.user.find({'uid': phone})
         inviter = None
         if None in [pwd, phone, safe_pwd]:
@@ -139,10 +143,13 @@ class Register(BaseHandler):
                 'uid': phone,
                 'phone': phone,
                 'pwd': pwd,
-                'username': phone,
+                'username': username,
                 'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                 'safe_pwd': safe_pwd,
                 'admin': rName,
+                'real_name':real_name,
+                'id_code':id_code,
+                'qq':qq,
                 'money': 0,
                 'level': 0,
                 'jinbi': 0,
@@ -154,8 +161,6 @@ class Register(BaseHandler):
                 return self.render("error.html", myuser=self.user, r=rName, error=u"注册失败")
             else:
                 now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-                # 如果与介绍人编号一致的用户存在
-
 
                 return self.render("ok.html", myuser=self.user, r=rName, url="/user/home", tip=u"注册成功")
 
@@ -344,9 +349,14 @@ class FarmShop(BaseHandler):
                 if bought_count + count > pet['limit']:
                     return self.render("ok.html", myuser=self.user, url="/nongchangsd",
                                        tip=u"%s分红进行中%d个,限购%d个" % (pet['name'], bought_count, pet['limit']))
+
             price = pet['price']
             item_cost = int(price) * int(count)
             total_cost += item_cost
+            if total_cost <= self.user.get("jinbi"):
+                self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
+            else:
+                return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"金币余额不足")
             # id自增1
             last = self.db.my_pet.find().sort("id", pymongo.DESCENDING).limit(1)
             if last.count() > 0:
@@ -365,10 +375,7 @@ class FarmShop(BaseHandler):
                 "count": count,
                 "cost": item_cost})
 
-        if total_cost <= self.user.get("jinbi"):
-            self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
-        else:
-            return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"金币余额不足")
+
 
         self.db.order.insert(
             {"item": order_items, "uid": self.user.get('uid'), "cost": total_cost, "time": now_time})
@@ -402,11 +409,11 @@ class FarmShop(BaseHandler):
                     for item in last:
                         lastone = item
                     consume_id = int(lastone.get('id', 0)) + 1
-                print admin_id,total_cost * per / 100
-                reward=total_cost * per / 100
+                print admin_id, total_cost * per / 100
+                reward = total_cost * per / 100
                 self.db.jinbi.insert(
                     {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
-                     "money":reward})
+                     "money": reward})
                 self.db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 user = admin_user
 

@@ -15,7 +15,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>数据表格</h2>
+                <h2>添加用户</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="index.html">主页</a>
@@ -24,7 +24,7 @@
                         <a>表格</a>
                     </li>
                     <li>
-                        <strong>数据表格</strong>
+                        <strong>添加用户</strong>
                     </li>
                 </ol>
             </div>
@@ -86,24 +86,36 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">用户编号</label>
-
-                                    <div class="col-sm-4">
-                                        <input class="form-control" placeholder="即手机号" name="UserID"
-                                               value="{{user.get('username','')}}"  id="UserID">
-                                    </div>
-
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-2 control-label">手机号</label>
 
                                     <div class="col-sm-4">
                                         <input class="form-control" placeholder="手机号" name="phone"
                                                onkeyup="usertitle()" maxlength="11" value="{{user.get('phone','')}}" id="phone">
                                     </div>
-                                    <!--<div class="col-sm-2">-->
-                                        <!--<a href="javascript:" id="check_phone">检测</a>-->
-                                    <!--</div>-->
+                                </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">真实姓名</label>
+
+                                    <div class="col-sm-4">
+                                        <input class="form-control" placeholder="真实姓名" name="real_name"
+                                               maxlength="11" value="{{user.get('real_name','')}}" id="real_name">
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">身份证号</label>
+
+                                    <div class="col-sm-4">
+                                        <input class="form-control" placeholder="身份证号" name="id_code"
+                                               maxlength="19" value="{{user.get('id_code','')}}" id="id_code">
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">支付宝账号</label>
+
+                                    <div class="col-sm-4">
+                                        <input class="form-control" placeholder="支付宝账号" name="alipay"
+                                               maxlength="19" value="{{user.get('alipay','')}}" id="alipay">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">级别</label>

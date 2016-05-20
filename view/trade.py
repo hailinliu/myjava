@@ -23,7 +23,7 @@ class Zhuanjihuobi(BaseHandler):
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def post(self):
-        uid = self.get_argument("uid", None)
+        uid = self.get_argument("uid", "")
         out_money = int(self.get_argument("money", 0))
         try:
             my_money = int(self.user.get("money", 0))
@@ -188,6 +188,7 @@ class GetCrash(BaseHandler):
             apply_id = int(lastone.get('id', 0)) + 1
         else:
             apply_id = 1
+
         # 写入提现记录表
         self.db.apply_crash.insert({
             "id": apply_id,

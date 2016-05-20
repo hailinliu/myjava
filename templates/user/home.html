@@ -33,7 +33,7 @@
                     <tbody>
                     <tr>
                         <td>会员编号: {{myuser['phone']}}</td>
-                        <td>会员姓名:</td>
+                        <td>会员姓名:{{myuser.get('real_name','')}}</td>
                         <td>推荐人编号:
                             {{myuser.get('admin','无')}}
                         </td>
