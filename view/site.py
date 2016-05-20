@@ -353,10 +353,12 @@ class FarmShop(BaseHandler):
             price = pet['price']
             item_cost = int(price) * int(count)
             total_cost += item_cost
+
             if total_cost <= self.user.get("jinbi"):
                 self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
             else:
                 return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"金币余额不足")
+
             # id自增1
             last = self.db.my_pet.find().sort("id", pymongo.DESCENDING).limit(1)
             if last.count() > 0:

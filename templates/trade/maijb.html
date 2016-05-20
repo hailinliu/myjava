@@ -41,7 +41,21 @@
                             </div>
                         </div>
 
+
                         <div class="form-group">
+                            <label for="x3" class="col-sm-2 control-label">提现方式</label>
+                            {%set banks={u"中国工商银行":"中国工商银行",u"中国农业银行":"中国农业银行",u"中国建设银行":"中国建设银行",u"中国银行":"中国银行"}%}
+                            <div class="col-sm-3">
+                                <select name="account_type" id="account_type" class="form-control ">
+
+                                    {%for k,v in banks.items()%}
+                                    <option value="{{k}}" {%if myuser.get('bank',{}).get('name')==k %}selected{%end%}>{{k}}</option>
+                                    {%end%}
+                                    <option value="支付宝" >支付宝</option>
+                                </select>
+                            </div>
+                        </div>
+                         <div class="form-group">
                             <label for="x2" class="col-sm-2 control-label">提现金额</label>
 
                             <div class="col-sm-10">
@@ -49,29 +63,35 @@
                                        maxlength="10">
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="x3" class="col-sm-2 control-label">支付宝账号</label>
-
-                            <div class="col-sm-10">
-                                <input class="form-control form-long-w1" name="alipay_account" id="x3" placeholder="收款的支付宝账号" value="">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="x4" class="col-sm-2 control-label">支付宝姓名</label>
+                         <div class="form-group  alipay">
+                            <label for="x3" class="col-sm-2 control-label">提现账户姓名</label>
 
                             <div class="col-sm-10">
-                                <input class="form-control form-long-w1" name="alipay_name" id="x4" disabled placeholder="收款的支付宝账号姓名,真实姓名" value="{{myuser.get('real_name','')}}">
+                                <input class="form-control form-long-w1"   disabled value="{{myuser.get('real_name','')}}">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="checked" checked="checked" id="x5"> 设置该支付宝账号为默认收款账号</label>
-                                </div>
+                        <div class="form-group  alipay">
+                            <label for="x3" class="col-sm-2 control-label">提现账户账号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" name="account" id="x3" placeholder="支付宝账号/银行卡号" value="">
                             </div>
                         </div>
+
+                        <!--<div class="form-group">-->
+                            <!--<label for="x4" class="col-sm-2 control-label">支付宝姓名</label>-->
+
+                            <!--<div class="col-sm-10">-->
+                                <!--<input class="form-control form-long-w1" name="alipay_name" id="x4" disabled placeholder="收款的支付宝账号姓名,真实姓名" value="{{myuser.get('real_name','')}}">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-sm-offset-2 col-sm-10">-->
+                                <!--<div class="checkbox">-->
+                                    <!--<label><input type="checkbox" name="checked" checked="checked" id="x5"> 设置该支付宝账号为默认收款账号</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
 
                         <div class="form-group">

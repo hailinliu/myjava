@@ -146,9 +146,9 @@ class GetCrash(BaseHandler):
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def post(self):
-        alipay_account = self.get_argument("alipay_account", "")
+        account = self.get_argument("account", "")
         alipay_name = self.get_argument("alipay_name", "")
-        checked = self.get_argument("checked", 0)
+        account_type = self.get_argument("account_type", "")
         crash_money = self.get_argument("money", 0)
         try:
             crash_money = int(crash_money)
@@ -195,14 +195,15 @@ class GetCrash(BaseHandler):
             "uid": self.user.get("uid"),
             "status": "submit",
             "money": crash_money,
-            "alipay": {"account": alipay_account, "name": alipay_name},
+            "account": {"account":account,"type":account_type},
             "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
 
-        self.db.user.update({"uid": self.user.get("uid")},
-                            {"$set": {"alipay": {"account": alipay_account, "name": alipay_name}}})
+        # self.db.user.update({"uid": self.user.get("uid")},
+        #                     {"$set": {"alipay": account}})
+
         tip = "提现申请已提交"
 
-        self.render("ok.html", url="/trade/maijb", tip=tip)
+        self.render("ok.html", url="/trade/jbdingdan", tip=tip)
 
 
 class GetCrashLog(BaseHandler):

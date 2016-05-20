@@ -32,7 +32,7 @@
                         <td>提现Id</td>
                         <td>提现金额</td>
                         <td>实得金额</td>
-                        <td>收款支付宝</td>
+                        <td>收款账号</td>
                         <td>提现状态</td>
                         <td>下单时间</td>
                     </tr>
@@ -45,8 +45,8 @@
                     <tr>
                         <td>{{r.get('id')}}</td>
                         <td>{{r.get('money')}}</td>
-                        <td>{{r.get('money') * 0.8}}</td>
-                        <td>{{r.get('alipay').get('name')}} {{r.get('alipay').get('account')}}</td>
+                        <td>{{r.get('money') * 0.95}}</td>
+                        <td>{{r.get('account',{}).get('type',"")}} {{myuser.get('real_name')}} {{r.get('account').get('account','')}}</td>
                         <td>{{crash_status.get(r.get('status'))}}</td>
                         <td>{{r.get('time')}}</td>
                     </tr>
