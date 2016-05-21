@@ -79,7 +79,51 @@ def cal_interests():
                 create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
                 db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
                                  "time": str(create_time)})
+                user = db.user.find_one({"uid": uid}, {"_id": 0})
                 db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
+                # 计算用户当日累计分红
+                user['income_day'] = str(yesterday_date)
+                if 'day_income' not in user:
+                    user['day_income'] = gain
+                else:
+                    user['day_income'] += gain
+
+
+
+
+@app.task
+def cal_manage_award(user):
+    """分红奖"""
+
+    yesterday = datetime.datetime.today() - timedelta(days=1)
+    yesterday_date = str(yesterday.date())
+
+    # 获取 购买红包的用户的昨日分红总额
+    users = db.user.find_one({"income_day": yesterday_date}, {"_id": 0})
+    award_percent = [10, 7, 5, 3, 1]
+    consume_id = 1
+    for u in users:
+        day_income = u['day_income']
+        for per in award_percent:
+            # 查询上级
+            admin_id = user.get("admin")
+            admin_user = db.user.find_one({"uid": admin_id})
+            now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+            if admin_user:
+                # id自增1
+                last = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+                if last.count() > 0:
+                    lastone = dict()
+                    for item in last:
+                        lastone = item
+                    consume_id = int(lastone.get('id', 0)) + 1
+                print admin_id, day_income * per / 100
+                reward = day_income * per / 100
+                db.jinbi.insert(
+                    {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
+                     "money": reward})
+                db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
+                user = admin_user
 
 
 @app.task
@@ -92,6 +136,7 @@ def cal_award():
     4.插入对应的奖金记录
 
     """
+
     helps = db.provide_help.find({"status": "complete", "check_award": {"$ne": "checked"}})
     now_time = str(datetime.datetime.now())
     for h in helps:
@@ -120,26 +165,3 @@ def cal_award():
                  "jine": award_money, "match_money": h.get("jine"),
                  "time": now_time})
             admin_id = admin.get("admin")
-
-
-def aaa(user):
-    award_percent = [10, 7, 5, 3, 1]
-    for per in award_percent:
-        # 查询一代
-        admin_id = user.get("admin")
-        admin_user = db.user.find_one({"uid": admin_id})
-        if admin_user:
-            # id自增1
-            last = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
-            if last.count() > 0:
-                lastone = dict()
-                for item in last:
-                    lastone = item
-                consume_id = int(lastone.get('id', 0)) + 1
-            print admin_id, total_cost * per / 100
-            reward = total_cost * per / 100
-            db.jinbi.insert(
-                {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
-                 "money": reward})
-            db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
-            user = admin_user

@@ -377,8 +377,6 @@ class FarmShop(BaseHandler):
                 "count": count,
                 "cost": item_cost})
 
-
-
         self.db.order.insert(
             {"item": order_items, "uid": self.user.get('uid'), "cost": total_cost, "time": now_time})
 
