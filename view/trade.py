@@ -108,9 +108,10 @@ class Zhuanjinbi(BaseHandler):
             now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": admin_jinbi}})
 
-            #更新收到金币的用户的金币余额
-            new_jinbi=member.get("jinbi",0)
-            self.db.user.update({"uid": uid}, {"$set": {"jinbi": new_jinbi}})
+            # 更新收到金币的用户的金币余额
+            new_jinbi = member.get("jinbi", 0)
+            print out_money
+            self.db.user.update({"uid": uid}, {"$inc": {"jinbi": out_money}})
 
             # 转账记录
             self.db.jinbi.insert({
@@ -195,7 +196,7 @@ class GetCrash(BaseHandler):
             "uid": self.user.get("uid"),
             "status": "submit",
             "money": crash_money,
-            "account": {"account":account,"type":account_type},
+            "account": {"account": account, "type": account_type},
             "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
 
         # self.db.user.update({"uid": self.user.get("uid")},
@@ -222,7 +223,8 @@ class JinBiPaiMai(BaseHandler):
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def get(self):
-        record = self.db.jinbi.find({"type": "guadan", "uid":{"$ne":self.user.get("uid")},"status": "waiting"}).sort("id", pymongo.DESCENDING).limit(50)
+        record = self.db.jinbi.find({"type": "guadan", "uid": {"$ne": self.user.get("uid")}, "status": "waiting"}).sort(
+            "id", pymongo.DESCENDING).limit(50)
         self.render("trade/jinbi_guadan.html", account_tab=12, record=record, myuser=self.user)
 
 
