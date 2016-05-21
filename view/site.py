@@ -413,7 +413,7 @@ class FarmShop(BaseHandler):
                 # print admin_id, total_cost * per / 100
                 reward = total_cost * per / 100
                 self.db.jinbi.insert(
-                    {"uid": admin_id, "type": "recommend", "id": consume_id, "time": now_time,
+                    {"uid": admin_id, "type": "tuijian", "id": consume_id, "time": now_time,
                      "money": reward})
                 self.db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
 
