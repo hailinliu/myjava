@@ -1,254 +1,129 @@
-<html>
-<head></head>
-<body>﻿
-
-<meta charset="UTF-8">
-<title>修改密码</title>
-<link rel="stylesheet" href="img/uc.css?t=201303211742">
-<script language="javascript">
-
-    function ckpass1() {
-        document.getElementById('pass1').style.display = '';
-        document.getElementById('pass2').style.display = 'none';
-        document.getElementById('pass3').style.display = 'none';
-    }
-    function ckpass2() {
-        document.getElementById('pass1').style.display = 'none';
-        document.getElementById('pass2').style.display = '';
-        document.getElementById('pass3').style.display = 'none';
-    }
-    function ckpass3() {
-        document.getElementById('pass1').style.display = 'none';
-        document.getElementById('pass2').style.display = 'none';
-        document.getElementById('pass3').style.display = '';
-    }
-
-    function CheckForm1() {
-        password1 = document.form1.password1.value;
-        npassword1 = document.form1.npassword1.value;
-        qnpassword1 = document.form1.qnpassword1.value;
+{% extends "../base.html" %}
+{% block page_title %}修改密码{% end %}
 
 
-        if (password1.length == 0) {
-            alert("温馨提示:\n请输入原密码.");
-            document.form1.password1.focus();
-            return false;
-        }
-        if (npassword1.length == 0) {
-            alert("温馨提示:\n请输入新密码.");
-            document.form1.npassword1.focus();
-            return false;
-        }
-        if (qnpassword1.length == 0) {
-            alert("温馨提示:\n请确认新密码.");
-            document.form1.qnpassword1.focus();
-            return false;
-        }
-        if (qnpassword1 != npassword1) {
-            alert("温馨提示:\n两次密码输入不一致,请确认后重新输入.");
-            document.form1.qnpassword1.focus();
-            return false;
-        }
-        return true;
-    }
-
-    function CheckForm2() {
-        password2 = document.form2.password2.value;
-        npassword2 = document.form2.npassword2.value;
-        qnpassword2 = document.form2.qnpassword2.value;
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>修改密码
+                    <small> 个人信息</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">个人信息</li>
+                </ol>
+            </div>
 
 
-        if (password2.length == 0) {
-            alert("温馨提示:\n请输入原密码.");
-            document.form2.password2.focus();
-            return false;
-        }
-        if (npassword2.length == 0) {
-            alert("温馨提示:\n请输入新密码.");
-            document.form2.npassword2.focus();
-            return false;
-        }
-        if (qnpassword2.length == 0) {
-            alert("温馨提示:\n请确认新密码.");
-            document.form2.qnpassword2.focus();
-            return false;
-        }
-        if (qnpassword2 != npassword2) {
-            alert("温馨提示:\n两次密码输入不一致,请确认后重新输入.");
-            document.form2.qnpassword2.focus();
-            return false;
-        }
-        return true;
-    }
-
-    function CheckForm3() {
-        password3 = document.form3.password3.value;
-        npassword3 = document.form3.npassword3.value;
-        qnpassword3 = document.form3.qnpassword3.value;
+            <div class="panel panel-default">
+                <div class="panel-heading">修改密码</div>
 
 
-        if (password3.length == 0) {
-            alert("温馨提示:\n请输入原密码.");
-            document.form3.password3.focus();
-            return false;
-        }
-        if (npassword3.length == 0) {
-            alert("温馨提示:\n请输入新密码.");
-            document.form3.npassword3.focus();
-            return false;
-        }
-        if (qnpassword3.length == 0) {
-            alert("温馨提示:\n请确认新密码.");
-            document.form3.qnpassword3.focus();
-            return false;
-        }
-        if (qnpassword3 != npassword3) {
-            alert("温馨提示:\n两次密码输入不一致,请确认后重新输入.");
-            document.form3.qnpassword3.focus();
-            return false;
-        }
-        return true;
-    }
-</script>
+                <div class="panel-body">
+                    <!--主-->
 
 
-<div class="main_part"><h5 class="tit"><span class="tit_nm">修改密码</span><span class="tit_sp"></span></h5>
-
-    <div class="info" id="info_contain">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-            <tr>
-                <td>
-                    <form name="form1" method="post" action="?pass=1" onsubmit="return CheckForm1();">
+                    <form name="form1" method="post" class="form-horizontal" action="?pass=1"
+                          onsubmit="return CheckForm();">
                         {% module xsrf_form_html() %}
-                        <input type="hidden" name="form_type" value="form1">
-                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"
-                               style="font-size:14px;">
-
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
                             <tr>
-                                <td height="18" colspan="2" style="font-size:15px; font-weight:bold; color:#5B6572;">
-                                    &nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#129fd7;">
-                                    <img
-                                            src="/static/images/roww2.gif" width="9" height="11"> 修改一級密碼
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="1" colspan="2" background="/static/images/lin22.gif"></td>
-                            </tr>
-                            <tr>
-                                <td width="45%" height="30" align="right">原密碼：</td>
-                                <td height="32">
-                                    <input name="password1" type="password" id="password1" class="txt">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="45%" height="30" align="right">新密碼：</td>
-                                <td height="32">
-                                    <input name="npassword1" type="password" id="npassword1" class="txt">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="45%" height="30" align="right">确認新密碼：</td>
-                                <td height="32"><input name="qnpassword1" type="password" id="qnpassword1" class="txt">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="30" align="right">&nbsp;</td>
-                                <td height="32">
-                                    <button type="submit" name="submit" value="提&nbsp;交" id="submit1">提交</button>
+                                <td>
+                                    <form name="form1" method="post" action="?pass=1" onsubmit="return CheckForm1();">
+                                        {% module xsrf_form_html() %}
+                                        <input type="hidden" name="form_type" value="form1">
+                                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"
+                                               style="font-size:14px;">
+
+                                            <tbody>
+                                            <tr>
+                                                <td height="18" colspan="2"
+                                                    style="font-size:15px; font-weight:bold; color:#5B6572;">
+                                                    &nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td height="32" colspan="2"
+                                                    style="font-size:15px; font-weight:bold; color:#129fd7;">
+                                                    修改登录密码
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="1" colspan="2" background="/static/images/lin22.gif"></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="45%" height="30" align="right">密保问题：</td>
+                                                <td class="td_l">
+                                                    <select name="question" class="txt">
+                                                        <option value="5">你的生日是？</option>
+                                                        <option value="6">你的家乡是？</option>
+                                                        <option value="7">你的学校是？</option>
+                                                        <option value="8">你母亲的名字是？</option>
+                                                        <option value="9">你父亲的名字是？</option>
+                                                        <option value="10">你的学校是？</option>
+                                                        <option value="11">你喜欢的食物是？</option>
+                                                        <option value="12">你喜欢的颜色是？</option>
+                                                        <option value="13">你喜欢的动物是？</option>
+                                                        <option value="14">你最想去的地方是？</option>
+                                                        <option value="15">你印象最深刻的地方是？</option>
+                                                    </select><span class="col">*<label id="question"></label></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="right">密保答案：</td>
+                                                <td class="td_l">
+                                                    <input name="answer" type="text" id="answer" class="txt">
+                                                    <span class="col">*<label ></label></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="45%" height="30" align="right">新密码：</td>
+                                                <td height="32">
+                                                    <input name="npassword1" type="password" id="npassword1"
+                                                           class="txt">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="45%" height="30" align="right">确认新密码：</td>
+                                                <td height="32"><input name="qnpassword1" type="password"
+                                                                       id="qnpassword1" class="txt">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td height="30" align="right">&nbsp;</td>
+                                                <td height="32">
+                                                    <button type="submit" name="submit" value="提&nbsp;交" id="submit1">
+                                                        提交
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </form>
+
                                 </td>
                             </tr>
                             </tbody>
-
                         </table>
+
                     </form>
-                    <form name="form2" method="post" action="?pass=2" onsubmit="return CheckForm2();">
-                        {% module xsrf_form_html() %}
-                        <input type="hidden" name="form_type" value="form2">
-                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"
-                               style="font-size:14px;">
-
-                            <tbody>
-                            <tr>
-                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#129fd7;">
-                                    <img
-                                            src="/static/images/roww2.gif" width="9" height="11"> 修改二級密碼
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="1" colspan="2" background="/images/images/lin22.gif"></td>
-                            </tr>
-                            <tr>
-                                <td width="45%" height="30" align="right">原密碼：</td>
-                                <td height="32"><input name="password2" type="password" id="password2" class="txt"></td>
-                            </tr>
-                            <tr>
-                                <td width="45%" height="30" align="right">新密碼：</td>
-                                <td height="32"><input name="npassword2" type="password" id="npassword2" class="txt">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="30" align="right">确認新密碼：</td>
-                                <td height="32"><input name="qnpassword2" type="password" id="qnpassword2" class="txt">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="30" align="right">&nbsp;</td>
-                                <td height="32">
-                                    <button type="submit" name="submit" value="提&nbsp;交" id="submit2">提交</button>
-                                </td>
-                            </tr>
-                            </tbody>
-
-                        </table>
-                    </form>
-                    <br><br><br><br><br><br><br><br>
-                     <form name="form3" method="post" action="?pass=3" onsubmit="return CheckForm3();">
-                    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="display: none">
-
-                        <tbody>
-                        <tr>
-                            <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"><img
-                                    src="/static/images/roww2.gif" width="9" height="11"> 修改三級密碼
-                            </td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="2" background="/static/images/lin22.gif"></td>
-                        </tr>
-                        <tr>
-                            <td width="45%" height="30" align="right">原密碼：</td>
-                            <td height="32"><input name="password3" type="password" id="password3" class="txt"></td>
-                        </tr>
-                        <tr>
-                            <td width="45%" height="30" align="right">新密碼：</td>
-                            <td height="32"><input name="npassword3" type="password" id="npassword3" class="txt"></td>
-                        </tr>
-                        <tr>
-                            <td width="45%" height="30" align="right">确認新密碼：</td>
-                            <td height="32"><input name="qnpassword3" type="password" id="qnpassword3" class="txt"></td>
-                        </tr>
-                        <tr>
-                            <td height="30" align="right">&nbsp;</td>
-                            <td height="32" class="td_l"><input type="submit" name="submit" value="提&nbsp;交" id="submit"
-                                                                class="niu1_zw" style="border-width:0px;"></td>
-                        </tr>
-                        </tbody>
-
-                    </table>
-                          </form>
-                    <span id="ctl00_ContentPlaceHolder1_lblalert"></span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <!--End-->
+                </div>
+            </div>
+        </div>
+        <!--MAN End-->
     </div>
 </div>
-<script type="text/javascript" src="/static/img/jquery.min.js"></script>
-<script type="text/javascript" src="/static/img/minfo.js?t=20150519"></script>
 
-</body>
-</html>
+{%end%}

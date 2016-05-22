@@ -10,7 +10,7 @@ from utils.Notice import Notice
 from utils.UImodule import *
 from view.account import SafePwdCheck, AccountPwdUpdate, AccountPwdProtect, AccountInfoSetting, \
     AccountMembers, AccountAwardDetail, LogoutHandler, TuijianJg, Zhitui, Jihuo, JihuoRecord, JiHuobiLog, JiHuobiLog2, \
-    JinBiLog, JinBiLog2, MyOrder, UserAddressSetting, UserAlipaySetting
+    JinBiLog, JinBiLog2, MyOrder, UserAddressSetting, UserAlipaySetting, AccountInfo
 from view.admin import *
 from view.site import *
 from view.trade import *
@@ -64,6 +64,7 @@ class Application(tornado.web.Application):
             (r"/account/orders", MyOrder),
             (r"/account/address_setting", UserAddressSetting),
             (r"/account/alipay_setting", UserAlipaySetting),
+            (r"/account/info", AccountInfo),
             (r"/account/info_setting", AccountInfoSetting),
             (r"/account/pwd_update", AccountPwdUpdate),
             (r"/account/pwd_protect", AccountPwdProtect),

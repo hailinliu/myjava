@@ -294,8 +294,8 @@ class JinBiLog(BaseHandler):
         per = 10
         total_consume = 0
         print self.user.get("uid")
-        type_list = ["in", "pet_produce", "qianggou", "tuijian","admin_award"]
-        tip_dict = {"in": "金币转账", "pet_produce": "宠物生产", "qianggou": "抢购金币", "tuijian": "直推奖","admin_award":"管理奖"}
+        type_list = ["in", "pet_produce", "qianggou", "tuijian", "admin_award"]
+        tip_dict = {"in": "金币转账", "pet_produce": "红包分红", "qianggou": "抢购金币", "tuijian": "直推奖", "admin_award": "管理奖"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
@@ -333,7 +333,7 @@ class JinBiLog2(BaseHandler):
         per = 10
         total_consume = 0
         type_list = ["transfer", "buy_pet", "guadan", "get_crash", "draw"]
-        tip_dict = {"transfer": "金币转账", "buy_pet": "宠物消费", "guadan": "金币拍卖", "get_crash": "金币提现", "draw": "抽奖消费"}
+        tip_dict = {"transfer": "金币转账", "buy_pet": "购买红包消费", "guadan": "金币拍卖", "get_crash": "金币提现", "draw": "抽奖消费"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
@@ -441,6 +441,16 @@ class MyOrder(BaseHandler):
                     next_page=next_page, myuser=self.user)
 
 
+class AccountInfo(BaseHandler):
+    """我的资料"""
+
+    @BaseHandler.is_active
+    @BaseHandler.is_check
+    def get(self):
+        error = ""
+        self.render("account/info.html", current_tab=1, account_tab=21, error=error, myuser=self.user)
+
+
 class AccountInfoSetting(BaseHandler):
     """更新资料"""
 
@@ -449,7 +459,8 @@ class AccountInfoSetting(BaseHandler):
     @BaseHandler.is_check
     def get(self):
         error = ""
-        self.render("account/info_setting.html", current_tab=1, account_tab=21,error=error, myuser=self.user)
+        self.render("account/info_setting.html", current_tab=1, account_tab=22, error=error, myuser=self.user)
+
     @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
@@ -486,82 +497,73 @@ class AccountInfoSetting(BaseHandler):
             self.render("ok.html", url="/account/info_setting", tip="请完善银行卡信息")
         else:
             info.update(
-                {"qq":qq,"bank": {"name": bankname, "card": BankCard, "user_name": BankUserName, "address": BankAddress}})
+                {"qq": qq,
+                 "bank": {"name": bankname, "card": BankCard, "user_name": BankUserName, "address": BankAddress}})
 
-            info.update({"real_name":real_name,"id_code":id_code})
+            info.update({"real_name": real_name, "id_code": id_code})
             print info
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
             self.render("ok.html", url="/account/info_setting", tip="资料修改成功")
-        self.render("account/info_setting.html", current_tab=1,account_tab=21, myuser=self.user)
+        self.render("account/info_setting.html", current_tab=1, account_tab=22, myuser=self.user)
 
 
 class AccountPwdUpdate(BaseHandler):
     """密码更新"""
+
     @BaseHandler.is_active
     @BaseHandler.is_check
     def get(self):
         error = ""
-        self.render("account/pwd_update.html", current_tab=1, error=error, myuser=self.user)
+        self.render("account/pwd_update.html", current_tab=1, account_tab=24, error=error, myuser=self.user)
 
     @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
-        datas = self.request.arguments
-        formType = self.get_argument("form_type")
-        if formType == 'form1':
-            opwd = self.get_argument("password1")
-            # print opwd
-            npwd = self.get_argument("npassword1")
-            # 旧密码验证
-            print pbkdf2_sha512.verify(opwd, self.user['pwd'])
-            if not self.application.auth.log_in(self.user['uid'], opwd):
-                self.render("ok.html", url="/account/pwd_update", tip="旧密码不正确")
-                # 新密码写入
-            if not self.application.auth.changepwd(self.user['uid'], npwd):
-                self.render("ok.html", url="/account/pwd_update", tip="密码修改失败")
-            else:
-                self.render("ok.html", url="/account/pwd_update", tip="密码已修改")
-        elif formType == 'form2':
+        passquestion1 = self.get_argument("question")
+        passanswer1 = self.get_argument("answer")
+        npwd = self.get_argument("npassword1")
 
-            old_safe_pwd = self.get_argument("password2")
-            new_safe_pwd = self.get_argument("npassword2")
-            print old_safe_pwd
-            # 旧密码验证
-            print "form2"
-            if old_safe_pwd != self.user.get("safe_pwd"):
-                self.render("ok.html", url="/account/pwd_update", tip="旧安全密码不正确")
-            # 新密码写入
-            self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"safe_pwd": new_safe_pwd}})
-            self.render("ok.html", url="/account/pwd_update", tip="二级密码已修改")
-        else:
+        # # 旧密码验证
+        # print pbkdf2_sha512.verify(opwd, self.user['pwd'])
+        # if not self.application.auth.log_in(self.user['uid'], opwd):
+        #     return self.render("ok.html", url="/account/pwd_update", tip="旧密码不正确")
+
+        # TODO 必须先验证密保才能修改
+        if passquestion1 == self.user.get("question") and passanswer1 == self.user.get("answer"):
             pass
+        else:
+            return self.render("ok.html", url="/account/pwd_update", tip="密保问题或答案不正确")
+        # 新密码写入
+        if not self.application.auth.changepwd(self.user['uid'], npwd):
+            self.render("ok.html", url="/account/pwd_update", tip="密码修改失败")
+        else:
+            self.render("ok.html", url="/user/home", tip="密码已修改")
 
-        self.render("account/pwd_update.html", current_tab=1, myuser=self.user)
+        self.render("account/pwd_update.html", current_tab=1, account_tab=24, myuser=self.user)
 
 
 class AccountPwdProtect(BaseHandler):
     """密保设置"""
+
     @BaseHandler.is_active
     def get(self):
         error = ""
-        self.render("account/pwd_protect.html", current_tab=1, account_tab=1,error=error, myuser=self.user)
+        self.render("account/pwd_protect.html", current_tab=1, account_tab=23, error=error, myuser=self.user)
+
     @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
-        datas = self.request.arguments
-        # print datas
+        safe_pwd = self.get_argument("safe_pwd", None)
+        if safe_pwd != self.user.get("safe_pwd"):
+            return self.render("ok.html", url="/account/pwd_protect", tip="安全密码不正确")
         # 旧密保
         question1 = self.get_argument("question1", None)
         answer1 = self.get_argument("answer1", None)
-        # print self.user.get("answer")
-        # print self.user.get("question")
-        # print answer1 ==self.user.get("answer")
-        # print question1 ==self.user.get("question")
         # 新密保
         question2 = self.get_argument("question2", None)
         answer2 = self.get_argument("answer2", None)
         if answer2 in ["", None]:
-            self.render("ok.html", url="/account/pwd_protect", tip="密保答案不能为空")
+            return self.render("ok.html", url="/account/pwd_protect", tip="密保答案不能为空")
 
         user_pwd_question = self.user.get("question")
         user_pwd_answer = self.user.get("answer")
@@ -575,16 +577,18 @@ class AccountPwdProtect(BaseHandler):
                 self.render("ok.html", url="/user/home", tip="密保修改成功")
             else:
                 self.render("ok.html", url="/account/pwd_protect", tip="旧密保不正确")
-        self.render("account/pwd_protect.html", current_tab=1, myuser=self.user)
+        self.render("account/pwd_protect.html", current_tab=1, account_tab=23, myuser=self.user)
 
 
 class SafePwdCheck(BaseHandler):
     """安全密码校验"""
+
     @BaseHandler.is_active
     @BaseHandler.authenticated
     def get(self):
         error = ""
         self.render("account/verify_safe_pwd.html", current_tab=1, next_url="", error=error, myuser=self.user)
+
     @BaseHandler.is_active
     @BaseHandler.authenticated
     def post(self):
@@ -602,6 +606,7 @@ class SafePwdCheck(BaseHandler):
 
 class AccountAwardDetail(BaseHandler):
     """奖金记录"""
+
     @BaseHandler.is_active
     @BaseHandler.authenticated
     def get(self):
@@ -613,6 +618,7 @@ class AccountAwardDetail(BaseHandler):
 
 class AccountMembers(BaseHandler):
     """直属会员"""
+
     @BaseHandler.is_active
     @BaseHandler.authenticated
     def get(self):

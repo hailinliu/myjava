@@ -1,0 +1,94 @@
+{% extends "../base.html" %}
+{% block page_title %}分红礼包查询{% end %}
+
+{% block content %}
+
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>礼包管理
+                    <small> 分红礼包查询</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">礼包管理</a></li>
+                    <li class="active">分红礼包查询</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">分红礼包查询</div>
+                <div class="panel-body">
+                    <!--====================-->
+
+
+                    <div class="row">
+                        {%for p in my_pets%}
+                        {%set pet=pet_info(p['pid'])%}
+                        {%if not pet%}
+                        {%continue%}
+                        {%end%}
+                        {%set current_day=cal_life_day(p.get('time'))%}
+
+                         {%set waiting_jinbi=pet.get('life')*pet.get('day_jinbi')-p.get('producted_jinbi',0) %}
+                         {%if current_day< pet.get('life')%}
+                        {%set progress=check_progress(current_day,pet.get('life'))  %}
+                        {%else%}
+                         {%set progress=100 %}
+                        {%end%}
+                        <div class="col-sm-6 col-md-3">
+                            <div class="thumbnail">
+
+                                <img src="/static/images/{{pet.get('image')}}">
+
+                                <div class="caption">
+                                    <h3>{{pet.get('name')}} <span class="badge">{{pet.get('day_jinbi')}}</span></h3>
+
+                                    <p>
+                                    </p>
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar"
+                                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: {{progress}}%;">
+                                            {{current_day}}天
+                                        </div>
+                                    </div>
+                                    <p>已产金币: <strong>{{p.get('producted_jinbi',0)}} </strong>/
+                                        {%if current_day< pet.get('life')%}
+                                        待产金币: <strong>{{waiting_jinbi}} </strong>
+                                        {%else%}
+                                        已完成生产
+                                        {%end%}
+                                    </p>
+
+                                    <p>购买日期:{{p.get('time')}}</p>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        {%end%}
+
+                    </div>
+
+
+                    <!--====================-->
+
+                </div>
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+
+{%end%}

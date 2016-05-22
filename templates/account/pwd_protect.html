@@ -44,10 +44,15 @@
                             </tr>
 
                             {%if myuser.get('question') and myuser.get('answer')%}
-
                             <tr>
-                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"><img
-                                        src="/static/images/roww2.gif" width="9" height="11"> 原密保
+                                <td height="30" align="right">安全密码：</td>
+                                <td class="td_l">
+                                    <input name="safe_pwd" type="password" id="safe_pwd" class="txt">
+                                    <span class="col">*<label ></label></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"> 原密保
                                 </td>
                             </tr>
                             <tr>
@@ -79,8 +84,7 @@
                             {%end%}
 
                             <tr>
-                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"><img
-                                        src="/static/images/roww2.gif" width="9" height="11"> 设置密保
+                                <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"> 设置密保
                                 </td>
                             </tr>
                             <tr>

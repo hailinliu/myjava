@@ -107,13 +107,12 @@ class Register(BaseHandler):
         self.render("site/register.html", r=r, myuser=self.user)
 
     def post(self):
-        print self.request.arguments
         rName = self.get_argument('rName', None)
         username = self.get_argument('username', None)
         phone = self.get_argument('phone', None)
         pwd = self.get_argument('password', None)
         safe_pwd = self.get_argument('safe_pwd', None)
-        real_name = self.get_argument('safe_pwd', "")
+        real_name = self.get_argument('real_name', "")
         id_code = self.get_argument('id_code', "")
         qq = self.get_argument('qq', "")
         exist_user = self.db.user.find({'uid': phone})
