@@ -1,7 +1,36 @@
-Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 200 GET /login?language=cn (127.0.0.1) 0.00ms
-Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 304 GET /static/css/login_style.css (127.0.0.1) 394.00ms
-Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 304 GET /static/images/logo2.png (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 32.00ms
-Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 304 GET /static/images/bg2.png (127.0.0.1) 6.00ms
-Tue, 24 May 2016 01:05:43 web.py[line:1908] INFO 200 GET /login?language=en (127.0.0.1) 6.00ms
-Tue, 24 May 2016 01:05:43 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 14.00ms
+Tue, 24 May 2016 01:22:14 web.py[line:1908] INFO 302 GET /admin/login (127.0.0.1) 4.00ms
+Tue, 24 May 2016 01:22:14 web.py[line:1496] ERROR Uncaught exception GET /admin/login (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/admin/login', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; csrftoken=787EADNy0TOHietbROPPIUxXqONjcqim; _xsrf=2|c9046d61|14a45271023f7a0e13409f2e69bcb556|1464019590; verify_code="2|1:0|10:1464023257|11:verify_code|8:c2hnYQ==|08020600bb8ae2e5e9cb93a7fc4643631b1c39ed892664859d983cef861eff3a"; checked="2|1:0|10:1464023359|7:checked|12:Y2hlY2tlZA==|eb5ba361f09982c2804fd99e3f554361c62b2a163fc8d70398a781241f3cd9a0"; verification="2|1:0|10:1464023379|12:verification|88:ODk2NmFhZGFiMzhiYjFjODllYzY5YTVkNWI3MzllZjM0ZDlmNTg0NTk1OTBmNWY0ZjE2YWExODQ0Yjg0M2JmYg==|d7f19c18a2e32e76a646364c80b8ed3ac85e3ac83fbc1c9d9528e76b50b86f0f"; session_id="2|1:0|10:1464023379|10:session_id|88:ZWU4NTNiNjIwMGQyMTlmZjhkNjlkYjExYjM2MThmZTM2YmYzNjI0MTRmZGI0NDJlNTExNzA1ZDNjMDUwOWZkZQ==|1ec516176f5d200902f41980a282f55d66d867c1e02773e7a75fd8bdd6a5a1f1"', 'Upgrade-Insecure-Requests': '1'})
+Traceback (most recent call last):
+  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "F:\TornadoProject\weikefarm\view\admin.py", line 45, in get
+    self.render("admin/login.html", url=next, myuser=self.user, error=error)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
+    html = self.render_string(template_name, **kwargs)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
+    namespace = self.get_template_namespace()
+  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
+    namespace.update(self.ui)
+TypeError: 'NoneType' object is not iterable
+Tue, 24 May 2016 01:22:14 web.py[line:1908] INFO 200 GET /admin/home (127.0.0.1) 21.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=2446 (127.0.0.1) 407.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-1.png (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-3.png (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-2.png (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:19 web.py[line:1908] INFO 200 GET /admin/userlist (127.0.0.1) 44.00ms
+Tue, 24 May 2016 01:22:19 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=1607 (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:19 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:19 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 3.00ms
+Tue, 24 May 2016 01:22:20 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 2.00ms
+Tue, 24 May 2016 01:22:20 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:24 web.py[line:1908] INFO 200 GET /admin/news (127.0.0.1) 24.00ms
+Tue, 24 May 2016 01:22:24 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=4215 (127.0.0.1) 2.00ms
+Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 2.00ms
+Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 2.00ms
+Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
