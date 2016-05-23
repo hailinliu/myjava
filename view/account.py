@@ -464,7 +464,6 @@ class AccountInfoSetting(BaseHandler):
     @BaseHandler.is_active
     @BaseHandler.is_check
     def post(self):
-        datas = self.request.arguments
         if None in [self.user.get("question"), self.user.get("answer")]:
             self.render("ok.html", url="/account/pwd_protect", tip="请先设置密保然后修改资料")
         info = {}
@@ -486,22 +485,21 @@ class AccountInfoSetting(BaseHandler):
             pass
             # self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
         else:
-            self.render("ok.html", url="/account/info_setting", tip="密保问题或答案不正确")
+            return self.render("ok.html", url="/account/info_setting", tip="密保问题或答案不正确")
         if wechat == "" and alipay == "":
-            self.render("ok.html", url="/account/info_setting", tip="支付宝或微信号至少填写一个")
+            return self.render("ok.html", url="/account/info_setting", tip="支付宝或微信号至少填写一个")
         else:
             info.update({"wechat": wechat, "alipay": alipay})
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
 
         if "" in [BankCard, bankname]:
-            self.render("ok.html", url="/account/info_setting", tip="请完善银行卡信息")
+            return self.render("ok.html", url="/account/info_setting", tip="请完善银行卡信息")
         else:
             info.update(
                 {"qq": qq,
                  "bank": {"name": bankname, "card": BankCard, "user_name": BankUserName, "address": BankAddress}})
 
             info.update({"real_name": real_name, "id_code": id_code})
-            print info
             self.db.user.update({"uid": self.user.get("uid")}, {"$set": info})
             self.render("ok.html", url="/account/info_setting", tip="资料修改成功")
         self.render("account/info_setting.html", current_tab=1, account_tab=22, myuser=self.user)
@@ -559,6 +557,7 @@ class AccountPwdProtect(BaseHandler):
         # 旧密保
         question1 = self.get_argument("question1", None)
         answer1 = self.get_argument("answer1", None)
+
         # 新密保
         question2 = self.get_argument("question2", None)
         answer2 = self.get_argument("answer2", None)
@@ -567,16 +566,15 @@ class AccountPwdProtect(BaseHandler):
 
         user_pwd_question = self.user.get("question")
         user_pwd_answer = self.user.get("answer")
-        # 当用户没有设置密保的时候
-        if None in [user_pwd_question, user_pwd_answer]:
-            self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"question": question2, "answer": answer2}})
-            self.render("ok.html", url="/user/home", tip="密保修改成功")
-        else:
-            if question1 == user_pwd_question and answer1 == user_pwd_answer:
-                self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"question": question2, "answer": answer2}})
-                self.render("ok.html", url="/user/home", tip="密保修改成功")
-            else:
-                self.render("ok.html", url="/account/pwd_protect", tip="旧密保不正确")
+
+        self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"question": question2, "answer": answer2}})
+        # if question1 == user_pwd_question and answer1 == user_pwd_answer:
+        #     self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"question": question2, "answer": answer2}})
+        #     self.render("ok.html", url="/user/home", tip="密保修改成功")
+        # else:
+        #     self.render("ok.html", url="/account/pwd_protect", tip="旧密保不正确")
+
+        self.render("ok.html", url="/user/home", tip="密保修改成功")
         self.render("account/pwd_protect.html", current_tab=1, account_tab=23, myuser=self.user)
 
 

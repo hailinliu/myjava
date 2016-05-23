@@ -1,11 +1,13 @@
-Tue, 24 May 2016 01:22:14 web.py[line:1908] INFO 302 GET /admin/login (127.0.0.1) 4.00ms
-Tue, 24 May 2016 01:22:14 web.py[line:1496] ERROR Uncaught exception GET /admin/login (127.0.0.1)
-HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/admin/login', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; csrftoken=787EADNy0TOHietbROPPIUxXqONjcqim; _xsrf=2|c9046d61|14a45271023f7a0e13409f2e69bcb556|1464019590; verify_code="2|1:0|10:1464023257|11:verify_code|8:c2hnYQ==|08020600bb8ae2e5e9cb93a7fc4643631b1c39ed892664859d983cef861eff3a"; checked="2|1:0|10:1464023359|7:checked|12:Y2hlY2tlZA==|eb5ba361f09982c2804fd99e3f554361c62b2a163fc8d70398a781241f3cd9a0"; verification="2|1:0|10:1464023379|12:verification|88:ODk2NmFhZGFiMzhiYjFjODllYzY5YTVkNWI3MzllZjM0ZDlmNTg0NTk1OTBmNWY0ZjE2YWExODQ0Yjg0M2JmYg==|d7f19c18a2e32e76a646364c80b8ed3ac85e3ac83fbc1c9d9528e76b50b86f0f"; session_id="2|1:0|10:1464023379|10:session_id|88:ZWU4NTNiNjIwMGQyMTlmZjhkNjlkYjExYjM2MThmZTM2YmYzNjI0MTRmZGI0NDJlNTExNzA1ZDNjMDUwOWZkZQ==|1ec516176f5d200902f41980a282f55d66d867c1e02773e7a75fd8bdd6a5a1f1"', 'Upgrade-Insecure-Requests': '1'})
+Tue, 24 May 2016 01:33:20 web.py[line:1908] INFO 304 GET /account/pwd_protect (127.0.0.1) 18.00ms
+Tue, 24 May 2016 01:33:20 web.py[line:1496] ERROR Uncaught exception GET /account/pwd_protect (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='GET', uri='/account/pwd_protect', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate, sdch', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8000/user/home', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; csrftoken=787EADNy0TOHietbROPPIUxXqONjcqim; _xsrf=2|c9046d61|14a45271023f7a0e13409f2e69bcb556|1464019590; verify_code="2|1:0|10:1464023257|11:verify_code|8:c2hnYQ==|08020600bb8ae2e5e9cb93a7fc4643631b1c39ed892664859d983cef861eff3a"; checked="2|1:0|10:1464023359|7:checked|12:Y2hlY2tlZA==|eb5ba361f09982c2804fd99e3f554361c62b2a163fc8d70398a781241f3cd9a0"; verification="2|1:0|10:1464023379|12:verification|88:ODk2NmFhZGFiMzhiYjFjODllYzY5YTVkNWI3MzllZjM0ZDlmNTg0NTk1OTBmNWY0ZjE2YWExODQ0Yjg0M2JmYg==|d7f19c18a2e32e76a646364c80b8ed3ac85e3ac83fbc1c9d9528e76b50b86f0f"; session_id="2|1:0|10:1464023379|10:session_id|88:ZWU4NTNiNjIwMGQyMTlmZjhkNjlkYjExYjM2MThmZTM2YmYzNjI0MTRmZGI0NDJlNTExNzA1ZDNjMDUwOWZkZQ==|1ec516176f5d200902f41980a282f55d66d867c1e02773e7a75fd8bdd6a5a1f1"', 'If-None-Match': '"8e74dba977518468c995893ed7c1baa141e97bdc"', 'Upgrade-Insecure-Requests': '1'})
 Traceback (most recent call last):
   File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
     result = method(*self.path_args, **self.path_kwargs)
-  File "F:\TornadoProject\weikefarm\view\admin.py", line 45, in get
-    self.render("admin/login.html", url=next, myuser=self.user, error=error)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 257, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\view\account.py", line 549, in get
+    self.render("account/pwd_protect.html", current_tab=1, account_tab=23, error=error, myuser=self.user)
   File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
     html = self.render_string(template_name, **kwargs)
   File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
@@ -13,24 +15,45 @@ Traceback (most recent call last):
   File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
     namespace.update(self.ui)
 TypeError: 'NoneType' object is not iterable
-Tue, 24 May 2016 01:22:14 web.py[line:1908] INFO 200 GET /admin/home (127.0.0.1) 21.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=2446 (127.0.0.1) 407.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-1.png (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-3.png (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile-skin-2.png (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:15 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:19 web.py[line:1908] INFO 200 GET /admin/userlist (127.0.0.1) 44.00ms
-Tue, 24 May 2016 01:22:19 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=1607 (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:19 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:19 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 3.00ms
-Tue, 24 May 2016 01:22:20 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 2.00ms
-Tue, 24 May 2016 01:22:20 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:24 web.py[line:1908] INFO 200 GET /admin/news (127.0.0.1) 24.00ms
-Tue, 24 May 2016 01:22:24 web.py[line:1908] INFO 200 GET /static/admin/admin.js?v=4215 (127.0.0.1) 2.00ms
-Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /fonts.useso.com/css-family=Open+Sans-300,400,600,700&lang=en.css (127.0.0.1) 1.00ms
-Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /static/WdatePicker/skin/WdatePicker.css (127.0.0.1) 2.00ms
-Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /static/admin/patterns/header-profile.png (127.0.0.1) 2.00ms
-Tue, 24 May 2016 01:22:24 web.py[line:1908] WARNING 404 GET /admin/skin-config.html (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:33:22 web.py[line:1908] INFO 304 GET /user/home (127.0.0.1) 25.00ms
+Tue, 24 May 2016 01:33:22 web.py[line:1908] INFO 304 GET /static/css/style.css (127.0.0.1) 407.00ms
+Tue, 24 May 2016 01:33:22 web.py[line:1908] INFO 304 GET /static/images/logo2.png (127.0.0.1) 2.00ms
+Tue, 24 May 2016 01:33:24 web.py[line:1908] INFO 302 GET /logout (127.0.0.1) 3.00ms
+Tue, 24 May 2016 01:33:24 web.py[line:1908] INFO 200 GET /login (127.0.0.1) 4.00ms
+Tue, 24 May 2016 01:33:24 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 22.00ms
+Tue, 24 May 2016 01:33:24 web.py[line:1908] INFO 304 GET /static/images/bg2.png (127.0.0.1) 6.00ms
+Tue, 24 May 2016 01:33:28 site.py[line:51] INFO LoginHandler argument {'url': ['/user/home'], '_xsrf': ['2|173d403c|ca9d7f2cdc065753cd79b273b785980b|1464019590'], 'password': ['hahaha'], 'cap_ch': ['l2vc'], 'name': ['13800000000']}
+Tue, 24 May 2016 01:33:28 BaseHandler.py[line:91] INFO ('start login', u'13800000000', u'hahaha')
+Tue, 24 May 2016 01:33:29 BaseHandler.py[line:95] INFO ('login checked', u'13800000000', u'hahaha')
+Tue, 24 May 2016 01:33:29 BaseHandler.py[line:102] INFO ('login', {u'alipay': u'1666727747@qq.com', u'active_time': u'2016-05-19 03:28:23', u'uid': u'13800000000', u'money': 12455, u'regtime': u'2016-05-19 03:27:51', u'safe_pwd': u'hahaha', u'question': u'5', u'answer': u'2', u'username': u'13800000000', u'jinbi': 7100, u'is_active': True, u'phone': u'13800000000', u'wechat': u'LovIme', u'id_code': u'420528199128224335', u'lasttime': u'2016-05-24 01:33', u'bank': {u'user_name': u'', u'name': u'\u4e2d\u56fd\u94f6\u884c', u'card': u'622052196113124', u'address': u'1'}, u'qq': u'', u'level': 3, u'admin': u'13855555555', u'real_name': u'\u5218\u54c8', u'status': u'online', u'login': {u'ip': u'\u672a\u77e5', u'time': u'2016-05-24 01:09:20'}})
+Tue, 24 May 2016 01:33:29 web.py[line:1908] INFO 302 POST /login (127.0.0.1) 367.00ms
+Tue, 24 May 2016 01:33:29 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 7.00ms
+Tue, 24 May 2016 01:33:32 web.py[line:1908] INFO 200 GET /account/pwd_protect (127.0.0.1) 16.00ms
+Tue, 24 May 2016 01:33:40 web.py[line:1908] INFO 200 POST /account/pwd_protect?pass=1 (127.0.0.1) 4.00ms
+Tue, 24 May 2016 01:33:41 web.py[line:1908] INFO 200 GET /account/pwd_protect (127.0.0.1) 3.00ms
+Tue, 24 May 2016 01:33:45 web.py[line:1908] INFO 200 POST /account/pwd_protect?pass=1 (127.0.0.1) 7.00ms
+Tue, 24 May 2016 01:33:46 web.py[line:1908] INFO 200 GET /account/pwd_protect (127.0.0.1) 4.00ms
+Tue, 24 May 2016 01:33:48 web.py[line:1908] INFO 200 POST /account/pwd_protect?pass=1 (127.0.0.1) 4.00ms
+Tue, 24 May 2016 01:33:50 web.py[line:1908] INFO 200 GET /account/pwd_protect (127.0.0.1) 4.00ms
+Tue, 24 May 2016 01:33:58 web.py[line:1908] INFO 200 POST /account/pwd_protect?pass=1 (127.0.0.1) 13.00ms
+Tue, 24 May 2016 01:33:58 web.py[line:1496] ERROR Uncaught exception POST /account/pwd_protect?pass=1 (127.0.0.1)
+HTTPServerRequest(protocol='http', host='127.0.0.1:8000', method='POST', uri='/account/pwd_protect?pass=1', version='HTTP/1.1', remote_ip='127.0.0.1', headers={'Origin': 'http://127.0.0.1:8000', 'Content-Length': '112', 'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 'Upgrade-Insecure-Requests': '1', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8000/account/pwd_protect', 'Cache-Control': 'max-age=0', 'Cookie': 'CNZZDATA4677459=cnzz_eid%3D2070184759-1452189971-%26ntime%3D1453016835; Hm_lvt_50b4952461c191a55d14ad9dbe6b22ae=1451842917,1452066531,1452159130,1452941412; CNZZDATA4663522=cnzz_eid%3D1351592935-1458318335-http%253A%252F%252F127.0.0.1%253A8000%252F%26ntime%3D1458318335; safe_pwd="2|1:0|10:1461574922|8:safe_pwd|8:aGFoYWhh|c459c7e1d997babcf8779f43591fda667c6d6682518aaeab1cc51848ee5e334d"; csrftoken=787EADNy0TOHietbROPPIUxXqONjcqim; _xsrf=2|c9046d61|14a45271023f7a0e13409f2e69bcb556|1464019590; verify_code="2|1:0|10:1464024804|11:verify_code|8:bDJ2Yw==|6ee2fcc8840b613644ad8bc0f5b3a6243b014b3512e8c769178c9cfa0559a6ec"; checked="2|1:0|10:1464024808|7:checked|12:Y2hlY2tlZA==|b981df2293a8cdd8ca668921bd6ecab3a0c14e127682d34a0e0b61edcce2c1e5"; verification="2|1:0|10:1464024809|12:verification|88:ODk2NmFhZGFiMzhiYjFjODllYzY5YTVkNWI3MzllZjM0ZDlmNTg0NTk1OTBmNWY0ZjE2YWExODQ0Yjg0M2JmYg==|7c82d7b5cf7a4620144c2bbaab0a0b561c16164b6542291df737b1bcabc72240"; session_id="2|1:0|10:1464024809|10:session_id|88:ZWU4NTNiNjIwMGQyMTlmZjhkNjlkYjExYjM2MThmZTM2YmYzNjI0MTRmZGI0NDJlNTExNzA1ZDNjMDUwOWZkZQ==|d8a39c09b061e46b33a52f4f08611c5a5d98d10bfc43470c58ad1dc6237e5cac"', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36', 'Content-Type': 'application/x-www-form-urlencoded'})
+Traceback (most recent call last):
+  File "D:\python27\lib\site-packages\tornado\web.py", line 1413, in _execute
+    result = method(*self.path_args, **self.path_kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 257, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\BaseHandler.py", line 245, in wrapper
+    return method(self, *args, **kwargs)
+  File "F:\TornadoProject\weikefarm\view\account.py", line 578, in post
+    self.render("account/pwd_protect.html", current_tab=1, account_tab=23, myuser=self.user)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 704, in render
+    html = self.render_string(template_name, **kwargs)
+  File "D:\python27\lib\site-packages\tornado\web.py", line 809, in render_string
+    namespace = self.get_template_namespace()
+  File "D:\python27\lib\site-packages\tornado\web.py", line 833, in get_template_namespace
+    namespace.update(self.ui)
+TypeError: 'NoneType' object is not iterable
+Tue, 24 May 2016 01:33:59 web.py[line:1908] INFO 304 GET /user/home (127.0.0.1) 9.00ms
+Tue, 24 May 2016 01:34:04 web.py[line:1908] INFO 200 GET /register?r=13800000000 (127.0.0.1) 8.00ms
+Tue, 24 May 2016 01:34:04 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 16.00ms

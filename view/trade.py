@@ -268,7 +268,7 @@ class JinBiGuadan(BaseHandler):
     @BaseHandler.is_active
     def get(self):
         if not self.user.get("alipay"):
-            self.render("ok.html", url="/account/alipay_setting", tip="请先完善支付宝信息")
+            self.render("ok.html", url="/account/info_setting", tip="请先完善个人信息")
             return
 
         self.render("trade/woyao_guadan.html", account_tab=16, myuser=self.user)
@@ -339,7 +339,7 @@ class JinBiQuerenPay(BaseHandler):
     @BaseHandler.is_active
     def get(self):
         if not self.user.get("alipay"):
-            self.render("ok.html", url="/account/alipay_setting", tip="请先完善支付宝信息")
+            self.render("ok.html", url="/account/info_setting", tip="请先完善个人信息")
             return
         try:
             id = int(self.get_argument("id", 0))
