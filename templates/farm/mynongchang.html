@@ -6,6 +6,7 @@
 <div class="countgo pull-left">
     <div class="zt">
         <!--MAN -->
+        {%set level_dict={0:"初级礼包",1:"中级礼包",2:"高级礼包"}%}
         <div class="remain" style="height: 553px;">
             <div class="gao1"></div>
             <div class="page-header long-header">
@@ -55,7 +56,7 @@
 
                             <tr>
                                 <td>{{p.get('id','')}}</td>
-                                <td>{{pet.get('level')}}</td>
+                                <td>{{pet.get('name','')}}</td>
                                 <td>{{p.get('time')}}</td>
                                 <td>{{current_day}}
                                 </td>
