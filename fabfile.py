@@ -72,7 +72,7 @@ def restart_web():
 def front_deploy():
     """前端代码部署"""
     # TODO
-    with cd('/webapps/kedou'):
+    with cd('/webapps/weikefarm'):
         run('sudo supervisorctl stop farm')
         run('sudo supervisorctl restart farm')
 
