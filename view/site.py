@@ -32,6 +32,7 @@ class LoginHandler(BaseHandler):
     def get(self):
         # self._template_loaders.clear()
         next_url = self.get_argument("next", None)
+        language = self.get_argument("language", "cn")
         referer_url = '/user/home'
         if 'Referer' in self.request.headers:
             referer_url = '/' + '/'.join(self.request.headers['Referer'].split("/")[3:])
@@ -41,7 +42,10 @@ class LoginHandler(BaseHandler):
             next_url = referer_url
         if referer_url == '/':
             next_url = '/user/home'
-        self.render("account/login.html", url=next_url, error="")
+        if language == 'en':
+            return self.render("account/login_en.html", url=next_url, language=language,error="")
+
+        self.render("account/login.html", url=next_url, language=language,error="")
 
     def post(self):
         self.logging.info(('LoginHandler argument %s') % (self.request.arguments))
@@ -146,9 +150,9 @@ class Register(BaseHandler):
                 'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                 'safe_pwd': safe_pwd,
                 'admin': rName,
-                'real_name':real_name,
-                'id_code':id_code,
-                'qq':qq,
+                'real_name': real_name,
+                'id_code': id_code,
+                'qq': qq,
                 'money': 0,
                 'level': 0,
                 'jinbi': 0,

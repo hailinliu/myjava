@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>登录到系统</title>
+    <title>Login to System</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="http://58.221.44.174:96/ui_yun/css/css.css" rel="stylesheet">
     <link href="/static/css/login_style.css" rel="stylesheet">
@@ -56,25 +56,25 @@
 
 <div class="page-container" style="">
     <div style="float:right;margin: 20px 10px">
-    <label for="language">中英文切换: </label>
+    <label for="language">Language select: </label>
     <select name="language" id="language" style="float:right;">
-        <option value="cn" selected>中文</option>
-        <option value="en">English</option>
+        <option value="cn" >中文</option>
+        <option value="en" selected>English</option>
     </select>
 </div>
     <div class="tit"><img src="/static/images/logo2.png"></div>
-    <h3 align="left">会员登录系统</h3>
+    <h3 align="left">Member Login</h3>
 
     <form action="" method="post">
         {% module xsrf_form_html() %}
         <input type="hidden" name="url" id="url" value="{{url}}">
-        <input type="text" name="name" class="username" id="x1" placeholder="请输入您的用户名！">
-        <input type="password" name="password" class="password" id="x2" placeholder="请输入您的用户密码！">
-        <input type="Captcha" class="Captcha" name="cap_ch" id="x3" placeholder="请输入验证码！">
+        <input type="text" name="name" class="username" id="x1" placeholder="Username！">
+        <input type="password" name="password" class="password" id="x2" placeholder="Password！">
+        <input type="Captcha" class="Captcha" name="cap_ch" id="x3" placeholder="Captcha！">
 
         <img src='/verifycode' width="70" height="34" id="yzmpic" class=" loimg " style=""/>
         <span style="color:red">{{error}}</span>
-        <button type="submit" class="btn btn-primary form-control denglugo">登录</button>
+        <button type="submit" class="btn btn-primary form-control denglugo">Login</button>
         <div class="error"><span>+</span></div>
     </form>
 </div>

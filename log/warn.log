@@ -1,0 +1,7 @@
+Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 200 GET /login?language=cn (127.0.0.1) 0.00ms
+Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 304 GET /static/css/login_style.css (127.0.0.1) 394.00ms
+Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 304 GET /static/images/logo2.png (127.0.0.1) 1.00ms
+Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 32.00ms
+Tue, 24 May 2016 01:05:40 web.py[line:1908] INFO 304 GET /static/images/bg2.png (127.0.0.1) 6.00ms
+Tue, 24 May 2016 01:05:43 web.py[line:1908] INFO 200 GET /login?language=en (127.0.0.1) 6.00ms
+Tue, 24 May 2016 01:05:43 web.py[line:1908] INFO 200 GET /verifycode (127.0.0.1) 14.00ms
