@@ -24,6 +24,12 @@
 <aside class="lt_aside_nav content mCustomScrollbar">
     <h2><a href="/user/home">常用菜单</a></h2>
     <ul>
+        <li class="item">
+            <dl>
+                <dt><a href="{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}" target="_blank" style="color:#333">注册新会员</a></dt>
+
+            </dl>
+        </li>
         <li class="item {% if account_tab in [2,3]%}active{%end%}">
             <dl>
                 <dt>礼包管理</dt>
@@ -81,12 +87,7 @@
 
             </dl>
         </li>
-         <li class="item">
-            <dl>
-                <dt><a href="{{handler.settings['weburl']}}/register?r={{myuser.get('uid')}}" target="_blank">注册新会员</a></dt>
 
-            </dl>
-        </li>
         <li class="item">
             <dl>
                 <dt><a href="/logout">退出登录</a></dt>
