@@ -42,15 +42,15 @@
                                 <td height="18" colspan="2" style="font-size:15px; font-weight:bold; color:#5B6572;">
                                     &nbsp;</td>
                             </tr>
-
-                            {%if myuser.get('question') and myuser.get('answer')%}
-                            <tr>
+                             <tr>
                                 <td height="30" align="right">安全密码：</td>
                                 <td class="td_l">
                                     <input name="safe_pwd" type="password" id="safe_pwd" class="txt">
                                     <span class="col">*<label ></label></span>
                                 </td>
                             </tr>
+                            {%if myuser.get('question') and myuser.get('answer')%}
+                           
                             <tr>
                                 <td height="32" colspan="2" style="font-size:15px; font-weight:bold; color:#888;"> 原密保
                                 </td>
