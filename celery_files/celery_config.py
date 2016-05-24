@@ -27,7 +27,7 @@ CELERYBEAT_SCHEDULE = {
     'cal_manage_award': {
         'task': 'celery_tasks.cal_manage_award',
         # "schedule": crontab(minute=5, hour=0),
-        "schedule": timedelta(seconds=300),
+        "schedule": timedelta(seconds=360),
         "args": ()
     },
 
