@@ -66,6 +66,7 @@ def cal_interests():
         #TODO 记得换回来
         # if live_days > 0:
         if 1:
+            #TODO 记得换回来
             # if p.get("check_day") != str(yesterday_date):
             if 2:
                 if live_days > life:
@@ -87,6 +88,7 @@ def cal_interests():
                 create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
                 db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
                                  "time": str(create_time)})
+                db.user.update({"uid":uid},{"$inc":{"jinbi":gain}})
                 user = db.user.find_one({"uid": uid}, {"_id": 0})
 
                 # 计算用户当日累计分红
