@@ -89,7 +89,6 @@ def cal_interests():
 
                 # 计算用户当日累计分红
                 if user:
-                    print "exist user"
                     income_day = str(yesterday_date)
                     if 'day_income' not in user:
                         day_income = gain
