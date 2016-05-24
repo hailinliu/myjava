@@ -47,10 +47,11 @@ def cal_interests():
     yesterday = datetime.datetime.today() - timedelta(days=1)
     my_pets = db.my_pet.find({"dead": {"$ne": 1}})
     yesterday_date = yesterday.date()
+    day_income=0
     for p in my_pets:
         info = {}
         uid = p.get("uid")
-        pet_id = p.get("id")
+        print uid
         pid = p.get("pid")
         pet = db.pet.find_one({"id": pid})
         day_jinbi = pet.get("day_jinbi")
@@ -60,10 +61,15 @@ def cal_interests():
         buy_time = p.get("time")
         b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
         live_days = (now_time - b).days
-        if live_days > 0:
+        print "live_days,", live_days
+        print "check_days", p.get("check_day")
+        #TODO 记得换回来
+        # if live_days > 0:
+        if 1:
             if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
+                    continue
                 producted_jinbi = live_days * day_jinbi
                 info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
@@ -80,30 +86,34 @@ def cal_interests():
                 db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
                                  "time": str(create_time)})
                 user = db.user.find_one({"uid": uid}, {"_id": 0})
-                db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
+
                 # 计算用户当日累计分红
-                user['income_day'] = str(yesterday_date)
-                if 'day_income' not in user:
-                    user['day_income'] = gain
-                else:
-                    user['day_income'] += gain
-
-
+                if user:
+                    print "exist user"
+                    income_day = str(yesterday_date)
+                    if 'day_income' not in user:
+                        day_income = gain
+                    else:
+                        day_income += gain
+                    db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
+                    db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
 
 
 @app.task
-def cal_manage_award(user):
+def cal_manage_award():
     """分红奖"""
-
     yesterday = datetime.datetime.today() - timedelta(days=1)
     yesterday_date = str(yesterday.date())
 
     # 获取 购买红包的用户的昨日分红总额
-    users = db.user.find_one({"income_day": yesterday_date}, {"_id": 0})
+    users = db.user.find({"income_day": yesterday_date}, {"_id": 0})
+    users = db.user.find({"income_day": yesterday_date}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
     consume_id = 1
     for u in users:
-        day_income = u['day_income']
+        day_income = u.get('day_income', 0)
+        print u
+        user=u
         for per in award_percent:
             # 查询上级
             admin_id = user.get("admin")
@@ -136,7 +146,6 @@ def cal_award():
     4.插入对应的奖金记录
 
     """
-
     helps = db.provide_help.find({"status": "complete", "check_award": {"$ne": "checked"}})
     now_time = str(datetime.datetime.now())
     for h in helps:

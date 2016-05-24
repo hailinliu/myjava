@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}矿机售出记录{% end %}
+{% block title %}礼包售出记录{% end %}
 {% block content %}
 <div class="pace  pace-inactive">
     <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
@@ -15,7 +15,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>矿机售出记录</h2>
+                <h2>礼包售出记录</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="/admin/home">主页</a>
@@ -24,7 +24,7 @@
                         <a href="/admin/userlist">礼包管理</a>
                     </li>
                     <li>
-                        <strong>矿机售出记录</strong>
+                        <strong>礼包售出记录</strong>
                     </li>
                 </ol>
             </div>
@@ -75,7 +75,7 @@
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" id="userListCheck"/></th>
                                         <th>ID</th>
-                                        <th>矿机名称</th>
+                                        <th>礼包名称</th>
                                         <th>用户</th>
                                         <th>已产金币</th>
                                         <th>待产金币</th>
@@ -132,8 +132,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<input type="button" class="btn btn-w-m btn-primary delete1" value="删除选中"-->
-                                <!--data-toggle="modal" data-target="#myModal5" disabled/>-->
+                                <input type="button" class="btn btn-w-m btn-primary delete1" value="删除选中"
+                                data-toggle="modal" data-target="#myModal5" disabled/>
                                 <a class="btn btn-w-m btn-primary checkout_jinbi" href="javascript:;">手动结算当天金币</a>
 
 
@@ -146,14 +146,40 @@
         </div>
     </div>
 </div>
+  <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span
+                                                        aria-hidden="true">&times;</span><span
+                                                        class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">删除购买记录</h4>
+                                                {#
+                                                <small class="font-bold">删除购买记录</small>
+                                                #}
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="delete1Content"></p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-white deleteUserId"
+                                                        data-dismiss="modal">确定
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">取消
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 <script>
 
 
     $(function () {
 
 
-        var json1 = _alert('.btn.btn-w-m.delete1', '.modal-body .delete1Content', '您要删除的用户ID为');
-        var json2 = _alert('.btn.btn-w-m.audit1', '.modal-body .audit1Content', '您要拉入黑名单的用户ID为');
+        var json1 = _alert('.btn.btn-w-m.delete1', '.modal-body .delete1Content', '您要删除的ID为');
 
         var list_to_handle;
 
@@ -177,7 +203,7 @@
 
         $('.btn.btn-white.deleteUserId').click(function () {
             $.ajax({
-                url: '/admin/userlist',
+                url: '/admin/buy_pet_record',
                 type: 'delete',
                 data: list_to_handle,
                 success: function (data) {
@@ -189,20 +215,6 @@
             });
         });
 
-        $('.btn.btn-white.auditUserId').click(function () {
-            $.ajax({
-                url: '/admin/userlist',
-                type: 'put',
-                data: list_to_handle,
-                success: function (data) {
-                    console.log(data);
-                    location.reload();
-                },
-                error: function () {
-                    alert('error');
-                }
-            });
-        });
         $(".checkout_jinbi").click(function () {
             if (confirm("确认结算所有矿机当天未结算金币吗")) {
                 location.href = '/admin/checkout_day_jinbi';

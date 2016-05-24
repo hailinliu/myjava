@@ -110,8 +110,8 @@ class MyFarm(BaseHandler):
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def get(self):
-        self._template_loaders.clear()
-        my_pets = self.db.my_pet.find({"uid": self.user.get('uid')})
+
+        my_pets = self.db.my_pet.find({"uid": self.user.get('uid')}).sort("_id", pymongo.DESCENDING)
 
         def pet_info(pid):
             record = self.db.pet.find_one({"id": pid})

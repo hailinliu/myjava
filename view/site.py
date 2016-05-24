@@ -53,7 +53,7 @@ class LoginHandler(BaseHandler):
         cookiecode = self.get_secure_cookie('verify_code')
         if cap_ch:
             if cap_ch != cookiecode:
-                return self.render("account/login.html", url="", error=u"验证码不正确")
+                return self.render("account/login.html", url="",  language="cn",error=u"验证码不正确")
             else:
                 self.set_secure_cookie("checked", "checked")
         try:
@@ -70,15 +70,15 @@ class LoginHandler(BaseHandler):
 
             exist_user = self.db.user.find_one({'phone': phone})
             if not exist_user:
-                return self.render("account/login.html", url=url, myuser={},
+                return self.render("account/login.html", language="cn",url=url, myuser={},
                                    error=u"用户不存在(提示:手机号或用户名都可以登录)")
 
             # 查询用户是否被冻结
             if exist_user.get("frozen"):
-                return self.render("account/login.html", url=url, error=u"该账号已被冻结")
+                return self.render("account/login.html",  language="cn",url=url, error=u"该账号已被冻结")
             res = self.begin_session(phone, pwd)
             if not res:
-                return self.render("account/login.html", url=url, error=u"用户名或密码不正确")
+                return self.render("account/login.html", language="cn", url=url, error=u"用户名或密码不正确")
             if self.user:
                 # 登录记录
                 get_ip = self.request.remote_ip

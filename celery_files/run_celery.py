@@ -6,7 +6,8 @@ result = test.delay(4, 4)
 result.ready()
 
 # 计算利息
-# result = cal_interests()
+result = cal_interests()
+result = cal_manage_award()
 
 
 

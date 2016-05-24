@@ -876,6 +876,18 @@ class BuyPetRecord(BaseHandler):
                     pet_info=pet_info, pages=pages, counts=counts, current_page=current_page,
                     admin_nav=2)
 
+    @BaseHandler.admin_authed
+    def delete(self):
+        try:
+            for value in self.request.arguments.values():
+                self.db.my_pet.remove({"id": int(value[0])})
+        except Exception, e:
+            print e
+            return self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            return self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
 
 class CheckoutJinBi(BaseHandler):
     """结算当天矿机金币"""
