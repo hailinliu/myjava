@@ -110,7 +110,6 @@ def cal_manage_award():
 
     # 获取 购买红包的用户的昨日分红总额
     users = db.user.find({"income_day": yesterday_date}, {"_id": 0})
-    users = db.user.find({"income_day": yesterday_date}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
     consume_id = 1
     for u in users:
@@ -136,6 +135,7 @@ def cal_manage_award():
                      "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 db.user.update({"uid": admin_id}, {"$set": {"day_income": 0}})
+                # db.user.update({"uid": admin_id},{"$unset": {'income_day': 1}})
                 user = admin_user
 
 
