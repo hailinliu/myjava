@@ -135,7 +135,7 @@ def cal_manage_award():
                      "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 db.user.update({"uid": admin_id}, {"$set": {"day_income": 0}})
-                # db.user.update({"uid": admin_id},{"$unset": {'income_day': 1}})
+                db.user.update({"uid": admin_id},{"$unset": {'income_day': 1}})
                 user = admin_user
 
 
