@@ -112,7 +112,6 @@ def cal_manage_award():
     consume_id = 1
     for u in users:
         day_income = u.get('day_income', 0)
-        print u
         user=u
         for per in award_percent:
             # 查询上级
