@@ -73,6 +73,7 @@ def cal_interests():
                     info.update({"dead": 1})
                     continue
                 producted_jinbi = live_days * day_jinbi
+                #TODO 记得换回来
                 producted_jinbi =1 * day_jinbi
                 info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
@@ -89,6 +90,7 @@ def cal_interests():
                 db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
                                  "time": str(create_time)})
                 db.user.update({"uid":uid},{"$inc":{"jinbi":gain}})
+
                 user = db.user.find_one({"uid": uid}, {"_id": 0})
 
                 # 计算用户当日累计分红
@@ -135,6 +137,7 @@ def cal_manage_award():
                     {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
                      "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
+                db.user.update({"uid": admin_id}, {"$set": {"day_income": 0}})
                 user = admin_user
 
 
