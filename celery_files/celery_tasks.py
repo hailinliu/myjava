@@ -67,8 +67,7 @@ def cal_interests():
         # if live_days > 0:
         if 1:
             #TODO 记得换回来
-            # if p.get("check_day") != str(yesterday_date):
-            if 2:
+            if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
                     continue
@@ -102,7 +101,6 @@ def cal_interests():
                         day_income += gain
                     db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
                     db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
-
 
 @app.task
 def cal_manage_award():
