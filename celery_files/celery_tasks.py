@@ -64,16 +64,17 @@ def cal_interests():
         print "live_days,", live_days
         print "check_days", p.get("check_day")
         #TODO 记得换回来
-        # if live_days > 0:
-        if 1:
+        if live_days > 0:
+        # if 1:
             #TODO 记得换回来
             if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
                     continue
+
+                # TODO 记得换回来
+                # producted_jinbi =1 * day_jinbi
                 producted_jinbi = live_days * day_jinbi
-                #TODO 记得换回来
-                producted_jinbi =1 * day_jinbi
                 info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
                 last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
@@ -138,42 +139,3 @@ def cal_manage_award():
                 db.user.update({"uid": admin_id},{"$unset": {'income_day': 1}})
                 user = admin_user
 
-
-@app.task
-def cal_award():
-    """
-    奖金计算
-    1.查找已完成的未统计奖金的提供帮助记录
-    2.查找记录的uid的代理，循环放到字典去。
-    3.根据系统设置的奖金比，更新对应层级代理的奖金
-    4.插入对应的奖金记录
-
-    """
-    helps = db.provide_help.find({"status": "complete", "check_award": {"$ne": "checked"}})
-    now_time = str(datetime.datetime.now())
-    for h in helps:
-        index = 1
-        user = db.user.find_one({"uid": h.get("uid")})
-        admin_uid = user.get("adin")
-        admin = db.user.find_one({"uid": admin_uid})
-        jine = h.get("jine", 0)
-        award_id = str(time.time()).replace(".", "")[4:]
-        award_money = int(jine) * award_setting[str(index)]
-        db.user.update({"uid": admin_uid}, {"$set": {"award": admin.get("award", 0) + award_money}})
-        db.award.insert(
-            {'id': award_id, "uid": admin_uid, "type": str(index), "jine": award_money, "match_money": h.get("jine"),
-             "time": now_time})
-        admin_id = admin.get("admin")
-        while admin_id:
-            if index > 12:
-                break
-            award_id = str(time.time()).replace(".", "")[4:]
-            admin = db.user.find_one({"uid": admin_id})
-            index += 1
-            award_money = h.get("jine") * award_setting[str(index)]
-            db.user.update({"uid": admin_uid}, {"$set": {"award": admin.get("award", 0) + award_money}})
-            db.award.insert(
-                {"id": award_id, "uid": admin_uid, "title": str(index) + "代" + award_setting[str(index)] + "%",
-                 "jine": award_money, "match_money": h.get("jine"),
-                 "time": now_time})
-            admin_id = admin.get("admin")
