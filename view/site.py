@@ -411,7 +411,7 @@ class FarmShop(BaseHandler):
                     for item in last:
                         lastone = item
                     consume_id = int(lastone.get('id', 0)) + 1
-                # print admin_id, total_cost * per / 100
+                print admin_id, total_cost * per / 100
                 reward = total_cost * per / 100
                 self.db.jinbi.insert(
                     {"uid": admin_id, "type": "tuijian", "id": consume_id, "time": now_time,

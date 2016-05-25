@@ -223,9 +223,10 @@ class JinBiPaiMai(BaseHandler):
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def get(self):
-        record = self.db.jinbi.find({"type": "guadan", "uid": {"$ne": self.user.get("uid")}, "status": "waiting"}).sort(
-            "id", pymongo.DESCENDING).limit(50)
-        self.render("trade/jinbi_guadan.html", account_tab=12, record=record, myuser=self.user)
+        return self.render("ok.html", myuser=self.user, url="/user/home",tip="交易系统建设中，敬请期待")
+        # record = self.db.jinbi.find({"type": "guadan", "uid": {"$ne": self.user.get("uid")}, "status": "waiting"}).sort(
+        #     "id", pymongo.DESCENDING).limit(50)
+        # self.render("trade/jinbi_guadan.html", account_tab=12, record=record, myuser=self.user)
 
 
 class JinBiGoumai(BaseHandler):
@@ -269,15 +270,17 @@ class JinBiGuadan(BaseHandler):
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def get(self):
-        if not self.user.get("alipay"):
-            self.render("ok.html", url="/account/info_setting", tip="请先完善个人信息")
-            return
-
-        self.render("trade/woyao_guadan.html", account_tab=16, myuser=self.user)
+        return self.render("ok.html", myuser=self.user, url="/user/home",tip="交易系统建设中，敬请期待")
+        # if not self.user.get("alipay"):
+        #     self.render("ok.html", url="/account/info_setting", tip="请先完善个人信息")
+        #     return
+        #
+        # self.render("trade/woyao_guadan.html", account_tab=16, myuser=self.user)
 
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def post(self):
+        return self.render("ok.html", myuser=self.user, url="/user/home",tip="交易系统建设中，敬请期待")
         out_jinbi = int(self.get_argument("jinbi", 0))
         try:
             my_jinbi = int(self.user.get("jinbi", 0))
