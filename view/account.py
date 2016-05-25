@@ -171,12 +171,12 @@ class Jihuo(BaseHandler):
                 info.update({"is_active": True, 'active_time': time.strftime("%Y-%m-%d %H:%M:%S",
                                                                              time.localtime(time.time()))})
                 self.db.user.update({"uid": uid}, {"$set": info})
-                # 转账记录
+                # 激活记录
                 self.db.trade_log.insert({
                     "type": "jihuo",
                     "id": trade_log_id,
                     "uid": self.user.get("uid"),
-                    "mid": uid, "money": 50,
+                    "mid": uid, "money": 100,
                     "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
                 now_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
 
@@ -345,14 +345,14 @@ class JinBiLog2(BaseHandler):
         pages = int(round(counts / 10.0))
         if pages == 0:
             pages = 1
-        if current_page <= 1:
+        if pages <= 1:
             prev_page = 1
             next_page = 1
         else:
             prev_page = current_page - 1
             next_page = current_page + 1
-
-        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(10)
+        print "next_page",next_page
+        records = records.skip(per * (current_page - 1)).sort("_id", pymongo.DESCENDING).limit(per)
 
         self.render("account/jinbi_log2.html", account_tab=11, records=records, counts=counts, tip_dict=tip_dict,
                     current_page=current_page, pages=pages, total_consume=total_consume, prev_page=prev_page,
