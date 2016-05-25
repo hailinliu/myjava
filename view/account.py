@@ -145,7 +145,7 @@ class Jihuo(BaseHandler):
         except ValueError:
             my_money = 0
 
-        if my_money < 50:
+        if my_money < 100:
             # 金额一定要小于用户余额
             self.render("ok.html", url="/account/jihuo", tip="您的激活币不足，请联系上级充值")
             return
@@ -163,9 +163,9 @@ class Jihuo(BaseHandler):
                 trade_log_id = 1
 
             if not member.get("is_active"):
-                # TODO 未激活-->激活则从用户余额扣除50
+                # TODO 未激活-->激活则从用户余额扣除100
                 # 更新发放激活币的用户的余额
-                admin_money = my_money - 50
+                admin_money = my_money - 100
                 self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"money": admin_money}})
                 tip = "激活成功"
                 info.update({"is_active": True, 'active_time': time.strftime("%Y-%m-%d %H:%M:%S",
@@ -295,7 +295,7 @@ class JinBiLog(BaseHandler):
         total_consume = 0
         print self.user.get("uid")
         type_list = ["in", "pet_produce", "qianggou", "tuijian", "admin_award"]
-        tip_dict = {"in": "金币转账", "pet_produce": "红包分红", "qianggou": "抢购金币", "tuijian": "直推奖", "admin_award": "管理奖"}
+        tip_dict = {"in": "金币转账", "pet_produce": "礼包分红", "qianggou": "抢购金币", "tuijian": "直推奖", "admin_award": "管理奖"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},
@@ -333,7 +333,7 @@ class JinBiLog2(BaseHandler):
         per = 10
         total_consume = 0
         type_list = ["transfer", "buy_pet", "guadan", "get_crash", "draw"]
-        tip_dict = {"transfer": "金币转账", "buy_pet": "购买红包消费", "guadan": "金币拍卖", "get_crash": "金币提现", "draw": "抽奖消费"}
+        tip_dict = {"transfer": "金币转账", "buy_pet": "购买礼包消费", "guadan": "金币拍卖", "get_crash": "金币提现", "draw": "抽奖消费"}
         records = self.db.jinbi.find({"type": {"$in": type_list}, "uid": self.user.get("uid")})
         records_result = self.db.jinbi.aggregate(
             [{"$match": {"uid": self.user.get("uid"), "type": {"$in": type_list}}},

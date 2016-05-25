@@ -108,7 +108,7 @@ def cal_manage_award():
     yesterday = datetime.datetime.today() - timedelta(days=1)
     yesterday_date = str(yesterday.date())
 
-    # 获取 购买红包的用户的昨日分红总额
+    # 获取 购买礼包的用户的昨日分红总额
     users = db.user.find({"income_day": yesterday_date}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
     consume_id = 1

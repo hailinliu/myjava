@@ -20,14 +20,14 @@ CELERYBEAT_SCHEDULE = {
     },
     'cal_interests': {
         'task': 'celery_tasks.cal_interests',
-        # "schedule": crontab(minute=1, hour=0),
-        "schedule": timedelta(seconds=300),
+        "schedule": crontab(minute=10, hour=0),
+        # "schedule": timedelta(seconds=300),
         "args": ()
     },
     'cal_manage_award': {
         'task': 'celery_tasks.cal_manage_award',
-        # "schedule": crontab(minute=5, hour=0),
-        "schedule": timedelta(seconds=360),
+        "schedule": crontab(minute=15, hour=0),
+        # "schedule": timedelta(seconds=360),
         "args": ()
     },
 

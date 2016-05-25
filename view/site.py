@@ -273,7 +273,7 @@ class ContactUs(BaseHandler):
         self.db.contact.insert(
             {"uid": self.user.get("uid"), "question": question, "title": title, "content": content, "id": id,
              "time": now_time})
-        return self.redirect('/user')
+        return self.render("ok.html", myuser=self.user, url="/user/home",tip="提交成功")
 
 
 class ForgetPwd(BaseHandler):
@@ -346,7 +346,7 @@ class FarmShop(BaseHandler):
                 return self.render("ok.html", myuser=self.user, url="/nongchangsd",
                                    tip=u"%s限购%d个" % (pet['name'], pet['limit']))
             else:
-                # 查找已购买的未过期的红包数是否超过限制
+                # 查找已购买的未过期的礼包数是否超过限制
                 bought_count = self.db.my_pet.find(
                     {"pid": pet['id'], "uid": self.user.get("uid"), "dead": {"$ne": 1}}).count()
                 if bought_count + count > pet['limit']:

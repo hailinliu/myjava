@@ -231,34 +231,36 @@ class JinBiPaiMai(BaseHandler):
 class JinBiGoumai(BaseHandler):
     """金币购买记录"""
 
-    @BaseHandler.authenticated
-    @BaseHandler.is_active
+    # @BaseHandler.authenticated
+    # @BaseHandler.is_active
     def get(self):
-        record = self.db.jinbi.find({"pay_uid": self.user.get('uid')}).sort("id", pymongo.DESCENDING)
-
-        def alipay_info(uid):
-            info = self.db.user.find_one({"uid": uid})
-            if not info:
-                return {}
-            else:
-                return info.get('alipay')
-
-        self.render("trade/jinbi_mai.html", account_tab=13, record=record, alipay_info=alipay_info, myuser=self.user)
+        return self.render("ok.html", myuser=self.user, url="/user/home",tip="交易系统建设中，敬请期待")
+        # record = self.db.jinbi.find({"pay_uid": self.user.get('uid')}).sort("id", pymongo.DESCENDING)
+        #
+        # def alipay_info(uid):
+        #     info = self.db.user.find_one({"uid": uid})
+        #     if not info:
+        #         return {}
+        #     else:
+        #         return info.get('alipay')
+        #
+        # self.render("trade/jinbi_mai.html", account_tab=13, record=record, alipay_info=alipay_info, myuser=self.user)
 
 
 class JinBiMai(BaseHandler):
     """金币卖出记录"""
 
-    @BaseHandler.authenticated
-    @BaseHandler.is_active
+    # @BaseHandler.authenticated
+    # @BaseHandler.is_active
     def get(self):
-        mai_status = {"confirm": "已抢购，等待确认付款", "paid": "已付款", "complete": "已完成"}
-        record = self.db.jinbi.find(
-            {"type": "guadan", "status": {"$in": ['paid', 'complete']}, "uid": self.user.get('uid')}).sort("id",
-                                                                                                           pymongo.DESCENDING)
-        alipay_info = self.db.user.find_one({"uid": self.user.get("uid")}).get("alipay")
-        self.render("trade/jinbi_mai2.html", account_tab=14, mai_status=mai_status, record=record,
-                    alipay_info=alipay_info, myuser=self.user)
+        return self.render("ok.html", myuser=self.user, url="/user/home",tip="交易系统建设中，敬请期待")
+        # mai_status = {"confirm": "已抢购，等待确认付款", "paid": "已付款", "complete": "已完成"}
+        # record = self.db.jinbi.find(
+        #     {"type": "guadan", "status": {"$in": ['paid', 'complete']}, "uid": self.user.get('uid')}).sort("id",
+        #                                                                                                    pymongo.DESCENDING)
+        # alipay_info = self.db.user.find_one({"uid": self.user.get("uid")}).get("alipay")
+        # self.render("trade/jinbi_mai2.html", account_tab=14, mai_status=mai_status, record=record,
+        #             alipay_info=alipay_info, myuser=self.user)
 
 
 class JinBiGuadan(BaseHandler):

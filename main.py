@@ -35,7 +35,7 @@ define("develop", default=True, help="develop environment", type=bool)
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", MainHandler),
+            (r"/", LoginHandler),
             (r"/403", error_403),
             (r"/404", error_404),
             (r"/500", error_500),
