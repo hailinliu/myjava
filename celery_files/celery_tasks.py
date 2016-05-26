@@ -57,9 +57,9 @@ def cal_interests():
         day_jinbi = pet.get("day_jinbi")
         gain = day_jinbi
         life = pet.get('life')
-        now_time = datetime.datetime.now()
+        now_time = datetime.datetime.now().date()
         buy_time = p.get("time")
-        b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
+        b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S').date()
         live_days = (now_time - b).days
         print "live_days,", live_days
         print "check_days", p.get("check_day")
