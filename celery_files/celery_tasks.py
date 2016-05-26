@@ -47,7 +47,7 @@ def cal_interests():
     yesterday = datetime.datetime.today() - timedelta(days=1)
     my_pets = db.my_pet.find({"dead": {"$ne": 1}})
     yesterday_date = yesterday.date()
-    day_income=0
+    day_income = 0
     for p in my_pets:
         info = {}
         uid = p.get("uid")
@@ -63,16 +63,14 @@ def cal_interests():
         live_days = (now_time - b).days
         print "live_days,", live_days
         print "check_days", p.get("check_day")
-        #TODO 记得换回来
+        # TODO 记得换回来
         if live_days >= 0:
-            #TODO 记得换回来
+            # TODO 记得换回来
             if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
                     continue
-
-                # TODO 记得换回来
-                if live_days==0:
+                if live_days == 0:
                     producted_jinbi = 1 * day_jinbi
                 else:
                     producted_jinbi = live_days * day_jinbi
@@ -90,7 +88,7 @@ def cal_interests():
                 create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
                 db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
                                  "time": str(create_time)})
-                db.user.update({"uid":uid},{"$inc":{"jinbi":gain}})
+                db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
 
                 user = db.user.find_one({"uid": uid}, {"_id": 0})
 
@@ -104,6 +102,7 @@ def cal_interests():
                     db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
                     db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
 
+
 @app.task
 def cal_manage_award():
     """分红奖"""
@@ -116,7 +115,7 @@ def cal_manage_award():
     consume_id = 1
     for u in users:
         day_income = u.get('day_income', 0)
-        user=u
+        user = u
         for per in award_percent:
             # 查询上级
             admin_id = user.get("admin")
@@ -137,6 +136,5 @@ def cal_manage_award():
                      "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 db.user.update({"uid": admin_id}, {"$set": {"day_income": 0}})
-                db.user.update({"uid": admin_id},{"$unset": {'income_day': 1}})
+                db.user.update({"uid": admin_id}, {"$unset": {'income_day': 1}})
                 user = admin_user
-

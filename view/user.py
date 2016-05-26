@@ -123,7 +123,7 @@ class MyFarm(BaseHandler):
         # 计算宠物当前存活天数
         def cal_life_day(buy_time):
             now_time=datetime.datetime.now()
-            b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S')
+            b = datetime.datetime.strptime(buy_time, '%Y/%m/%d 00:00:00')
             days= (now_time-b).days
             return days
 
