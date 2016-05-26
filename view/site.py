@@ -43,9 +43,9 @@ class LoginHandler(BaseHandler):
         if referer_url == '/':
             next_url = '/user/home'
         if language == 'en':
-            return self.render("account/login_en.html", url=next_url, language=language,error="")
+            return self.render("account/login_en.html", url=next_url, language=language, error="")
 
-        self.render("account/login.html", url=next_url, language=language,error="")
+        self.render("account/login.html", url=next_url, language=language, error="")
 
     def post(self):
         self.logging.info(('LoginHandler argument %s') % (self.request.arguments))
@@ -53,7 +53,7 @@ class LoginHandler(BaseHandler):
         cookiecode = self.get_secure_cookie('verify_code')
         if cap_ch:
             if cap_ch != cookiecode:
-                return self.render("account/login.html", url="",  language="cn",error=u"验证码不正确")
+                return self.render("account/login.html", url="", language="cn", error=u"验证码不正确")
             else:
                 self.set_secure_cookie("checked", "checked")
         try:
@@ -70,12 +70,12 @@ class LoginHandler(BaseHandler):
 
             exist_user = self.db.user.find_one({'phone': phone})
             if not exist_user:
-                return self.render("account/login.html", language="cn",url=url, myuser={},
+                return self.render("account/login.html", language="cn", url=url, myuser={},
                                    error=u"用户不存在(提示:手机号或用户名都可以登录)")
 
             # 查询用户是否被冻结
             if exist_user.get("frozen"):
-                return self.render("account/login.html",  language="cn",url=url, error=u"该账号已被冻结")
+                return self.render("account/login.html", language="cn", url=url, error=u"该账号已被冻结")
             res = self.begin_session(phone, pwd)
             if not res:
                 return self.render("account/login.html", language="cn", url=url, error=u"用户名或密码不正确")
@@ -273,7 +273,7 @@ class ContactUs(BaseHandler):
         self.db.contact.insert(
             {"uid": self.user.get("uid"), "question": question, "title": title, "content": content, "id": id,
              "time": now_time})
-        return self.render("ok.html", myuser=self.user, url="/user/home",tip="提交成功")
+        return self.render("ok.html", myuser=self.user, url="/user/home", tip="提交成功")
 
 
 class ForgetPwd(BaseHandler):
@@ -340,6 +340,15 @@ class FarmShop(BaseHandler):
         now_time = time.strftime('%Y/%m/%d %H:%M:%S', time.localtime(time.time()))
         for i in items:
             pet = self.db.pet.find_one({"id": i['id']})
+            count = int(i['count'])
+            price = pet['price']
+            item_cost = int(price) * int(count)
+            total_cost += item_cost
+        print "total_cost", total_cost
+        if total_cost > self.user.get("jinbi"):
+            return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"金币余额不足")
+        for i in items:
+            pet = self.db.pet.find_one({"id": i['id']})
             # TODO 校验
             count = int(i['count'])
             if count > pet['limit']:
@@ -352,17 +361,8 @@ class FarmShop(BaseHandler):
                 if bought_count + count > pet['limit']:
                     return self.render("ok.html", myuser=self.user, url="/nongchangsd",
                                        tip=u"%s分红进行中%d个,限购%d个" % (pet['name'], bought_count, pet['limit']))
-
             price = pet['price']
             item_cost = int(price) * int(count)
-            print "item_cost,",item_cost
-            total_cost += item_cost
-            print "total_cost",total_cost
-            if total_cost < self.user.get("jinbi"):
-                self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
-            else:
-                return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"金币余额不足")
-
             # id自增1
             last = self.db.my_pet.find().sort("id", pymongo.DESCENDING).limit(1)
             if last.count() > 0:
@@ -384,7 +384,6 @@ class FarmShop(BaseHandler):
         self.db.order.insert(
             {"item": order_items, "uid": self.user.get('uid'), "cost": total_cost, "time": now_time})
 
-
         # id自增1
         last = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
         if last.count() > 0:
@@ -397,7 +396,8 @@ class FarmShop(BaseHandler):
 
         self.db.jinbi.insert(
             {"uid": self.user.get("uid"), "type": "buy_pet", "id": consume_id, "time": now_time, "money": total_cost})
-
+        if total_cost <= self.user.get("jinbi"):
+            self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
         # TODO 计算投资直推奖
         award_percent = [10]
         user = self.user
