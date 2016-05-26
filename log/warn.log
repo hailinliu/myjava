@@ -147,3 +147,10 @@ Thu, 26 May 2016 20:28:28 web.py[line:1908] INFO 200 GET /account/jihuo (127.0.0
 Thu, 26 May 2016 20:28:35 web.py[line:1908] INFO 200 POST /account/jihuo (127.0.0.1) 10.00ms
 Thu, 26 May 2016 20:28:37 web.py[line:1908] INFO 200 GET /account/jihuo (127.0.0.1) 8.00ms
 Thu, 26 May 2016 20:28:42 web.py[line:1908] INFO 200 GET /account/jihuobi_log2 (127.0.0.1) 58.00ms
+Thu, 26 May 2016 20:30:47 web.py[line:1908] INFO 304 GET /trade/jinbi_guadan (127.0.0.1) 7.00ms
+Thu, 26 May 2016 20:30:48 web.py[line:1908] INFO 200 GET /user/home (127.0.0.1) 15.00ms
+Thu, 26 May 2016 20:30:51 web.py[line:1908] INFO 304 GET /trade/jinbi_mai (127.0.0.1) 7.00ms
+Thu, 26 May 2016 20:30:52 web.py[line:1908] INFO 304 GET /user/home (127.0.0.1) 11.00ms
+Thu, 26 May 2016 20:30:54 web.py[line:1908] INFO 304 GET /trade/jinbi_mai2 (127.0.0.1) 3.00ms
+Thu, 26 May 2016 20:30:55 web.py[line:1908] INFO 304 GET /user/home (127.0.0.1) 11.00ms
+Thu, 26 May 2016 20:30:57 web.py[line:1908] INFO 200 GET /trade/zhuanjihuobi (127.0.0.1) 26.00ms

@@ -73,7 +73,10 @@ def cal_interests():
 
                 # TODO 记得换回来
                 # producted_jinbi =1 * day_jinbi
-                producted_jinbi = live_days * day_jinbi
+                if live_days==0:
+                    producted_jinbi = 1 * day_jinbi
+                else:
+                    producted_jinbi = live_days * day_jinbi
                 info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
                 last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
