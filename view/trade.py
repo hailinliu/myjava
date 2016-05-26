@@ -281,41 +281,41 @@ class JinBiGuadan(BaseHandler):
     @BaseHandler.is_active
     def post(self):
         return self.render("ok.html", myuser=self.user, url="/user/home",tip="交易系统建设中，敬请期待")
-        out_jinbi = int(self.get_argument("jinbi", 0))
-        try:
-            my_jinbi = int(self.user.get("jinbi", 0))
-        except ValueError:
-            my_jinbi = 0
-        if my_jinbi <= 0 or my_jinbi - out_jinbi < 0:
-            # 金额一定要小于用户余额
-            self.render("ok.html", url="/trade/woyao_guadan", tip="您的金币不足，请联系上级充值")
-            return
-
-        # trade_log_id自增1
-        last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
-        if last_trade_log.count() > 0:
-            lastone = dict()
-            for item in last_trade_log:
-                lastone = item
-            trade_log_id = int(lastone.get('id', 0)) + 1
-        else:
-            trade_log_id = 1
-
-        # 更新用户的金币余额
-        admin_money = my_jinbi - out_jinbi
-        self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": admin_money}})
-
-        # 挂单记录
-        self.db.jinbi.insert({
-            "id": trade_log_id,
-            "type": "guadan",
-            "uid": self.user.get("uid"),
-            "money": out_jinbi,
-            "status": "waiting",
-            "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
-        tip = "挂单成功"
-
-        self.render("ok.html", url="/trade/jinbi_guadan", tip=tip)
+        # out_jinbi = int(self.get_argument("jinbi", 0))
+        # try:
+        #     my_jinbi = int(self.user.get("jinbi", 0))
+        # except ValueError:
+        #     my_jinbi = 0
+        # if my_jinbi <= 0 or my_jinbi - out_jinbi < 0:
+        #     # 金额一定要小于用户余额
+        #     self.render("ok.html", url="/trade/woyao_guadan", tip="您的金币不足，请联系上级充值")
+        #     return
+        #
+        # # trade_log_id自增1
+        # last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+        # if last_trade_log.count() > 0:
+        #     lastone = dict()
+        #     for item in last_trade_log:
+        #         lastone = item
+        #     trade_log_id = int(lastone.get('id', 0)) + 1
+        # else:
+        #     trade_log_id = 1
+        #
+        # # 更新用户的金币余额
+        # admin_money = my_jinbi - out_jinbi
+        # self.db.user.update({"uid": self.user.get("uid")}, {"$set": {"jinbi": admin_money}})
+        #
+        # # 挂单记录
+        # self.db.jinbi.insert({
+        #     "id": trade_log_id,
+        #     "type": "guadan",
+        #     "uid": self.user.get("uid"),
+        #     "money": out_jinbi,
+        #     "status": "waiting",
+        #     "time": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))})
+        # tip = "挂单成功"
+        #
+        # self.render("ok.html", url="/trade/jinbi_guadan", tip=tip)
 
 
 class JinBiQianggou(BaseHandler):
@@ -324,17 +324,18 @@ class JinBiQianggou(BaseHandler):
     @BaseHandler.authenticated
     @BaseHandler.is_active
     def get(self):
-        id = int(self.get_argument("id", 0))
-        print id
-        record = self.db.jinbi.find_one({"id": id})
-        if not record:
-            self.render("ok.html", url="/trade/jinbi_guadan", tip="该单号id不存在")
-            return
-        current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-        self.db.jinbi.update({"id": id},
-                             {"$set": {"pay_uid": self.user.get("uid"), "status": "confirm",
-                                       "pay_time": current_time}})
-        self.redirect('/trade/jinbi_mai')
+        return self.render("ok.html", myuser=self.user, url="/user/home",tip="交易系统建设中，敬请期待")
+        # id = int(self.get_argument("id", 0))
+        # print id
+        # record = self.db.jinbi.find_one({"id": id})
+        # if not record:
+        #     self.render("ok.html", url="/trade/jinbi_guadan", tip="该单号id不存在")
+        #     return
+        # current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        # self.db.jinbi.update({"id": id},
+        #                      {"$set": {"pay_uid": self.user.get("uid"), "status": "confirm",
+        #                                "pay_time": current_time}})
+        # self.redirect('/trade/jinbi_mai')
 
 
 class JinBiQuerenPay(BaseHandler):
