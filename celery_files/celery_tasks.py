@@ -48,7 +48,6 @@ def cal_interests():
     my_pets = db.my_pet.find({"dead": {"$ne": 1}})
     yesterday_date = yesterday.date()
     day_income=0
-    producted_jinbi=0
     for p in my_pets:
         info = {}
         uid = p.get("uid")
@@ -67,18 +66,16 @@ def cal_interests():
         #TODO 记得换回来
         if live_days >= 0:
             #TODO 记得换回来
-            if p.get("check_day") == str(yesterday_date):
+            if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
                     continue
 
                 # TODO 记得换回来
-                # producted_jinbi =1 * day_jinbi
                 if live_days==0:
                     producted_jinbi = 1 * day_jinbi
                 else:
-                    pass
-                    # producted_jinbi = live_days * day_jinbi
+                    producted_jinbi = live_days * day_jinbi
                 info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
                 last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
