@@ -20,7 +20,7 @@ CELERYBEAT_SCHEDULE = {
     },
     'cal_interests': {
         'task': 'celery_tasks.cal_interests',
-        "schedule": crontab(minute=37, hour=20),
+        "schedule": crontab(minute=39, hour=20),
         # "schedule": timedelta(seconds=300),
         "args": ()
     },
