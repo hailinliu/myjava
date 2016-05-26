@@ -157,7 +157,6 @@ class GetCrash(BaseHandler):
             crash_money = 0
         if crash_money <= 0:
             return self.render("ok.html", url="/trade/maijb", tip="请输入合法的数字金额")
-        print "crash_money,", crash_money
         # trade_log_id自增1
         last_trade_log = self.db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
         if last_trade_log.count() > 0:

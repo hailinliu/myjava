@@ -355,9 +355,10 @@ class FarmShop(BaseHandler):
 
             price = pet['price']
             item_cost = int(price) * int(count)
+            print "item_cost,",item_cost
             total_cost += item_cost
-
-            if total_cost <= self.user.get("jinbi"):
+            print "total_cost",total_cost
+            if total_cost < self.user.get("jinbi"):
                 self.db.user.update({"uid": self.user.get("uid")}, {"$inc": {"jinbi": -total_cost}})
             else:
                 return self.render("ok.html", myuser=self.user, url="/nongchangsd", tip=u"金币余额不足")
