@@ -151,7 +151,7 @@ def test_cal_interests():
     today = time.strftime("%Y-%m-%d")
     now_time = str(datetime.datetime.now())
     yesterday = datetime.datetime.today() - timedelta(days=1)
-    my_pets = db.my_pet.find({"uid": "13999990001", "dead": {"$ne": 1}})
+    my_pets = db.my_pet.find({"uid": "13999990004", "dead": {"$ne": 1}})
     yesterday_date = yesterday.date()
     day_income = 0
     for p in my_pets:
