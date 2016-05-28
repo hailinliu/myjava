@@ -132,9 +132,10 @@ def cal_manage_award():
                     consume_id = int(lastone.get('id', 0)) + 1
                 print admin_id, day_income * per / 100
                 reward = day_income * per / 100
-                db.jinbi.insert(
-                    {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
-                     "money": reward})
+                if reward !=0:
+                    db.jinbi.insert(
+                        {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
+                         "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
                 db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
@@ -238,9 +239,10 @@ def test_cal_manage_award():
                     consume_id = int(lastone.get('id', 0)) + 1
                 print admin_id, day_income * per / 100
                 reward = day_income * per / 100
-                db.jinbi.insert(
-                    {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
-                     "money": reward})
+                if reward !=0:
+                    db.jinbi.insert(
+                        {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
+                         "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
                 db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
