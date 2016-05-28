@@ -12,12 +12,12 @@ CELERY_ROUTES = {"celery_files.celery_tasks.test": {"queue": "hipri"},
                  }
 CELERYBEAT_SCHEDULE = {
     # Executes every midnight at 00:00 A.M
-    'plan_test': {
-        'task': 'celery_tasks.test',
-        'schedule': timedelta(seconds=10),
-        # 'schedule':crontab(minute=50, hour=14),
-        "args": (4, 4)
-    },
+    # 'plan_test': {
+    #     'task': 'celery_tasks.test',
+    #     'schedule': timedelta(seconds=10),
+    #     # 'schedule':crontab(minute=50, hour=14),
+    #     "args": (4, 4)
+    # },
     'cal_interests': {
         'task': 'celery_tasks.cal_interests',
         "schedule": crontab(minute=10, hour=0),
