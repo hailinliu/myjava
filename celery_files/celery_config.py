@@ -32,12 +32,12 @@ CELERYBEAT_SCHEDULE = {
     },
     'test_cal_interests': {
         'task': 'celery_tasks.test_cal_interests',
-        "schedule": timedelta(seconds=300),
+        "schedule": timedelta(seconds=180),
         "args": ()
     },
     'test_cal_manage_award': {
         'task': 'celery_tasks.test_cal_manage_award',
-        "schedule": timedelta(seconds=360),
+        "schedule": timedelta(seconds=240),
         "args": ()
     },
 

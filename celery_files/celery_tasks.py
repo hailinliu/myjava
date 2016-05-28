@@ -172,7 +172,6 @@ def test_cal_interests():
         print "check_days", p.get("check_day")
         # TODO 记得换回来
         if live_days >= 0:
-            # TODO 记得换回来
             if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
