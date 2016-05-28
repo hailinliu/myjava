@@ -115,6 +115,7 @@ def cal_manage_award():
     consume_id = 1
     for u in users:
         user = u
+        old_uid=u.get("uid")
         for per in award_percent:
             day_income = user.get('day_income', 0)
             # 查询上级
@@ -135,8 +136,8 @@ def cal_manage_award():
                     {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
                      "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
-                db.user.update({"uid": admin_id}, {"$set": {"day_income": 0}})
-                db.user.update({"uid": admin_id}, {"$unset": {'income_day': 1}})
+                db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
+                db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
                 user = admin_user
 
 
@@ -221,6 +222,7 @@ def test_cal_manage_award():
     consume_id = 1
     for u in users:
         user = u
+        old_uid=u.get("uid")
         for per in award_percent:
             day_income = user.get('day_income', 0)
             # 查询上级
@@ -241,6 +243,6 @@ def test_cal_manage_award():
                     {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
                      "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
-                db.user.update({"uid": admin_id}, {"$set": {"day_income": 0}})
-                db.user.update({"uid": admin_id}, {"$unset": {'income_day': 1}})
+                db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
+                db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
                 user = admin_user
