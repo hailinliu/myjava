@@ -179,7 +179,7 @@ def test_cal_interests():
                 continue
             if live_days == 0:
                 producted_jinbi = 1 * day_jinbi
-                check_day = now_time
+                check_day = str(now_time)
             else:
                 producted_jinbi = live_days * day_jinbi
             info.update({"gain": gain, "check_day": check_day, "producted_jinbi": producted_jinbi})
