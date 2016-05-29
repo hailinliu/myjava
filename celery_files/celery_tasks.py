@@ -75,7 +75,8 @@ def cal_interests():
                     check_day = str(now_time)
                 else:
                     producted_jinbi = live_days * day_jinbi
-                info.update({"gain": gain, "check_day": check_day, "producted_jinbi": producted_jinbi})
+                life_day=p.get("life_day",0)+1
+                info.update({"gain": gain, "check_day": check_day,"life_day":life_day, "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
                 last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
                 if last_trade_log.count() > 0:
@@ -182,7 +183,8 @@ def test_cal_interests():
                 check_day = str(now_time)
             else:
                 producted_jinbi = live_days * day_jinbi
-            info.update({"gain": gain, "check_day": check_day, "producted_jinbi": producted_jinbi})
+            life_day=p.get("life_day",0)+1
+            info.update({"gain": gain, "check_day": check_day,"life_day":life_day, "producted_jinbi": producted_jinbi})
             db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
             last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
             if last_trade_log.count() > 0:
