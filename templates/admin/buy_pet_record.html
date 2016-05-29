@@ -97,7 +97,7 @@
                                         <td class="userListId">{{ u.get('id','无') }}</td>
                                         <td>{{ pet_info(u.get('pid')).get('name','无') }}</td>
                                         <td>{{ u.get('uid','无') }}</td>
-                                        <td>{{ current_day }}</td>
+                                        <td>{{ u.get('life_day',0) }}</td>
 
                                         <td>{{u.get('producted_jinbi',0)}}</td>
                                         <td>{{waiting_jinbi}}</td>
