@@ -29,13 +29,11 @@
                 </ol>
             </div>
             <div class="col-lg-2">
-
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
-
 
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -49,7 +47,6 @@
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
                                 </a>
-
                                 <a class="close-link">
                                     <i class="fa fa-times"></i>
                                 </a>
@@ -62,7 +59,6 @@
                                     width: 20px;
                                     cursor: pointer;
                                 }
-
                                 th:first-child input,
                                 .gradeX td:first-child input {
                                     cursor: pointer;
@@ -77,7 +73,6 @@
                                         <th>ID</th>
                                         <th>礼包名称</th>
                                         <th>用户</th>
-
                                         <th>已返利天数</th>
                                         <th>已产金币</th>
                                         <th>待产金币</th>
@@ -98,7 +93,6 @@
                                         <td>{{ pet_info(u.get('pid')).get('name','无') }}</td>
                                         <td>{{ u.get('uid','无') }}</td>
                                         <td>{{ u.get('life_day',0) }}</td>
-
                                         <td>{{u.get('producted_jinbi',0)}}</td>
                                         <td>{{waiting_jinbi}}</td>
                                         <td>{%if not u.get('dead')%}生产中{%else%}停止生产{%end%}</td>
@@ -139,8 +133,6 @@
                                 <input type="button" class="btn btn-w-m btn-primary delete1" value="删除选中"
                                 data-toggle="modal" data-target="#myModal5" disabled/>
                                 <!--<a class="btn btn-w-m btn-primary checkout_jinbi" href="javascript:;">手动结算当天金币</a>-->
-
-
                             </form>
 
                         </div>

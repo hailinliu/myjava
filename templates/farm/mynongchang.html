@@ -59,7 +59,7 @@
                                 <td>{{p.get('time')}}</td>
                                 <td>{{p.get('life_day',0)}}
                                 </td>
-                                <td>{{pet.get('life') -current_day}}</td>
+                                <td>{{pet.get('life') -p.get('life_day',0)}}</td>
                             </tr>
                             {%end%}
                             {%end%}

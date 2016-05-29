@@ -225,7 +225,6 @@ def test_cal_manage_award():
     """分红奖"""
     yesterday = datetime.datetime.today() - timedelta(days=1)
     yesterday_date = str(yesterday.date())
-
     # 获取 购买礼包的用户的昨日分红总额
     users = db.user.find({"uid": '13777770004'}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
