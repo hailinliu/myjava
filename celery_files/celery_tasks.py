@@ -66,6 +66,8 @@ def cal_interests():
         check_day = str(yesterday_date)
         if live_days > life:
             info.update({"dead": 1})
+            db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
+            continue
         if live_days == 0:
             check_day = str(now_time)
         if p.get("check_day") != check_day:
@@ -141,7 +143,7 @@ def cal_manage_award():
                     db.jinbi.insert(
                         {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
                          "money": reward})
-                db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
+                    db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 user = admin_user
         db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
         db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
