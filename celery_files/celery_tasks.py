@@ -61,48 +61,50 @@ def cal_interests():
         buy_time = p.get("time")
         b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S').date()
         live_days = (now_time - b).days
-        print "live_days,", live_days
-        print "check_days", p.get("check_day")
-        # TODO 记得换回来
-        if live_days >= 0:
-            check_day = str(yesterday_date)
-            if p.get("check_day") != str(yesterday_date):
-                if live_days > life:
-                    info.update({"dead": 1})
-                    continue
-                if live_days == 0:
-                    producted_jinbi = 1 * day_jinbi
-                    check_day = str(now_time)
-                else:
-                    producted_jinbi = live_days * day_jinbi
-                life_day=p.get("life_day",0)+1
-                info.update({"gain": gain, "check_day": check_day,"life_day":life_day, "producted_jinbi": producted_jinbi})
-                db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
-                last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
-                if last_trade_log.count() > 0:
-                    lastone = dict()
-                    for item in last_trade_log:
-                        lastone = item
-                    trade_log_id = int(lastone.get('id', 0)) + 1
-                else:
-                    trade_log_id = 1
-                # 写入金币收入记录
-                create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-                db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
-                                 "time": str(create_time)})
-                db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
+        print "live_days,{}".format(live_days)
+        print "check_days,{}".format(p.get("check_day"))
+        check_day = str(yesterday_date)
+        if live_days > life:
+            info.update({"dead": 1})
+        if live_days == 0:
+            check_day = str(now_time)
+        if p.get("check_day") != check_day:
+            if live_days > life:
+                info.update({"dead": 1})
+                continue
+            if live_days == 0:
+                producted_jinbi = 1 * day_jinbi
+            else:
+                producted_jinbi = live_days * day_jinbi
+            life_day = p.get("life_day", 0) + 1
+            info.update(
+                {"gain": gain, "check_day": check_day, "life_day": life_day, "producted_jinbi": producted_jinbi})
+            db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
+            last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last_trade_log.count() > 0:
+                lastone = dict()
+                for item in last_trade_log:
+                    lastone = item
+                trade_log_id = int(lastone.get('id', 0)) + 1
+            else:
+                trade_log_id = 1
+            # 写入金币收入记录
+            create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+            db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
+                             "time": str(create_time)})
+            db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
 
-                user = db.user.find_one({"uid": uid}, {"_id": 0})
+            user = db.user.find_one({"uid": uid}, {"_id": 0})
 
-                # 计算用户当日累计分红
-                if user:
-                    income_day = str(yesterday_date)
-                    if 'day_income' not in user:
-                        day_income = gain
-                    else:
-                        day_income += gain
-                    db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
-                    db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
+            # 计算用户当日累计分红
+            if user:
+                income_day = str(yesterday_date)
+                if 'day_income' not in user:
+                    day_income = gain
+                else:
+                    day_income += gain
+                db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
+                db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
 
 
 @app.task
@@ -164,7 +166,7 @@ def test_cal_interests():
         print uid
         pid = p.get("pid")
         pet = db.pet.find_one({"id": pid})
-        day_jinbi = pet.get("day_jinbi",0)
+        day_jinbi = pet.get("day_jinbi", 0)
         gain = day_jinbi
         life = pet.get('life')
         now_time = datetime.datetime.now().date()
@@ -173,18 +175,22 @@ def test_cal_interests():
         live_days = (now_time - b).days
         print "live_days,{}".format(live_days)
         print "check_days,{}".format(p.get("check_day"))
-        if p.get("check_day") != str(yesterday_date):
-            check_day = str(yesterday_date)
+        check_day = str(yesterday_date)
+        if live_days > life:
+            info.update({"dead": 1})
+        if live_days == 0:
+            check_day = str(now_time)
+        if p.get("check_day") != check_day:
             if live_days > life:
                 info.update({"dead": 1})
                 continue
             if live_days == 0:
                 producted_jinbi = 1 * day_jinbi
-                check_day = str(now_time)
             else:
                 producted_jinbi = live_days * day_jinbi
-            life_day=p.get("life_day",0)+1
-            info.update({"gain": gain, "check_day": check_day,"life_day":life_day, "producted_jinbi": producted_jinbi})
+            life_day = p.get("life_day", 0) + 1
+            info.update(
+                {"gain": gain, "check_day": check_day, "life_day": life_day, "producted_jinbi": producted_jinbi})
             db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
             last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
             if last_trade_log.count() > 0:
