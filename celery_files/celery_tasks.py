@@ -54,7 +54,7 @@ def cal_interests():
         print uid
         pid = p.get("pid")
         pet = db.pet.find_one({"id": pid})
-        day_jinbi = pet.get("day_jinbi")
+        day_jinbi = pet.get("day_jinbi", 0)
         gain = day_jinbi
         life = pet.get('life')
         now_time = datetime.datetime.now().date()
@@ -98,13 +98,14 @@ def cal_interests():
 
             # 计算用户当日累计分红
             if user:
-                income_day = str(yesterday_date)
+                income_day = check_day
                 if 'day_income' not in user:
                     day_income = gain
                 else:
                     day_income += gain
                 db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
                 db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
+    print "day_income: {}".format(day_income)
 
 
 @app.task
@@ -134,7 +135,7 @@ def cal_manage_award():
                     for item in last:
                         lastone = item
                     consume_id = int(lastone.get('id', 0)) + 1
-                print admin_id, day_income * per / 100
+                print "admin_id {0},{1}".format(admin_id, day_income * per / 100)
                 reward = day_income * per / 100
                 if reward != 0:
                     db.jinbi.insert(
