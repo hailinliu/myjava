@@ -118,7 +118,7 @@ def cal_manage_award():
         user = u
         old_uid = u.get("uid")
         for per in award_percent:
-            day_income = user.get('day_income', 0)
+            day_income = u.get('day_income', 0)
             # 查询上级
             admin_id = user.get("admin")
             admin_user = db.user.find_one({"uid": admin_id})
@@ -163,15 +163,15 @@ def test_cal_interests():
         print uid
         pid = p.get("pid")
         pet = db.pet.find_one({"id": pid})
-        day_jinbi = pet.get("day_jinbi")
+        day_jinbi = pet.get("day_jinbi",0)
         gain = day_jinbi
         life = pet.get('life')
         now_time = datetime.datetime.now().date()
         buy_time = p.get("time")
         b = datetime.datetime.strptime(buy_time, '%Y/%m/%d %H:%M:%S').date()
         live_days = (now_time - b).days
-        print "live_days,", live_days
-        print "check_days", p.get("check_day")
+        print "live_days,{}".format(live_days)
+        print "check_days,{}".format(p.get("check_day"))
         if p.get("check_day") != str(yesterday_date):
             check_day = str(yesterday_date)
             if live_days > life:
@@ -202,13 +202,14 @@ def test_cal_interests():
 
             # 计算用户当日累计分红
             if user:
-                income_day = str(yesterday_date)
+                income_day = check_day
                 if 'day_income' not in user:
                     day_income = gain
                 else:
                     day_income += gain
                 db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
                 db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
+    print "day_income: {}".format(day_income)
 
 
 @app.task
@@ -218,14 +219,14 @@ def test_cal_manage_award():
     yesterday_date = str(yesterday.date())
 
     # 获取 购买礼包的用户的昨日分红总额
-    users = db.user.find({"uid": {"$in": ['13777770004']}}, {"_id": 0})
+    users = db.user.find({"uid": '13777770004'}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
     consume_id = 1
     for u in users:
         user = u
         old_uid = u.get("uid")
         for per in award_percent:
-            day_income = user.get('day_income', 0)
+            day_income = u.get('day_income', 0)
             # 查询上级
             admin_id = user.get("admin")
             admin_user = db.user.find_one({"uid": admin_id})
@@ -238,7 +239,7 @@ def test_cal_manage_award():
                     for item in last:
                         lastone = item
                     consume_id = int(lastone.get('id', 0)) + 1
-                print admin_id, day_income * per / 100
+                print ("admin_id {0},{1}").format(admin_id, day_income * per / 100)
                 reward = day_income * per / 100
                 if reward != 0:
                     db.jinbi.insert(
