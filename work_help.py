@@ -5,6 +5,7 @@ import logging
 import random
 import time
 from bson import DBRef, ObjectId
+import datetime
 
 from fabric.api import run, env, cd
 from passlib.handlers.pbkdf2 import pbkdf2_sha512
@@ -148,6 +149,14 @@ def remove_record():
     else:
         print "not find table named %s" % table
 
+def rollback_award_day():
+    """回退分红结算日期一天"""
+    db = database.database.getDB()
+    back_date = raw_input("turn to date:")
+    now_date=str(datetime.datetime.now().date())
+    pets=db.my_pet.find({"check_day":now_date})
+    for p in pets:
+        db.my_pet.update({"check_day":now_date},{"$set":{"check_day":back_date}})
 
 def update_record():
     """更新记录"""

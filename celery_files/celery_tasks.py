@@ -65,16 +65,17 @@ def cal_interests():
         print "check_days", p.get("check_day")
         # TODO 记得换回来
         if live_days >= 0:
-            # TODO 记得换回来
+            check_day = str(yesterday_date)
             if p.get("check_day") != str(yesterday_date):
                 if live_days > life:
                     info.update({"dead": 1})
                     continue
                 if live_days == 0:
                     producted_jinbi = 1 * day_jinbi
+                    check_day = now_time
                 else:
                     producted_jinbi = live_days * day_jinbi
-                info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
+                info.update({"gain": gain, "check_day": check_day, "producted_jinbi": producted_jinbi})
                 db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
                 last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
                 if last_trade_log.count() > 0:
@@ -115,7 +116,7 @@ def cal_manage_award():
     consume_id = 1
     for u in users:
         user = u
-        old_uid=u.get("uid")
+        old_uid = u.get("uid")
         for per in award_percent:
             day_income = user.get('day_income', 0)
             # 查询上级
@@ -132,14 +133,14 @@ def cal_manage_award():
                     consume_id = int(lastone.get('id', 0)) + 1
                 print admin_id, day_income * per / 100
                 reward = day_income * per / 100
-                if reward !=0:
+                if reward != 0:
                     db.jinbi.insert(
                         {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
                          "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
-                db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
-                db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
                 user = admin_user
+        db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
+        db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
 
 
 @app.task
@@ -171,43 +172,43 @@ def test_cal_interests():
         live_days = (now_time - b).days
         print "live_days,", live_days
         print "check_days", p.get("check_day")
-        # TODO 记得换回来
-        if live_days >= 0:
-            if p.get("check_day") != str(yesterday_date):
-                if live_days > life:
-                    info.update({"dead": 1})
-                    continue
-                if live_days == 0:
-                    producted_jinbi = 1 * day_jinbi
-                else:
-                    producted_jinbi = live_days * day_jinbi
-                info.update({"gain": gain, "check_day": str(yesterday_date), "producted_jinbi": producted_jinbi})
-                db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
-                last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
-                if last_trade_log.count() > 0:
-                    lastone = dict()
-                    for item in last_trade_log:
-                        lastone = item
-                    trade_log_id = int(lastone.get('id', 0)) + 1
-                else:
-                    trade_log_id = 1
-                # 写入金币收入记录
-                create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-                db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
-                                 "time": str(create_time)})
-                db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
+        if p.get("check_day") != str(yesterday_date):
+            check_day = str(yesterday_date)
+            if live_days > life:
+                info.update({"dead": 1})
+                continue
+            if live_days == 0:
+                producted_jinbi = 1 * day_jinbi
+                check_day = now_time
+            else:
+                producted_jinbi = live_days * day_jinbi
+            info.update({"gain": gain, "check_day": check_day, "producted_jinbi": producted_jinbi})
+            db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
+            last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
+            if last_trade_log.count() > 0:
+                lastone = dict()
+                for item in last_trade_log:
+                    lastone = item
+                trade_log_id = int(lastone.get('id', 0)) + 1
+            else:
+                trade_log_id = 1
+            # 写入金币收入记录
+            create_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+            db.jinbi.insert({"id": trade_log_id, "type": 'pet_produce', 'money': gain, "uid": uid, "pet_id": pid,
+                             "time": str(create_time)})
+            db.user.update({"uid": uid}, {"$inc": {"jinbi": gain}})
 
-                user = db.user.find_one({"uid": uid}, {"_id": 0})
+            user = db.user.find_one({"uid": uid}, {"_id": 0})
 
-                # 计算用户当日累计分红
-                if user:
-                    income_day = str(yesterday_date)
-                    if 'day_income' not in user:
-                        day_income = gain
-                    else:
-                        day_income += gain
-                    db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
-                    db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
+            # 计算用户当日累计分红
+            if user:
+                income_day = str(yesterday_date)
+                if 'day_income' not in user:
+                    day_income = gain
+                else:
+                    day_income += gain
+                db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
+                db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
 
 
 @app.task
@@ -217,12 +218,12 @@ def test_cal_manage_award():
     yesterday_date = str(yesterday.date())
 
     # 获取 购买礼包的用户的昨日分红总额
-    users = db.user.find({"uid": {"$in": ['13999990001', '13999990002', '13999990003']}}, {"_id": 0})
+    users = db.user.find({"uid": {"$in": ['13999990004']}}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
     consume_id = 1
     for u in users:
         user = u
-        old_uid=u.get("uid")
+        old_uid = u.get("uid")
         for per in award_percent:
             day_income = user.get('day_income', 0)
             # 查询上级
@@ -239,11 +240,11 @@ def test_cal_manage_award():
                     consume_id = int(lastone.get('id', 0)) + 1
                 print admin_id, day_income * per / 100
                 reward = day_income * per / 100
-                if reward !=0:
+                if reward != 0:
                     db.jinbi.insert(
                         {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
                          "money": reward})
                 db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
-                db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
-                db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
                 user = admin_user
+        db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
+        db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
