@@ -471,7 +471,7 @@ class AdminManageAward(BaseHandler):
             query.update({"uid": uid})
 
         record = self.db.jinbi.find(query)
-        per = 20.0
+        per = 50.0
         pages = int(math.ceil(record.count() / per))
         record = record.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
         counts = record.count()

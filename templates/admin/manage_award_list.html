@@ -85,6 +85,7 @@
                                     <tr>
                                         <th><input type="checkbox" class="i-checks" id="userListCheck"/></th>
                                         <th>奖金编号</th>
+                                        <th>用户</th>
                                         <th>奖金金额</th>
                                         <th>发放时间</th>
 
@@ -95,6 +96,7 @@
                                     <tr class="gradeX">
                                         <td><input type="checkbox" class="i-checks"></td>
                                         <td class="userListId">{{ r.get('id','无') }}</td>
+                                        <td>{{r.get('uid','')}}</td>
                                         <td>{{ r.get('money','') }}</td>
                                         <td>{{r.get('time')}}</td>
 
