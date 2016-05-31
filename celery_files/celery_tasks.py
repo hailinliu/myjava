@@ -148,7 +148,8 @@ def cal_manage_award():
         db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
         db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
 
-
+    db.user.update({"day_income": {"$ne":0}}, {"$set": {"day_income": 0}},upsert=True)
+    db.user.update({"income_day": {"$exists":True}}, {"$unset": {'income_day': 1}},upsert=True)
 @app.task
 def test_cal_interests():
     """
