@@ -101,6 +101,7 @@ class Application(tornado.web.Application):
             (r"/admin/crash_record", AdminUserApplyCrashRecord),
             (r"/admin/adduser", AddUser),
             (r"/admin/recharge", AdminRecharge),
+            (r"/admin/manage_award", AdminManageAward),
             (r"/admin/petlist", AdminPetList),
             (r"/admin/addpet", AdminPetEdit),
             (r"/admin/buy_pet_record", BuyPetRecord),

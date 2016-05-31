@@ -360,7 +360,7 @@ class AddUser(BaseHandler):
                 'jinbi': jinbi,
                 'money': money,
                 'id_code': id_code,
-                'alipay':alipay,
+                'alipay': alipay,
                 'regtime': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time())),
                 'safe_pwd': pwd,
                 'is_check': False,
@@ -448,6 +448,52 @@ class AdminUserTradeRecord(BaseHandler):
         trade_records = self.db.trade_log.find({"uid": uid})
         self.render('admin/user_trade_record.html', admin_nav=3, user=user, trade_records=trade_records,
                     myuser=self.user)
+
+
+class AdminManageAward(BaseHandler):
+    """管理奖"""
+
+    @BaseHandler.admin_authed
+    def get(self):
+        if not self.user:
+            self.redirect('/admin/login')
+
+        query = {"type": "admin_award"}
+        search = ""
+
+        if self.get_argument("page", None) in ["", None]:
+            current_page = 1
+        else:
+            current_page = int(self.get_argument("page"))
+
+        uid = self.get_argument("search", None)
+        if uid:
+            query.update({"uid": uid})
+
+        record = self.db.jinbi.find(query)
+        per = 20.0
+        pages = int(math.ceil(record.count() / per))
+        record = record.skip(int(per) * (current_page - 1)).limit(int(per)).sort("_id", pymongo.DESCENDING)
+        counts = record.count()
+
+        self.render("admin/manage_award_list.html", myuser=self.user, admin_nav=2, current_page=current_page,
+                    pages=pages,
+                    counts=counts, record=record, search=search,
+                    )
+
+    @BaseHandler.admin_authed
+    def delete(self):
+        try:
+            for value in self.request.arguments.values():
+                print value[0]
+                self.db.jinbi.remove({"id": value[0]})
+        except Exception, e:
+            print e
+            self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
+        else:
+            count = len(self.request.arguments)
+            print 'handle %d itmes' % count
+            self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
 
 
 class AdminUserApplyCrashRecord(BaseHandler):
@@ -888,6 +934,7 @@ class BuyPetRecord(BaseHandler):
             count = len(self.request.arguments)
             print 'handle %d itmes' % count
             return self.write(json.dumps({"status": 'ok', "msg": "delete %d items." % count}))
+
 
 class CheckoutJinBi(BaseHandler):
     """结算当天矿机金币"""

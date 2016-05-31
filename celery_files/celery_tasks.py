@@ -47,8 +47,9 @@ def cal_interests():
     yesterday = datetime.datetime.today() - timedelta(days=1)
     my_pets = db.my_pet.find({"dead": {"$ne": 1}})
     yesterday_date = yesterday.date()
-    day_income = 0
+
     for p in my_pets:
+        day_income = 0
         info = {}
         uid = p.get("uid")
         print uid
@@ -106,8 +107,9 @@ def cal_interests():
                 else:
                     day_income += gain
                 db.user.update({"uid": uid}, {"$set": {"income_day": income_day}})
-                db.user.update({"uid": uid}, {"$set": {"day_income": day_income}})
-    print "day_income: {}".format(day_income)
+                db.user.update({"uid": uid}, {"$inc": {"day_income": day_income}})
+
+        print "day_income: {}".format(day_income)
 
 
 @app.task
