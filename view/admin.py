@@ -486,7 +486,7 @@ class AdminManageAward(BaseHandler):
         try:
             for value in self.request.arguments.values():
                 print value[0]
-                self.db.jinbi.remove({"id": value[0]})
+                self.db.jinbi.remove({"id": int(value[0])})
         except Exception, e:
             print e
             self.write(json.dumps({"status": 'error', "msg": u"删除失败，请重试！"}))
