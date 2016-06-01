@@ -121,11 +121,14 @@ def cal_manage_award():
     # 获取 购买礼包的用户的昨日分红总额
     users = db.user.find({"income_day": yesterday_date}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
+    member_level = {1: "一代", 2: "二", 3: "三", 4: "四", 5: "五"}
     consume_id = 1
     for u in users:
         user = u
         old_uid = u.get("uid")
+        index = 1
         for per in award_percent:
+            tip = "{0}代 {1}{2}%".format(member_level[index], u.get("uid"), per)
             day_income = u.get('day_income', 0)
             # 查询上级
             admin_id = user.get("admin")
@@ -141,17 +144,21 @@ def cal_manage_award():
                     consume_id = int(lastone.get('id', 0)) + 1
                 print "admin_id {0},{1}".format(admin_id, day_income * per / 100)
                 reward = day_income * per / 100
+
                 if reward != 0:
                     db.jinbi.insert(
                         {"uid": admin_id, "type": "admin_award", "id": consume_id, "time": now_time,
-                         "money": reward})
+                         "money": reward, "tip": tip})
                     db.user.update({"uid": admin_id}, {"$inc": {"jinbi": reward}})
                 user = admin_user
+            index += 1
         db.user.update({"uid": old_uid}, {"$set": {"day_income": 0}})
         db.user.update({"uid": old_uid}, {"$unset": {'income_day': 1}})
 
-    db.user.update({"day_income": {"$ne":0}}, {"$set": {"day_income": 0}},upsert=True)
-    db.user.update({"income_day": {"$exists":True}}, {"$unset": {'income_day': 1}},upsert=True)
+    db.user.update({"day_income": {"$ne": 0}}, {"$set": {"day_income": 0}}, upsert=True)
+    db.user.update({"income_day": {"$exists": True}}, {"$unset": {'income_day': 1}}, upsert=True)
+
+
 @app.task
 def test_cal_interests():
     """
