@@ -87,6 +87,7 @@
                                         <th>奖金编号</th>
                                         <th>用户</th>
                                         <th>奖金金额</th>
+                                        <th>备注</th>
                                         <th>发放时间</th>
 
                                     </tr>
@@ -98,6 +99,7 @@
                                         <td class="userListId">{{ r.get('id','无') }}</td>
                                         <td>{{r.get('uid','')}}</td>
                                         <td>{{ r.get('money','') }}</td>
+                                        <td>{{ r.get('tip','') }}</td>
                                         <td>{{r.get('time')}}</td>
 
                                     </tr>

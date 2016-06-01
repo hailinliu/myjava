@@ -80,8 +80,9 @@ def cal_interests():
             else:
                 producted_jinbi = live_days * day_jinbi
             life_day = p.get("life_day", 0) + 1
+            # check_day="2016-05-31"
             info.update(
-                {"gain": gain, "check_day": check_day, "life_day": life_day, "producted_jinbi": producted_jinbi})
+                {"gain": gain, "check_day":check_day, "life_day": life_day, "producted_jinbi": producted_jinbi})
             db.my_pet.update({"_id": ObjectId(p['_id'])}, {"$set": info})
             last_trade_log = db.jinbi.find().sort("id", pymongo.DESCENDING).limit(1)
             if last_trade_log.count() > 0:
@@ -115,21 +116,26 @@ def cal_interests():
 @app.task
 def cal_manage_award():
     """分红奖"""
+    today_date = str(datetime.datetime.today().date())
     yesterday = datetime.datetime.today() - timedelta(days=1)
     yesterday_date = str(yesterday.date())
-
+    print today_date
+    print yesterday_date
     # 获取 购买礼包的用户的昨日分红总额
     users = db.user.find({"income_day": yesterday_date}, {"_id": 0})
     award_percent = [10, 7, 5, 3, 1]
-    member_level = {1: "一代", 2: "二", 3: "三", 4: "四", 5: "五"}
+    member_level = {1: "一", 2: "二", 3: "三", 4: "四", 5: "五"}
     consume_id = 1
     for u in users:
+
         user = u
         old_uid = u.get("uid")
         index = 1
         for per in award_percent:
-            tip = "{0}代 {1}{2}%".format(member_level[index], u.get("uid"), per)
+
             day_income = u.get('day_income', 0)
+            tip = "{0}代{1}昨日分红:{2},管理奖:{3}%".format(member_level[index], u.get("uid"), day_income, per)
+            print tip
             # 查询上级
             admin_id = user.get("admin")
             admin_user = db.user.find_one({"uid": admin_id})
