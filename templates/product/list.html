@@ -1,0 +1,117 @@
+{% extends "../base.html" %}
+{% block page_title %}商城购物{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>购买商品
+                    <small> 商城购物</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    </li>
+                    <li><a href="#">购买商品</a></li>
+                    <li class="active">商城购物</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">商城购物</div>
+
+                <form method="post" action="">
+                    {% module xsrf_form_html() %}
+                    <input type="hidden" id="items" name="items" value="">
+                    <table class="long_table">
+                        <tbody>
+                        <tr class="tb_top">
+                            <td></td>
+                            <td>商品</td>
+                            <td>单价(金币)</td>
+                            <td>数量</td>
+                            <td>小计</td>
+                        </tr>
+
+                        {%for p in products%}
+                        <tr uid="{{p.get('id')}}" class="item" data-id="{{p.get('id')}}">
+                            <td align="center" valign="middle" width="10" style="padding-right:10px;"><img
+                                    src="/static/media/product_img/{{p.get('image')}}"
+                                    style="height:100px; width:auto;"></td>
+                            <td width="50%" style="padding-right:10px;"><h5><strong>{{p.get('name')}}</strong></h5>
+
+                                <p>{{p.get('desc','')}}</p>
+
+                                <p>需要直推人数:2 &nbsp;&nbsp; 需要等级:
+                                    {%if int(p.get('level'))==0%}
+                                    <span class="label label-default">VIP</span>
+                                    {%else%}
+                                    <span class="label label-danger">VIP{{p.get('level')}}</span>
+                                    {%end%}</p>
+                            </td>
+                            <td valign="middle" class="price"> {{p.get('price')}}</td>
+                            <td valign="middle">
+
+
+                                {%if myuser.get('level',0)>= int(p.get('level')) %}
+                                {%if member_count>=int(p.get('member_count',0))%}
+                                <div class="input-group" style="width:130px;">
+                                <span class="input-group-btn jian"><button class="btn btn-default j_jian" type="button"
+                                                                           disabled="disabled"><span
+                                        class="glyphicon glyphicon-minus " aria-hidden="true"></span></button></span>
+                                    <input type="text" class="form-control j_shuliang" value="0" maxlength="3" id="">
+                                <span class="input-group-btn jia"><button class="btn btn-default j_jia"
+                                                                          type="button"><span
+                                        class="glyphicon glyphicon-plus " aria-hidden="true"></span></button></span>
+                                </div>
+                                {%else%}
+                                    直推人数量不足
+                                {%end%}
+                                {%else%}
+                                等级不足
+                                {%end%}
+
+                            </td>
+                            <td valign="middle" width="100" style="padding-left:10px;"><span style="font-weight:bold;"
+                                                                                             id="j_danjia">0</span></td>
+                        </tr>
+                        {%end%}
+
+
+                        <tr class="tb_bottom">
+                            <td colspan="5" align="right">
+
+                                您的直推人数量为:{{member_count}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                 您的当前等级是:
+                                {%if myuser.get('level',0)<1%}
+                                <span class="label label-default">VIP</span>
+                                {%else%}
+                                <span class="label label-danger">VIP{{ myuser.get('level',)}}</span>
+                                {%end%}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您的当前金币余额为:<span
+                                    style="color:#C30; font-weight:bold;"><span class="glyphicon glyphicon-yen"
+                                                                                aria-hidden="true"></span><span
+                                    id="j_jinbi">{{myuser.get('jinbi',0)}}</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您已选择<span
+                                    id="j_zongshu"></span>个商品&nbsp;&nbsp;&nbsp;&nbsp;总价(金币):<span
+                                    style="color:#C30; font-weight:bold;"><span class="glyphicon glyphicon-yen"
+                                                                                aria-hidden="true"></span><span
+                                    id="j_zongjia">0</span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-danger" id="goumaigo">立即购买</button>
+                            </td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+<script src="/static/js/product.js"></script>
+{%end%}

@@ -1,0 +1,87 @@
+{% extends "../base.html" %}
+{% block page_title %}金币卖出记录{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>交易系统
+                    <small> 金币卖出记录</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="index.asp">主页</a>
+                    </li>
+                    <li><a href="#">交易系统</a></li>
+                    <li class="active">金币卖出记录</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">金币卖出列表</div>
+
+                <div class="panel-body">
+                    <strong><span style="color:#F00;">警告:</span></strong><br>
+                    <span style="color:#F00;">1.如果买家已把钱币打到你支付宝,而你超过12小时不确认收款,公司将没收你本次交易金币</span><br>
+                </div>
+
+                <table class="table table-striped table-hover">
+                    <tbody>
+                    <tr>
+                        <td>单号ID</td>
+                        <td>挂单金额</td>
+                        <td>收款支付宝信息</td>
+                        <td>买家编号</td>
+                        <td>状态</td>
+                        <td>操作</td>
+                    </tr>
+                    {%if record.count()==0%}
+                    <tr>
+                        <td colspan="7">暂无记录</td>
+                    </tr>
+                    {%else%}
+                    {%for r in record%}
+                    <tr>
+                        <td>{{r.get('id')}}</td>
+                        <td>{{r.get('money')}}</td>
+                        <td>{{alipay_info.get('name')}} {{alipay_info.get('account')}}</td>
+                        <td>{{r.get('pay_uid')}}</td>
+                        <td>{{mai_status.get(r.get('status'))}}</td>
+                        <td>
+                            {%if r.get('status')=='confirm'%}
+                            已抢购，等待付款
+                            {%elif r.get('status')=='paid'%}
+                            <a href="javascript:;" data-id="{{r.get('id')}}" class="confirm_paid">确认收款</a>
+                            <a href="/static/media/pay_image/{{r.get('pay_image')}}" target="_blank">[查看凭证]</a>
+                             <a href="/trade/jinbi_confirm_paid?id={{r.get('id')}}">未收到款(或凭证无效)</a>
+                            {%elif r.get('status')=='complete'%}
+                            已完成
+                            {%else%}
+                            拍卖中
+                            {%end%}
+                        </td>
+                    </tr>
+                    {%end%}
+                    {%end%}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(".confirm_paid").click(function(){
+        var id=$(this).data("id");
+        if (confirm("您确认收到款项吗，一旦确认将无法取消")){
+            location.href="/trade/jinbi_confirm_paid?id="+id;
+        }
+    })
+</script>
+{%end%}

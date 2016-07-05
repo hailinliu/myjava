@@ -1,0 +1,92 @@
+{% extends "../base.html" %}
+{% block page_title %}收货地址设置{% end %}
+
+
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>收货地址设置
+                    <small> </small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">收货地址设置</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">收货地址设置</div>
+
+
+                <div class="panel-body">
+                    <!--主-->
+                    <form class="form-horizontal" method="post">
+                        {% module xsrf_form_html() %}
+                        {%set address_info=myuser.get('address_info',{})%}
+
+
+                        <div class="form-group">
+                            <label for="city" class="col-sm-2 control-label">所在省份、城市</label>
+
+                            <div class="col-sm-10">
+                                <input  class="form-control form-long-w1" id="city"
+                                       placeholder="所在省份、城市,比如湖北武汉"  name="city" value="{{address_info.get('province_city','')}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="col-sm-2 control-label">详细收货地址</label>
+
+                            <div class="col-sm-10">
+                                <input  class="form-control form-long-w1"  name="address" id="address" placeholder="详细收货地址"
+                                       value="{{address_info.get('address','')}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">收货人姓名</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" name="username" id="username" placeholder="收货人姓名" value="{{address_info.get('username','')}}"
+                                       maxlength="11">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label">联系方式</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" name="phone" id="phone" placeholder="联系方式" value="{{address_info.get('phone','')}}"
+                                       maxlength="11">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning jihuowanjia_go">提交</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--End-->
+                </div>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+{%end%}

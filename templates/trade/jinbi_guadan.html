@@ -1,0 +1,75 @@
+{% extends "../base.html" %}
+{% block page_title %}金币拍卖{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>交易系统
+                    <small> 金币拍卖</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">交易系统</a></li>
+                    <li class="active">金币拍卖</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">拍卖金币列表</div>
+
+                <div class="panel-body">
+                    <strong><span style="color:#F00">警告:</span></strong><br>
+                    <span style="color:#F00">如果不拍,请勿乱点,否则会扣除您相应的金币作为惩罚</span><br>
+                    <strong>注意:</strong><br>
+                    为了减少服务器资源,只显示前50名挂单的,没显示的后面依次排队挂单<br>
+                    挂单前请先完善您的支付宝信息!<br>
+                    <a href="/trade/woyao_guadan" class="btn btn-success guadan_go" >我要挂单</a>
+                </div>
+                <div id="xinxi">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+
+                        <tr>
+                            <td>单号ID</td>
+                            <td>挂单金额</td>
+                            <td>挂单时间</td>
+                            <td>操作</td>
+                        </tr>
+                        {%for r in record%}
+                        <tr>
+                            <td>{{r.get('id')}}</td>
+                            <td>{{r.get('money')}}</td>
+                            <td>{{r.get('time')}}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs" onclick="jinbi_qianggou({{r.get('id')}})">
+                                    我要抢购
+                                </button>
+                            </td>
+                        </tr>
+                        {%end%}
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+<script type="text/javascript">
+    function jinbi_qianggou(id){
+        if (confirm("如果不拍,请勿乱点,否则会扣除您相应的金币作为惩罚")){
+           location.href="/trade/jinbi_qianggou?id="+id;
+        }
+    }
+</script>
+{%end%}

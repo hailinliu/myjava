@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login to System</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="http://58.221.44.174:96/ui_yun/css/css.css" rel="stylesheet">
+    <link href="/static/css/login_style.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            background: #977106;
+            min-width: 320px;
+        }
+
+        .page-container {
+            float: right;
+            margin: 40px 100px;
+        }
+
+        .loimg {
+            height: 42px;
+            margin-top: 25px;
+            background: #2d2d2d;
+            background: rgba(45, 45, 45, .15);
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            border: 1px solid #3d3d3d;
+            border: 1px solid rgba(255, 255, 255, .15);
+            -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+            -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+            box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+            font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+            -o-transition: all .2s;
+            -moz-transition: all .2s;
+            -webkit-transition: all .2s;
+            -ms-transition: all .2s;
+        }
+
+        #language, #language option {
+            color: #333
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="page-container" style="">
+    <div style="float:right;margin: 20px 10px">
+    <label for="language">Language select: </label>
+    <select name="language" id="language" style="float:right;">
+        <option value="cn" >中文</option>
+        <option value="en" selected>English</option>
+    </select>
+</div>
+    <div class="tit"><img src="/static/images/logo2.png"></div>
+    <h3 align="left">Member Login</h3>
+
+    <form action="" method="post">
+        {% module xsrf_form_html() %}
+        <input type="hidden" name="url" id="url" value="{{url}}">
+        <input type="text" name="name" class="username" id="x1" placeholder="Username！">
+        <input type="password" name="password" class="password" id="x2" placeholder="Password！">
+        <input type="Captcha" class="Captcha" name="cap_ch" id="x3" placeholder="Captcha！">
+
+        <img src='/verifycode' width="70" height="34" id="yzmpic" class=" loimg " style=""/>
+        <span style="color:red">{{error}}</span>
+        <button type="submit" class="btn btn-primary form-control denglugo">Login</button>
+        <div class="error"><span>+</span></div>
+    </form>
+</div>
+<!--<div class="lo lo3">点击<a href="/register">这里</a>,使用密码保护找回您的密码.</div>-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="http://58.221.44.174:96/ui_yun/js/jquery.backstretch.min.js"></script>
+<script src="http://58.221.44.174:96/ui_yun/layer/layer.js"></script>
+<script src="http://58.221.44.174:96/ui_yun/js/long.js"></script>
+
+<script>
+    var l="{{language}}";
+    $(".denglugo").click(function () {
+        denglu_go();
+        return false;
+    });
+    function denglu_go() {
+
+        var x1 = $("#x1").val();
+        var x2 = $("#x2").val();
+        var x3 = $("#x3").val();
+        //  var x4 = $("#x4").prop('checked');
+        if (x1 == "") {
+            tishi4('请输入您的用户名', '#x1')
+            return false;
+        }
+        if (!checkMobile(x1)) {
+            tishi4('会员编号应该是手机号码形式的11位数字', '#x1')
+            return false;
+        }
+
+        if (x2 == "") {
+            tishi4('请输入您的密码', '#x2')
+            return false;
+        }
+        if (x3 == "") {
+            tishi4('请输入验证码', '#x3')
+            return false;
+        }
+        $("form").submit();
+//        var url = "/login?act=dl&x1=" + escape(x1) + "&x2=" + escape(x2) + "&x4=" + escape(x4.toString());
+//        tishi2();
+//        $.ajax({type: "post", async: true, url: url, dataType: "jsonp"});
+
+    }
+    function refreshCode() {
+        document.getElementById("imgcode").src = "/verifycode?" + Math.random();
+    }
+    $.backstretch(["/static/images/bg2.png"], {
+        fade: 100,
+        duration: 100
+    });
+    $("#language").change(function(){
+        var v=$(this).val();
+        if (v =='cn'){
+            location.href='/login?language=cn';
+        }
+        else{
+             location.href='/login?language=en';
+        }
+    })
+</script>
+
+</body>
+</html>
+</body>
+</html>

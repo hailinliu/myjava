@@ -1,0 +1,64 @@
+{% extends "../base.html" %}
+{% block page_title %}提现记录{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    {%set crash_status={"submit":"已提交,等待处理","paid":"已处理","cancel":"已取消"}%}
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>
+                    <small> 提现记录</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">提现记录</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">提现记录</div>
+
+
+                <table class="table table-striped table-hover">
+                    <tbody>
+                    <tr>
+                        <td>提现Id</td>
+                        <td>提现金额</td>
+                        <td>实得金额</td>
+                        <td>收款账号</td>
+                        <td>提现状态</td>
+                        <td>下单时间</td>
+                    </tr>
+                    {%if record.count()==0%}
+                    <tr>
+                        <td colspan="6">暂无记录</td>
+                    </tr>
+                    {%else%}
+                    {%for r in record%}
+                    <tr>
+                        <td>{{r.get('id')}}</td>
+                        <td>{{r.get('money')}}</td>
+                        <td>{{r.get('money') * 0.95}}</td>
+                        <td>{{r.get('account',{}).get('type',"")}} {{myuser.get('real_name')}} {{r.get('account').get('account','')}}</td>
+                        <td>{{crash_status.get(r.get('status'))}}</td>
+                        <td>{{r.get('time')}}</td>
+                    </tr>
+                    {%end%}
+                    {%end%}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+{%end%}

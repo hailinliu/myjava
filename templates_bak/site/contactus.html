@@ -1,0 +1,89 @@
+{% extends "../base.html" %}
+{% block page_title %}站内留言{% end %}
+
+
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>
+                    <small> 站内留言</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">站内留言</a></li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">站内留言</div>
+
+
+                <div class="panel-body">
+                    <!--主-->
+                    <form class="form-horizontal" method="post">
+                        {% module xsrf_form_html() %}
+
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">类型</label>
+
+                            <div class="col-sm-4">
+                                <select class="form-control " name="question" id="question">
+                                    <option value="利息问题">利息问题</option>
+                                    <option value="订单错误">订单错误</option>
+                                    <option value="会员资料修正">会员资料修正</option>
+                                    <option value="封号与解封">封号与解封</option>
+                                    <option value="不诚信玩家举报">不诚信玩家举报</option>
+                                    <option value="创业(公益)众筹">创业(公益)众筹</option>
+                                    <option value="平台建议">平台建议</option>
+                                    <option value="发展合作">发展合作</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">标题</label>
+
+                            <div class="col-sm-4">
+                                <input type="text" required="" name="title" id="title" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">内容</label>
+
+                            <div class="col-sm-4">
+                            <textarea rows="4" required="" name="content" id="content" class="form-control"
+                                      style="width: 100%;"></textarea>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning jihuowanjia_go">确认修改</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--End-->
+                </div>
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+
+{%end%}

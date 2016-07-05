@@ -1,0 +1,66 @@
+{% extends "../base.html" %}
+{% block page_title %}我要挂单{% end %}
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>交易系统
+                    <small> 我要挂单</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">交易系统</a></li>
+                    <li class="active">我要挂单</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">我要挂单</div>
+
+
+                <div class="panel-body">
+                    <p>注:您当前金币余额:{{myuser.get('jinbi',0)}}</p>
+
+
+                    <!--主-->
+                    <form class="form-horizontal" method="post">
+                        {% module xsrf_form_html() %}
+
+
+                        <div class="form-group">
+                            <label for="x3" class="col-sm-2 control-label">挂单金额</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" name="jinbi" id="x3" placeholder="挂单金额" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning goumai_go">保存提交</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <!--End-->
+                </div>
+
+
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+{%end%}

@@ -1,0 +1,129 @@
+{% extends "../base.html" %}
+{% block page_title %}修改密码{% end %}
+
+
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>修改密码
+                    <small> 个人信息</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">账户管理</a></li>
+                    <li class="active">个人信息</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">修改密码</div>
+
+
+                <div class="panel-body">
+                    <!--主-->
+
+
+                    <form name="form1" method="post" class="form-horizontal" action="?pass=1"
+                          onsubmit="return CheckForm();">
+                        {% module xsrf_form_html() %}
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <form name="form1" method="post" action="?pass=1" onsubmit="return CheckForm1();">
+                                        {% module xsrf_form_html() %}
+                                        <input type="hidden" name="form_type" value="form1">
+                                        <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"
+                                               style="font-size:14px;">
+
+                                            <tbody>
+                                            <tr>
+                                                <td height="18" colspan="2"
+                                                    style="font-size:15px; font-weight:bold; color:#5B6572;">
+                                                    &nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td height="32" colspan="2"
+                                                    style="font-size:15px; font-weight:bold; color:#129fd7;">
+                                                    修改登录密码
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="1" colspan="2" background="/static/images/lin22.gif"></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="45%" height="30" align="right">密保问题：</td>
+                                                <td class="td_l">
+                                                    <select name="question" class="txt">
+                                                        <option value="5">你的生日是？</option>
+                                                        <option value="6">你的家乡是？</option>
+                                                        <option value="7">你的学校是？</option>
+                                                        <option value="8">你母亲的名字是？</option>
+                                                        <option value="9">你父亲的名字是？</option>
+                                                        <option value="10">你的学校是？</option>
+                                                        <option value="11">你喜欢的食物是？</option>
+                                                        <option value="12">你喜欢的颜色是？</option>
+                                                        <option value="13">你喜欢的动物是？</option>
+                                                        <option value="14">你最想去的地方是？</option>
+                                                        <option value="15">你印象最深刻的地方是？</option>
+                                                    </select><span class="col">*<label id="question"></label></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="30" align="right">密保答案：</td>
+                                                <td class="td_l">
+                                                    <input name="answer" type="text" id="answer" class="txt">
+                                                    <span class="col">*<label ></label></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="45%" height="30" align="right">新密码：</td>
+                                                <td height="32">
+                                                    <input name="npassword1" type="password" id="npassword1"
+                                                           class="txt">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="45%" height="30" align="right">确认新密码：</td>
+                                                <td height="32"><input name="qnpassword1" type="password"
+                                                                       id="qnpassword1" class="txt">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td height="30" align="right">&nbsp;</td>
+                                                <td height="32">
+                                                    <button type="submit" name="submit" value="提&nbsp;交" id="submit1">
+                                                        提交
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </form>
+                    <!--End-->
+                </div>
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+
+{%end%}

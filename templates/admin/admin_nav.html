@@ -1,0 +1,106 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs"> <strong class="font-bold">{{ myuser.get('username') }}</strong>
+                             </span> <span class="text-muted text-xs block">超级管理员 <b class="caret"></b></span> </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+
+                        <li><a href="#">联系我们</a>
+                        </li>
+                        <li><a href="#">信箱</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/admin/loginout">安全退出</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+
+                </div>
+
+            </li>
+            <li class="{% if admin_nav==2 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">用户管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/userlist">用户列表</a></li>
+
+                    <li><a href="/admin/adduser">添加用户</a></li>
+                    <li><a href="/admin/manage_award">管理奖详情</a></li>
+                    <li><a href="/admin/contact_record">用户反馈</a></li>
+                </ul>
+            </li>
+             <li class="{% if admin_nav==3 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">礼包管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/petlist">礼包列表</a></li>
+
+                    <li><a href="/admin/addpet">添加礼包</a></li>
+                    <li><a href="/admin/buy_pet_record">礼包售出记录</a></li>
+                </ul>
+            </li>
+
+            <li class="{% if admin_nav==4 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">公告管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/news">公告列表</a></li>
+                    <li>
+                        <a href="/admin/news_edit">发布公告</a>
+                    </li>
+                </ul>
+            </li>
+             <li class="{% if admin_nav==5 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">商品管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/products">商品列表</a>
+                    </li>
+                    <li>
+                        <a href="/admin/add_product">发布商品</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="{% if admin_nav==6 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">订单管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/orders">订单列表</a>
+                    </li>
+                </ul>
+            </li>
+            <!--<li class="{% if admin_nav==7 %}active{% end %}">-->
+                <!--<a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">奖励管理</span> <span-->
+                        <!--class="fa arrow"></span></a>-->
+                <!--<ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">-->
+                    <!--<li><a href="/admin/leader_award_setting">直推奖设置</a></li>-->
+                    <!--&lt;!&ndash;<li><a href="/admin/member_reward">下属分红</a></li>&ndash;&gt;-->
+
+                <!--</ul>-->
+            <!--</li>-->
+             <li class="{% if admin_nav==8 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">提现管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/crash_record">提现记录</a></li>
+
+                </ul>
+            </li>
+            <li class="{% if admin_nav==9 %}active{% end %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">拍卖管理</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li><a href="/admin/paimai_record">拍卖纪录</a></li>
+
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</nav>

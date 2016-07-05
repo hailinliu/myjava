@@ -1,0 +1,239 @@
+{% extends "../base.html" %}
+{% block page_title %}个人信息{% end %}
+
+
+{% block content %}
+<div class="countgo pull-left">
+    <div class="zt">
+        <!--MAN -->
+        <div class="remain" style="height: 553px;">
+            <div class="gao1"></div>
+            <div class="page-header long-header">
+                <h3>会员中心
+                    <small> 修改资料</small>
+                </h3>
+            </div>
+            <div>
+                <ol class="breadcrumb">
+                    <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> <a href="/user/home">主页</a>
+                    </li>
+                    <li><a href="#">会员中心</a></li>
+                    <li class="active">修改资料</li>
+                </ol>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">个人信息</div>
+
+
+                <div class="panel-body">
+                    <!--主-->
+                    <form class="form-horizontal" method="post">
+                        {% module xsrf_form_html() %}
+                        <div class="form-group">
+                            <label for="x1" class="col-sm-2 control-label">您的会员编号</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" id="x1"
+                                       placeholder="您的会员编号" value="{{myuser.get('uid')}}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="x2" class="col-sm-2 control-label">加入日期</label>
+
+                            <div class="col-sm-10">
+                                <input disabled="disabled" class="form-control form-long-w1" id="x2"
+                                       placeholder="加入日期" value="{{myuser.get('regtime',0)}}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="real_name" class="col-sm-2 control-label">真实姓名</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="real_name" placeholder="真实姓名"
+                                 disabled      name="real_name" value="{{myuser.get('real_name','')}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_code" class="col-sm-2 control-label">证件号码</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="id_code" placeholder="证件号码"
+                                    disabled  name="id_code" value="{{myuser.get('id_code','')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label">手机号码</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="phone" placeholder="phone"
+                                       name="phone" value="{{myuser.get('phone','')}}">
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label">微信号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="wechat" placeholder="微信号"
+                                       name="wechat" value="{{myuser.get('wechat','')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label">支付宝账号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="alipay" placeholder="支付宝账号"
+                                       name="alipay" value="{{myuser.get('alipay')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">支付宝姓名</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1"  placeholder="支付宝姓名"
+                                      disabled value="{{myuser.get('real_name','')}}">
+                            </div>
+                        </div>
+                        {%set banks={u"中国工商银行":"中国工商银行",u"中国农业银行":"中国农业银行",u"中国建设银行":"中国建设银行",u"中国银行":"中国银行"}%}
+                        <div class="form-group">
+                            <label for="x3" class="col-sm-2 control-label">开户银行</label>
+
+                            <div class="col-sm-3">
+                                <select name="bankname" id="bankname" class="form-control ">
+                                    {%for k,v in banks.items()%}
+                                    <option value="{{k}}" {%if myuser.get('bank',{}).get('name')==k %}selected{%end%}>{{k}}</option>
+                                    {%end%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="BankAddress" class="col-sm-2 control-label">开户行省市</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="BankAddress" placeholder="开户行省市"
+                                      name="BankAddress" value="{{myuser.get('bank',{}).get('address','')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="BankAddress" class="col-sm-2 control-label">开户人户名</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" id="BankUserName" placeholder="开户人户名需与真实姓名一致"
+                                  disabled    name="BankUserName" value="{{myuser.get('real_name','')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="BankCard" class="col-sm-2 control-label">开户账号</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control form-long-w1" name="BankCard" id="BankCard" placeholder="开户账号"
+                                       value="{{myuser.get('bank',{}).get('card','')}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="BankCard" class="col-sm-2 control-label">密保问题:</label>
+
+                            <div class="col-sm-3">
+                                <select class="form-control" name="passquestion1" height="30" readonly="readonly">
+                                    <option value="5">你的生日是？</option>
+                                    <option value="6">你的家乡是？</option>
+                                    <option value="7">你的学校是？</option>
+                                    <option value="8">你母亲的名字是？</option>
+                                    <option value="9">你父亲的名字是？</option>
+                                    <option value="10">你的学校是？</option>
+                                    <option value="11">你喜欢的食物是？</option>
+                                    <option value="12">你喜欢的颜色是？</option>
+                                    <option value="13">你喜欢的动物是？</option>
+                                    <option value="14">你最想去的地方是？</option>
+                                    <option value="15">你印象最深刻的地方是？</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="BankCard" class="col-sm-2 control-label">密保答案</label>
+
+                            <div class="col-sm-3">
+                                <input class="form-control form-long-w1" id="passanswer1" name="passanswer1"
+                                       placeholder="密保答案"
+                                       value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10" id="x4-cos"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-warning jihuowanjia_go">确认修改</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--End-->
+                </div>
+            </div>
+        </div>
+        <!--MAN End-->
+    </div>
+</div>
+<script language="javascript">
+    function CheckForm() {
+        UserCard = document.form1.UserCard.value;
+        UserName = document.form1.UserName.value;
+        RealName = document.form1.real_name.value;
+        UserTel = document.form1.UserTel.value;
+        UserAddress = document.form1.UserAddress.value;
+        BankCard = document.form1.BankCard.value;
+        BankUserName = document.form1.BankUserName.value;
+        BankAddress = document.form1.BankAddress.value;
+
+        if (UserCard.length == 0) {
+            alert("温馨提示:\n请输入身份证号码.");
+            document.form1.UserCard.focus();
+            return false;
+        }
+        if (UserName.length == 0) {
+            alert("温馨提示:\n请输入会员姓名.");
+            document.form1.UserName.focus();
+            return false;
+        }
+        if (UserTel.length == 0) {
+            alert("温馨提示:\n请输入联系电话.");
+            document.form1.UserTel.focus();
+            return false;
+        }
+        if (BankCard.length == 0) {
+            alert("温馨提示:\n请输入开户帐号.");
+            document.form1.BankCard.focus();
+            return false;
+        }
+        if (BankUserName.length == 0) {
+            alert("温馨提示:\n请输入开户人.");
+            document.form1.BankUserName.focus();
+            return false;
+        }
+        else {
+            if ($("#BankUserName").val() != $("#real_name").val()) {
+                alert("温馨提示:\n开户人必须与姓名一致.");
+                return false
+            }
+        }
+        if (BankAddress.length == 0) {
+            alert("温馨提示:\n请输入开户地址.");
+            document.form1.BankAddress.focus();
+            return false;
+        }
+//	if(UserAddress.length == 0){
+//		alert("温馨提示:\n请输入联系地址.");
+//		document.form1.UserAddress.focus();
+//		return false;
+//	}
+        return true;
+    }
+</script>
+{%end%}

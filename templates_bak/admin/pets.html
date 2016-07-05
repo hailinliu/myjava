@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block title %}礼包管理{% end %}
+{% block content %}
+<div class="pace  pace-inactive">
+    <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+        <div class="pace-progress-inner"></div>
+    </div>
+    <div class="pace-activity"></div>
+</div>
+<div id="wrapper">
+    {% include 'admin_nav.html' %}
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            {% include 'header_nav.html' %}
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>礼包管理</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/admin/home">主页</a>
+                    </li>
+                    <li>
+                        <a>礼包列表</a>
+                    </li>
+
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>
+
+                            </h5>
+
+                        </div>
+                        <div class="ibox-content">
+                            <style>
+                                th:first-child,
+                                .gradeX td:first-child {
+                                    width: 20px;
+                                    cursor: pointer;
+                                }
+
+                                th:first-child input,
+                                .gradeX td:first-child input {
+                                    cursor: pointer;
+                                }
+                            </style>
+
+
+                            <form action="javascript:;" method="post" name="login_form" id="login_form">
+                                {% module xsrf_form_html() %}
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" class="i-checks" id="userListCheck"/></th>
+                                        <th>ID</th>
+                                        <th>名称</th>
+                                        <th>图片</th>
+                                        <th>单价</th>
+                                        <th>所需等级</th>
+                                        <th>日产金币</th>
+                                        <th>存活时间</th>
+                                        <th>描述</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for n in pets %}
+                                    <tr class="gradeX">
+                                        <td><input type="checkbox" class="i-checks"></td>
+                                        <td class="userListId">{{ n.get('id','无') }}</td>
+                                        <td>{{ n.get('name','无') }}</td>
+                                        <td><img  width="50" src="/static/images/{{ n.get('pet_image','无') }}" /></td>
+                                        <td>{{ n.get('price','无') }}</td>
+                                        <td>{{ n.get('level','无') }}</td>
+                                        <td>{{ n.get('day_jinbi','无') }}</td>
+                                        <td>{{ n.get('life','无') }}</td>
+                                        <td>{{ n.get('desc','无') }}</td>
+                                        <td><a href="/admin/addpet?id={{n.get('id','')}}">修改</a></td>
+                                    </tr>
+                                    {% end %}
+                                    </tbody>
+                                </table>
+                                <input type="button" class="btn btn-w-m btn-primary delete1" value="删除选中"
+                                       data-toggle="modal" data-target="#myModal5" disabled/>
+
+
+                                <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span
+                                                        aria-hidden="true">&times;</span><span
+                                                        class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">删除挖矿机</h4>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="delete1Content"></p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-white deleteUserId"
+                                                        data-dismiss="modal">确定
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">取消
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </form>
+                            <script>
+
+
+                                $(function () {
+
+
+                                    var json1 = _alert('.btn.btn-w-m.delete1', '.modal-body .delete1Content', '您要删除的宠物ID为');
+
+
+                                    var list_to_handle;
+
+                                    $('tr.gradeX input[type="checkbox"],#userListCheck').click(function () {
+                                        list_to_handle = listNubmer()
+                                        console.log(listNubmer());
+                                    });
+
+                                    function getCookie(name) {
+                                        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+                                        return r ? r[1] : undefined;
+                                    }
+
+                                    $.ajaxSetup({
+                                        beforeSend: function (xhr, settings) {
+                                            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+                                                xhr.setRequestHeader("X-XSRFToken", getCookie("_xsrf"));
+                                            }
+                                        }
+                                    });
+
+                                    $('.btn.btn-white.deleteUserId').click(function () {
+                                        $.ajax({
+                                            url: '/admin/petlist',
+                                            type: 'delete',
+                                            data: list_to_handle,
+                                            success: function (data) {
+                                                console.log(data);
+                                            },
+                                            error: function () {
+                                                alert('error');
+                                            }
+                                        });
+                                    });
+
+                                    $('.btn.btn-white.auditUserId').click(function () {
+                                        $.ajax({
+                                            url: '/admin/petlist',
+                                            type: 'put',
+                                            data: list_to_handle,
+                                            success: function (data) {
+                                                console.log(data);
+                                            },
+                                            error: function () {
+                                                alert('error');
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% end %}

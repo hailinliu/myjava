@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/fabfile.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/log/warn.log" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/main.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/push.bat" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/requirements.pip" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/session/auth.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/static/WdatePicker" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/admin" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/bootstrap" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/font-awesome" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/images/A.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/images/B.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/images/C.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/images/bg2.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/images/logo2.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/images/logo_black.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/kindeditor-4.1.10" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/static/plupload" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/templates/account/forget_pwd.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/account/info_setting.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/account/pwd_protect.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/account/pwd_update.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/active_error.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/admin/match_pay_list.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/admin/provide_help_list.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/admin/recharge.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/error.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/footer.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/left.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/ok.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/site/notice_detail.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/templates/site/notice_list.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/work_help.py" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

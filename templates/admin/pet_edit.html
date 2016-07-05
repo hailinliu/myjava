@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% block title %}礼包管理{% end %}
+{% block content %}
+<script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/kindeditor-min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('kindeditor-4.1.10/lang/zh_CN.js') }}"></script>
+<!--<script type="text/javascript">-->
+<!--KindEditor.ready(function (K) {-->
+<!--window.editor = K.create('#desc', {-->
+<!--allowFileManager: true,-->
+<!--width: '700px',-->
+<!--height: '400px',-->
+<!--resizeType: 0,       //2时可以拖动改变宽度和高度，1时只能改变高度，0时不能拖动。-->
+<!--afterFocus: function () {-->
+<!--},-->
+<!--afterBlur: function () {-->
+<!--if (editor.html() == '') {-->
+<!--$('p.desc_tip').html('详情不能为空！');-->
+<!--} else {-->
+<!--$('p.textarea').html('');-->
+<!--}-->
+<!--}-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+<div class="pace  pace-inactive">
+    <div class="pace-progress" data-progress-text="100%" data-progress="99" style="width: 100%;">
+        <div class="pace-progress-inner"></div>
+    </div>
+    <div class="pace-activity"></div>
+</div>
+<div id="wrapper">
+    {% include 'admin_nav.html' %}
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            {% include 'header_nav.html' %}
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>礼包管理</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/admin/home">主页</a>
+                    </li>
+                    <li>
+                        <a href="/admin/pets">礼包管理</a>
+                    </li>
+                    {%if pet %}
+                    <li>
+                        <strong>礼包编辑</strong>
+                    </li>
+                    {% end %}
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>
+
+                            </h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown"
+                                   href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <style>
+                                th:first-child,
+                                .gradeX td:first-child {
+                                    width: 20px;
+                                    cursor: pointer;
+                                }
+
+                                th:first-child input,
+                                .gradeX td:first-child input {
+                                    cursor: pointer;
+                                }
+                            </style>
+
+                            <form method="post" id="setting_form" class="form-horizontal">
+                                {% module xsrf_form_html() %}
+                                <input name="id" type="hidden" value="{{ pet_id }}">
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">名称:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="不多于25个字" name="name"
+                                               value="{{ pet.get('name','') }}" id="name">
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">-->
+                                <!--<label class="col-sm-2 control-label">图片:</label>-->
+                                <!--{% set image_url="/static/media/pet_img/"+pet.get('image','') %}-->
+
+                                <!--<div class="col-sm-9">-->
+                                <!--<img src="{{ image_url }}"-->
+                                <!--style="margin-top: 10px;max-width: 400px;width: 100%;"-->
+                                <!--class=" {% if not pet.get('image','') %}hide{% end %} imageview">-->
+                                <!--<input type="file" name="" class="form-control " id="index_image">-->
+                                <!--</div>-->
+                                <!--<input type="text" name="image" id="image_url" style="display: none">-->
+                                <!--</div>-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">类型:</label>
+                                    {% set image_url="/static/images/"+pet.get('image','') %}
+
+                                    <div class="col-sm-10">
+                                        <select name="pet_image" class="form-control" id="pet_image">
+                                            <option value="A.png">初级礼包</option>
+                                            <option value="B.png">中级礼包</option>
+                                            <option value="C.png">高级礼包</option>
+                                        </select>
+                                        <img src="{{ image_url }}" width="50"
+                                         style="margin-top: 10px;"
+                                         class="{% if  pet.get('image','') =='' %}hide{% end %} imageview">
+                                    </div>
+
+                                    <!--<input type="text" name="image" id="image_url" style="display: none">-->
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">价格:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="单价" name="price"
+                                               value="{{ pet.get('price','') }}" id="price">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">需要等级:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="等级>=" name="level"
+                                               value="{{ pet.get('level','') }}" id="level">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">日产金币:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="日产金币" name="day_jinbi"
+                                               value="{{ pet.get('day_jinbi','') }}" id="day_jinbi">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">限购:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="限购" name="limit"
+                                               value="{{ pet.get('limit','') }}" id="limit">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">周期:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control"  type="number" placeholder="周期" name="life"
+                                               value="{{ pet.get('life','') }}" id="life">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">说明:</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" placeholder="说明" name="desc"
+                                               value="{{ pet.get('desc','') }}" id="desc">
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary fabu" type="submit">保存内容</button>
+                                        <button class="btn btn-white" type="reset">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#pet_image").change(function(){
+        var base_url='/static/images/';
+        var val=$(this).val();
+        console.log(val);
+        $(".imageview").attr("src",base_url+val);
+    })
+
+</script>
+<script type="text/javascript" src="{{ static_url('plupload/js/plupload.full.min.js') }}"></script>
+<script type="text/javascript">
+    function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+        return r ? r[1] : undefined;
+    }
+
+    csrf_token = getCookie("_xsrf");
+    $(function () {
+        var uploader = new plupload.Uploader({
+            browse_button: 'index_image',
+            url: "/ajax/upload_image?path=pet_img",
+            multipart_params: {
+                '_xsrf': $("input[name='_xsrf']").val()
+            }
+        });
+
+        uploader.init();
+
+        // 文件添加后立即上传
+        uploader.bind('FilesAdded', function (up, files) {
+            plupload.each(files, function (file) {
+                uploader.start();
+            });
+        });
+
+        // 上传图片
+        uploader.bind('FileUploaded', function (up, file, info) {
+            var base = '/static/media/pet_img/';
+            var response = $.parseJSON(info.response);
+            if (response.status == 'ok') {
+                $(".imageview").removeClass("hide").attr("src", base + response.name);
+                $("#image_url").val(response.name);
+            } else {
+                $('.upload-error-info').text(response.error);
+            }
+        });
+
+
+    })
+    $(".fabu").click(function () {
+        $("#setting_form").submit();
+
+    });
+</script>
+{% end %}
